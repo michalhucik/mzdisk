@@ -1,0 +1,2194 @@
+# Slovak translations for mzdisk package.
+# Copyright (C) 2026 Michal
+# This file is distributed under the same license as the mzdisk package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: mzdisk 0.3.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-21 22:31+0200\n"
+"PO-Revision-Date: 2026-04-18 19:00+0200\n"
+"Last-Translator: Michal\n"
+"Language-Team: Slovak\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:595
+msgid "Open Disk Image"
+msgstr "Otvoriť diskový obraz"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:642
+msgid "Save Disk As"
+msgstr "Uložiť disk ako"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:745
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:812
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1266
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:976
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1206
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1855
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_raw_io_imgui.cpp:337
+msgid "File"
+msgstr "Súbor"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:749
+msgid "New Window"
+msgstr "Nové okno"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:754
+msgid "Maximum number of windows reached."
+msgstr ""
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:757
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1826
+msgid "New Disk..."
+msgstr "Nový disk..."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:765
+msgid "Open Disk..."
+msgstr "Otvoriť disk..."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:768
+msgid "Open Recent"
+msgstr "Otvoriť nedávne"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:851
+msgid "Shift+click to open in a new window"
+msgstr "Shift+klik otvorí v novom okne"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:855
+msgid "Clear Recent"
+msgstr "Vymazať nedávne"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:862
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1207
+msgid "Save"
+msgstr "Uložiť"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:865
+msgid "Save As..."
+msgstr "Uložiť ako..."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:871
+msgid "Close Disk"
+msgstr "Zavrieť disk"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:876
+msgid "Settings..."
+msgstr "Nastavenia..."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:883
+msgid "Duplicate Process"
+msgstr "Nová inštancia aplikácie"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:886
+msgid "Exit"
+msgstr "Ukončiť"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:892
+msgid "View"
+msgstr "Zobrazenie"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:894
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1908
+msgid "Info"
+msgstr "Info"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:895
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1914
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_create_imgui.cpp:202
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_create_imgui.cpp:206
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:803
+msgid "Geometry"
+msgstr "Geometria"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:896
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1920
+msgid "Geometry Edit"
+msgstr "Editácia geometrie"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:897
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1934
+msgid "Boot Sector"
+msgstr "Boot sector"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:898
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1943
+msgid "Block Map"
+msgstr "Mapa blokov"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:899
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1949
+msgid "Hexdump"
+msgstr "Hexdump"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:901
+msgid "FS Directory"
+msgstr "FS directory"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:902
+msgid "FS Maintenance"
+msgstr "FS údržba"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:904
+msgid "Show All"
+msgstr "Zobraziť všetko"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:912
+msgid "Help"
+msgstr "Pomoc"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:913
+msgid "About mzdisk..."
+msgstr "O programe mzdisk..."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:938
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:950
+msgid "About mzdisk"
+msgstr "O programe mzdisk"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:995
+msgid "Sharp MZ disk image manager"
+msgstr "Správca diskových obrazov Sharp MZ"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1014
+msgid "Author"
+msgstr "Autor"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1015
+msgid "Copyright"
+msgstr "Copyright"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1016
+msgid "License"
+msgstr "Licencia"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1022
+msgid "Source code"
+msgstr "Zdrojový kód"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1039
+msgid "Open in browser"
+msgstr "Otvoriť v prehliadači"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1048
+msgid "Library versions"
+msgstr "Verzie knižníc"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1050
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1088
+msgid "Library"
+msgstr "Knižnica"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1051
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1089
+msgid "Version"
+msgstr "Verzia"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1086
+msgid "External dependencies"
+msgstr "Externé závislosti"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1117
+msgid "Close"
+msgstr "Zavrieť"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1200
+msgid "Disk"
+msgstr "Disk"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1201
+msgid "has unsaved changes."
+msgstr "má neuložené zmeny."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1217
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1346
+msgid "Save failed"
+msgstr "Ukladanie zlyhalo"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1229
+msgid "Don't Save"
+msgstr "Neukladať"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1237
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1368
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1447
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1518
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:587
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:646
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:744
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1531
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1814
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2116
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2238
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2294
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2675
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2716
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:889
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:948
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1051
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1297
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1345
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1388
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:784
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:820
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:857
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:905
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:540
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:388
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1562
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1677
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1735
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1823
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1907
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:2168
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:2212
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_settings_imgui.cpp:415
+msgid "Cancel"
+msgstr "Zrušiť"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1313
+msgid "Unsaved changes:"
+msgstr "Neuložené zmeny:"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1335
+msgid "Save All"
+msgstr "Uložiť všetko"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1362
+msgid "Discard All"
+msgstr "Zahodiť všetko"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1432
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1441
+msgid "Reload"
+msgstr "Znovu načítať"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1436
+msgid "All unsaved changes will be discarded!"
+msgstr "Všetky neuložené zmeny budú zahodené!"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1486
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1502
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_create_imgui.cpp:650
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:360
+msgid "File already exists:"
+msgstr "Subor uz existuje:"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1501
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1514
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:371
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_settings_imgui.cpp:259
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_settings_imgui.cpp:298
+msgid "Overwrite"
+msgstr "Prepisat"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1503
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:355
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:430
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1516
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:344
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:373
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1007
+msgid "Rename"
+msgstr "Premenovať"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1505
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1518
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:375
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_settings_imgui.cpp:260
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_settings_imgui.cpp:299
+msgid "Skip"
+msgstr "Preskocit"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1508
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1521
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:378
+msgid "Apply to all remaining:"
+msgstr "Pre všetky zostávajúce použiť:"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1509
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1522
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:379
+msgid "Overwrite all"
+msgstr "Prepísať všetko"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1511
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1524
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:381
+msgid "Rename all"
+msgstr "Premenovať všetko"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1513
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1526
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:383
+msgid "Skip all"
+msgstr "Preskočiť všetko"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1696
+msgid "No disk loaded"
+msgstr "Žiadny disk nie je načítaný"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1744
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:503
+msgid "Modified"
+msgstr "Zmenené"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1751
+msgid "OK"
+msgstr "OK"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1751
+msgid "FAILED"
+msgstr "CHYBA"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1785
+msgid "Open Disk... (Ctrl+O)"
+msgstr "Otvoriť disk... (Ctrl+O)"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1796
+msgid "Save (Ctrl+S)"
+msgstr "Uložiť (Ctrl+S)"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1812
+msgid "Reload DSK image"
+msgstr "Znovu načítať DSK obraz"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1883
+msgid "Sharp MZ disk image manager. Open a DSK file to begin."
+msgstr "Správca diskových obrazov Sharp MZ. Otvorte DSK súbor pre začatie."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1885
+msgid "File > Open Disk... or click the folder icon in the toolbar."
+msgstr ""
+"Súbor > Otvoriť disk... alebo kliknite na ikonu priečinka v paneli nástrojov."
+"File > Open Disk... alebo kliknite na ikonu priečinka v paneli nástrojov."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1891
+msgid "Disclaimer"
+msgstr "Upozornenie"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1894
+msgid "Always work on a copy of your DSK image, never on the original."
+msgstr "Vždy pracujte s kópiou DSK obrazu, nie s originálom."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1896
+msgid ""
+"The author provides no warranty and accepts no liability for data loss or "
+"damage resulting from use of the mzdisk project tools."
+msgstr ""
+"Autor projektu neposkytuje žiadne záruky a nezodpovedá za straty ani "
+"poškodenie údajov spôsobené používaním nástrojov projektu mzdisk."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1899
+msgid "Distributed under the GPLv3 license, without warranty."
+msgstr "Projekt je distribuovaný pod licenciou GPLv3 bez záruky."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1961
+msgid "FSMZ Directory"
+msgstr "FSMZ directory"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1970
+msgid "FSMZ Maintenance"
+msgstr "FSMZ údržba"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1981
+msgid "CP/M Directory"
+msgstr "CP/M directory"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:1990
+msgid "CP/M Maintenance"
+msgstr "CP/M údržba"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:2002
+msgid "MRS Directory"
+msgstr "MRS directory"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/app_imgui.cpp:2012
+msgid "MRS Maintenance"
+msgstr "MRS údržba"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot.c:418
+msgid "Existing IPLPRO header found. Clear bootstrap first."
+msgstr "Nájdená existujúca hlavička IPLPRO. Najprv vymažte bootstrap."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot.c:428
+msgid "Cannot read MZF file."
+msgstr "Nedá sa načítať MZF súbor."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot.c:440
+#, c-format
+msgid "Bootstrap too large: needs %d blocks, max %d available."
+msgstr "Bootstrap je príliš veľký: potrebuje %d blokov, max %d k dispozícii."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:198
+msgid "IPLPRO header not readable."
+msgstr "IPLPRO hlavička nie je čitateľná."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:204
+msgid "Valid IPLPRO header"
+msgstr "Platná IPLPRO hlavička"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:206
+msgid "Invalid IPLPRO header"
+msgstr "Neplatná IPLPRO hlavička"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:223
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:693
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:625
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:802
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1108
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1778
+msgid "Name"
+msgstr "Názov"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:235
+msgid "Name encoding"
+msgstr "Kódovanie názvov"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:243
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1746
+msgid "File type"
+msgstr "Typ súboru"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:244
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:695
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:814
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:626
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:806
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:203
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:297
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:358
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:300
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:381
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_map_imgui.cpp:272
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1111
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_settings_imgui.cpp:190
+msgid "Size"
+msgstr "Veľkosť"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:245
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:807
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1209
+msgid "Start address"
+msgstr "Počiatočná adresa"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:246
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1765
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:808
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1210
+msgid "Exec address"
+msgstr "Exec adresa"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:247
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:809
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:302
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:383
+msgid "Start block"
+msgstr "Počiatočný block"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:248
+msgid "Block count"
+msgstr "Počet blokov"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:251
+msgid "Block range"
+msgstr "Rozsah blokov"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:254
+msgid "Bootstrap type"
+msgstr "Typ bootstrap"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:270
+msgid "DINFO block not readable."
+msgstr "DINFO block nie je čitateľný."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:278
+msgid "Volume"
+msgstr "Zväzok"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:279
+msgid "Master (bootable)"
+msgstr "Master (bootovateľný)"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:279
+msgid "Slave"
+msgstr "Slave"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:281
+msgid "File area start"
+msgstr "Začiatok súborovej oblasti"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:281
+msgid "block"
+msgstr "block"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:282
+msgid "Used blocks"
+msgstr "Obsadené bloky"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:283
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:257
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:327
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_map_imgui.cpp:409
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:556
+msgid "Total blocks"
+msgstr "Celkom blokov"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:301
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:329
+msgid "Reserved tracks"
+msgstr "Rezervované stopy"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:302
+msgid "System tracks"
+msgstr "Systémové stopy"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:303
+msgid "Abs. track range"
+msgstr "Abs. rozsah stôp"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:304
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:162
+msgid "Total size"
+msgstr "Celková veľkosť"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:307
+msgid "Content"
+msgstr "Obsah"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:334
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:285
+msgid "Get (Export MZF)"
+msgstr "Export (MZF)"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:348
+msgid "Export Bootstrap to MZF"
+msgstr "Export bootstrap do MZF"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:365
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:361
+msgid "Set"
+msgstr "Nastaviť"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:374
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:574
+msgid "Clear"
+msgstr "Vymazať"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:388
+msgid "Put Bottom"
+msgstr "Import Bottom"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:396
+msgid "Import MZF as Bottom Bootstrap"
+msgstr "Importovať MZF ako Bottom bootstrap"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:403
+msgid "Put Normal"
+msgstr "Import Normal"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:411
+msgid "Import MZF as Normal Bootstrap"
+msgstr "Importovať MZF ako Normal bootstrap"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:416
+msgid "Put Over"
+msgstr "Import Over"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:424
+msgid "Import MZF as Over-FAREA Bootstrap"
+msgstr "Importovať MZF ako Over-FAREA bootstrap"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:435
+msgid "Preserve FSMZ compatibility (Mini mode)"
+msgstr "Zachovať FSMZ kompatibilitu (Mini režim)"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:452
+msgid "Disk will no longer be FSMZ compatible!"
+msgstr "Disk prestane byť kompatibilný s FSMZ!"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:457
+msgid "Max bottom blocks"
+msgstr "Max. bottom blokov"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:479
+msgid "Failed to export bootstrap."
+msgstr "Export bootstrapu zlyhal."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:520
+msgid "Failed to install normal bootstrap."
+msgstr "Inštalácia normálneho bootstrapu zlyhala."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:542
+msgid "Failed to install over-FAREA bootstrap."
+msgstr "Inštalácia over-FAREA bootstrapu zlyhala."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:566
+msgid "Clear bootstrap from disk?"
+msgstr "Vymazať bootstrap z disku?"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:568
+msgid "FAREA blocks will be deallocated, disk set to Slave."
+msgstr "FAREA bloky budú uvoľnené, disk nastavený ako Slave."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:581
+msgid "Failed to clear bootstrap."
+msgstr "Vymazanie bootstrapu zlyhalo."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:608
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2255
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:912
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1694
+msgid "Current name"
+msgstr "Súčasný názov"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:617
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:916
+msgid "New name"
+msgstr "Nový názov"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:666
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:292
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:297
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:373
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:378
+msgid "Bootstrap"
+msgstr "Bootstrap"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:777
+msgid "No boot sector data available."
+msgstr "Dáta boot sectora nie sú dostupné."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:786
+msgid "IPLPRO Header (block 0)"
+msgstr "IPLPRO hlavička (block 0)"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:796
+msgid "DINFO Block (block 15)"
+msgstr "DINFO block (block 15)"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:807
+msgid "System Tracks (CP/M)"
+msgstr "Systémové stopy (CP/M)"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_boot_imgui.cpp:817
+msgid "Bootstrap Management"
+msgstr "Správa bootstrap"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:166
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:180
+msgid "Empty filename"
+msgstr "Prázdne meno"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:169
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:183
+msgid "Name exceeds 8 characters"
+msgstr "Meno presahuje 8 znakov"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:172
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:186
+msgid "Extension exceeds 3 characters"
+msgstr "Prípona presahuje 3 znaky"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:175
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:189
+msgid "Forbidden character"
+msgstr "Zakázaný znak"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:362
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:916
+msgid "Get (Export)"
+msgstr "Export"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:378
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:932
+msgid "Export file"
+msgstr "Exportovať súbor"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:380
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:308
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:934
+msgid "Export to directory"
+msgstr "Exportovať do adresára"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:388
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:942
+msgid "Put (Import)"
+msgstr "Import"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:393
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:947
+msgid "Import file"
+msgstr "Importovať súbor"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:400
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:955
+msgid "Get MZF"
+msgstr "Export MZF"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:409
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:986
+msgid "Put MZF"
+msgstr "Import MZF"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:414
+msgid "Import MZF (CPM-IC)"
+msgstr "Import MZF (CPM-IC)"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:421
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2180
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2205
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:335
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:826
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:860
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:998
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1624
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1647
+msgid "Delete"
+msgstr "Zmazať"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:522
+msgid ""
+"Change CP/M user area of selected files.\n"
+"\n"
+"'--' = no change (shown also when selection mixes different users).\n"
+"Conflicts with existing names are reported as errors;\n"
+"the file keeps its original user."
+msgstr ""
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:532
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:696
+msgid "Attr"
+msgstr "Attr"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:579
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:836
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:694
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:325
+msgid "Preset"
+msgstr "Preset"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:581
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:554
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:560
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1052
+msgid "Files"
+msgstr "Súbory"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:588
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:556
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1054
+msgid "selected"
+msgstr "vybrané"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:598
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2030
+msgid "User:"
+msgstr ""
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:629
+msgid ""
+"Filter directory by CP/M user area.\n"
+"Also drives target user for Put/Import and drag-and-drop.\n"
+"\n"
+"'all' shows every user;\n"
+"imports default to user 0;\n"
+"drops from CP/M sources preserve their source user."
+msgstr ""
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:667
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:596
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1082
+msgid "Directory is empty."
+msgstr "Directory je prázdny."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:692
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:813
+msgid "User"
+msgstr "Používateľ"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:694
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1109
+msgid "Ext"
+msgstr "Ext"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:697
+msgid "Ext#"
+msgstr "Ext#"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:755
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:705
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:747
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1162
+msgid "Move:"
+msgstr "Presun:"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:755
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:705
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:747
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1162
+msgid "Copy:"
+msgstr "Kopírovať:"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:757
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:707
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:749
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1164
+msgid "files"
+msgstr "súborov"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:815
+msgid "Attributes"
+msgstr "Atribúty"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:816
+msgid "Extents"
+msgstr "Extenty"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:834
+msgid "Disk Parameter Block (DPB)"
+msgstr "Disk Parameter Block (DPB)"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:843
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:845
+msgid "Parameter"
+msgstr "Parameter"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:844
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:846
+msgid "Value"
+msgstr "Hodnota"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:853
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:326
+msgid "Block size"
+msgstr "Veľkosť bloku"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:886
+msgid "Capacity"
+msgstr "Kapacita"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:888
+msgid "Dir blocks"
+msgstr "Dir bloky"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:911
+#, fuzzy
+msgid "Directory slots"
+msgstr "Položky directory"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:912
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:941
+#, fuzzy
+msgid "Total"
+msgstr "Celková veľkosť"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:914
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:943
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_map_imgui.cpp:413
+msgid "Used"
+msgstr "Obsadený"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:916
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:946
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1000
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1172
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1262
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_map_imgui.cpp:411
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:558
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:626
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:788
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:879
+msgid "Free"
+msgstr "Voľný"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:918
+#, fuzzy
+msgid "Blocked"
+msgstr "Block"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:921
+msgid ""
+"Allocated directory slots with user > 15 (outside the\n"
+"displayable CP/M 2.2 user areas 0-15). BDOS treats them\n"
+"as occupied but the SEARCH loop matches only the active\n"
+"USRCODE (0-15), so they never appear in directory\n"
+"listings."
+msgstr ""
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:940
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1110
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1208
+msgid "Blocks"
+msgstr "Bloky"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:949
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:566
+msgid "Dir"
+msgstr "Dir"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:962
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_map_imgui.cpp:186
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:583
+msgid "Disk Layout"
+msgstr "Rozloženie disku"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:978
+msgid "System Tracks"
+msgstr "Systémové stopy"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:992
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:617
+msgid "File Data"
+msgstr "Dáta súboru"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1081
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:707
+msgid "blocks"
+msgstr "blokov"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1111
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:737
+msgid "Legend"
+msgstr "Legenda"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1199
+msgid "CP/M Block Map"
+msgstr "CP/M mapa blokov"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1287
+msgid "Allocation map not available."
+msgstr "Alokačná mapa nie je dostupná."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1427
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:309
+msgid "Export MZF"
+msgstr "Exportovať MZF"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1427
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:309
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_settings_imgui.cpp:263
+msgid "Export"
+msgstr "Export"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1726
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1736
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1773
+msgid "MZF Export Options"
+msgstr "Volby MZF exportu"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1782
+msgid "Load address"
+msgstr "Load adresa"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1800
+msgid "Encode CP/M attrs"
+msgstr "Kódovať CP/M atribúty"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1809
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1818
+msgid "Export.."
+msgstr "Export.."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1844
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:304
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1841
+msgid "Export to MZF"
+msgstr "Export do MZF"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1846
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:978
+msgid "Export MZFs to directory"
+msgstr "Exportovať MZF do adresára"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1970
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1983
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1421
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1433
+msgid "Put file as..."
+msgstr "Vložiť súbor ako..."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1987
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1437
+msgid "Source file:"
+msgstr "Zdrojový súbor:"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:1992
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1442
+msgid "Target name:"
+msgstr "Cieľový názov:"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2072
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1487
+msgid "MZF fname charset:"
+msgstr "Kódovanie MZF mien:"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2091
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1539
+msgid "Auto-truncate on overflow"
+msgstr "Automaticky skrátiť pri preplnení"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2096
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1543
+msgid "Hint: 8 chars max for name, 3 for ext."
+msgstr "Tip: max 8 znakov pre meno, 3 pre príponu."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2180
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:826
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1624
+msgid "file(s)"
+msgstr "súbor(ov)"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2257
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1696
+msgid "New name (NAME.EXT)"
+msgstr "Nový názov (NAME.EXT)"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2315
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2731
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1070
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1403
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1753
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:2227
+msgid "Error"
+msgstr "Chyba"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2338
+msgid "No CP/M directory data."
+msgstr "Žiadne CP/M directory dáta."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2344
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_create_imgui.cpp:563
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_create_imgui.cpp:581
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1937
+msgid "Directory"
+msgstr "Adresár"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2349
+msgid "Alloc Map"
+msgstr "Alokačná mapa"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2485
+msgid "CP/M disk maintenance operations."
+msgstr "Operácie údržby CP/M disku."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2491
+msgid "Check Extents"
+msgstr "Kontrola extentov"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2492
+msgid ""
+"Verifies extent consistency for all files. Read-only operation - no data is "
+"modified."
+msgstr ""
+"Overí konzistenciu extentov všetkých súborov. Operácia iba na čítanie - "
+"žiadne dáta nie sú zmenené."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2494
+msgid "Check"
+msgstr "Kontrola"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2544
+msgid "All files OK."
+msgstr "Všetky súbory OK."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2547
+msgid "file(s) with errors"
+msgstr "súbor(ov) s chybami"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2559
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2639
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1197
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1311
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:2056
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:2133
+msgid "Defragmentation"
+msgstr "Defragmentácia"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2560
+msgid ""
+"Reads all files into memory, formats directory, and writes files "
+"sequentially without gaps. System tracks and attributes are preserved."
+msgstr ""
+"Načíta všetky súbory do pamäte, naformátuje directory a zapíše súbory "
+"sekvenčne bez medzier. Systémové stopy a atribúty budú zachované."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2578
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1214
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:2074
+msgid "Defragmentation completed successfully."
+msgstr "Defragmentácia úspešne dokončená."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2582
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1218
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:2078
+msgid "Defragmentation failed"
+msgstr "Defragmentácia zlyhala"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2588
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2649
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1224
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1321
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:2084
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:2143
+msgid "Defragment"
+msgstr "Defragmentovať"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2597
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1232
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:2092
+msgid "Defragmentation in progress..."
+msgstr "Prebieha defragmentácia..."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2622
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1256
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:2116
+msgid "Format (File Area)"
+msgstr "Formátovanie (súborová oblasť)"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2623
+msgid ""
+"Erases directory (fills with 0xE5). System tracks (CCP+BDOS+BIOS) are "
+"preserved. All files become inaccessible."
+msgstr ""
+"Vymaže directory (vyplní hodnotou 0xE5). Systémové stopy (CCP+BDOS+BIOS) "
+"budú zachované. Všetky súbory sa stanú nedostupnými."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2625
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2689
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1259
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1359
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:2119
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:2182
+msgid "Format File Area"
+msgstr "Formátovanie súborovej oblasti"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2641
+msgid ""
+"This will read all files into memory, format the directory, and write files "
+"sequentially without gaps. System tracks, attributes and user numbers are "
+"preserved."
+msgstr ""
+"Toto načíta všetky súbory do pamäte, naformátuje directory a zapíše súbory "
+"sekvenčne bez medzier. Systémové stopy, atribúty a čísla používateľov budú "
+"zachované."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2644
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1316
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:2138
+msgid "WARNING: If the process is interrupted, data may be lost!"
+msgstr "VAROVANIE: Ak bude proces prerušený, dáta môžu byť stratené!"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2691
+msgid ""
+"This will erase the entire CP/M directory. All files will become "
+"inaccessible. System tracks will be preserved."
+msgstr ""
+"Toto vymaže celý CP/M directory. Všetky súbory sa stanú nedostupnými. "
+"Systémové stopy budú zachované."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2694
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1366
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:2187
+msgid "WARNING: This operation cannot be undone!"
+msgstr "VAROVANIE: Túto operáciu nie je možné vrátiť späť!"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2699
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1371
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:2192
+msgid "Format"
+msgstr "Formátovať"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2706
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1378
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:2202
+msgid "File area format completed successfully."
+msgstr "Formátovanie súborovej oblasti úspešne dokončené."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2710
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1382
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:2206
+msgid "Format failed"
+msgstr "Formátovanie zlyhalo"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_cpm_imgui.cpp:2733
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1405
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:2229
+msgid "Success"
+msgstr "Úspech"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_create_imgui.cpp:187
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_create_imgui.cpp:192
+msgid "Disk Summary"
+msgstr "Súhrn disku"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_create_imgui.cpp:189
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_create_imgui.cpp:194
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:606
+msgid "tracks"
+msgstr "stôp"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_create_imgui.cpp:192
+msgid "Custom"
+msgstr "Vlastná"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_create_imgui.cpp:202
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:657
+msgid "sectors"
+msgstr "sectorov"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_create_imgui.cpp:203
+msgid "track"
+msgstr "stopa"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_create_imgui.cpp:206
+msgid "Mixed"
+msgstr "Zmiešaná"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_create_imgui.cpp:207
+msgid "rules"
+msgstr "pravidiel"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_create_imgui.cpp:306
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:224
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:500
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:161
+msgid "Sides"
+msgstr "Strany"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_create_imgui.cpp:333
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:222
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:173
+msgid "Tracks"
+msgstr "Stopy"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_create_imgui.cpp:422
+msgid "From track"
+msgstr "Od stopy"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_create_imgui.cpp:444
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:419
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:875
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:175
+msgid "Sectors"
+msgstr "Sectory"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_create_imgui.cpp:564
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_create_imgui.cpp:571
+msgid "Filename"
+msgstr "Názov súboru"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_create_imgui.cpp:583
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_raw_io_imgui.cpp:341
+msgid "Browse..."
+msgstr "Prehľadávať..."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_create_imgui.cpp:594
+msgid "Select Directory"
+msgstr "Vybrať adresár"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_create_imgui.cpp:654
+msgid "Overwrite?"
+msgstr "Prepísať?"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:318
+msgid "Put (Import MZF)"
+msgstr "Import (MZF)"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:327
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:991
+msgid "Import MZF File"
+msgstr "Importovať MZF súbor"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:386
+msgid "Lock"
+msgstr "Zamknúť"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:386
+msgid "Unlock"
+msgstr "Odomknúť"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:423
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:424
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:278
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:359
+msgid "Encoding"
+msgstr "Kódovanie"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:547
+msgid "No FSMZ directory data."
+msgstr "Žiadne FSMZ directory dáta."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:623
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:805
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:299
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:380
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_map_imgui.cpp:159
+msgid "Type"
+msgstr "Typ"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:627
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1112
+msgid "Start"
+msgstr "Začiatok"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:628
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1113
+msgid "Exec"
+msgstr "Exec"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:629
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:210
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_map_imgui.cpp:376
+msgid "Block"
+msgstr "Block"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:811
+msgid "Locked"
+msgstr "Zamknutý"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1055
+msgid "No file selected."
+msgstr "Nie je vybraný žiadny súbor."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1179
+msgid ""
+"FSMZ disk maintenance operations. Use with caution - some operations modify "
+"disk data."
+msgstr ""
+"Operácie údržby FSMZ disku. Používajte opatrne - niektoré operácie menia "
+"dáta na disku."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1185
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1273
+msgid "Repair DINFO"
+msgstr "Oprava DINFO"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1186
+msgid ""
+"Recalculates allocation bitmap from directory contents and bootstrap. "
+"Corrects any bitmap inconsistencies."
+msgstr ""
+"Prepočíta alokačnú bitmapu z obsahu directory a bootstrap. Opraví prípadné "
+"nekonzistencie bitmapy."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1188
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1280
+msgid "Repair"
+msgstr "Opraviť"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1198
+msgid ""
+"Reads all files into memory, formats disk, and writes files sequentially "
+"without gaps. Bootstrap is preserved if present."
+msgstr ""
+"Načíta všetky súbory do pamäte, naformátuje disk a zapíše súbory sekvenčne "
+"bez medzier. Bootstrap bude zachovaný, ak existuje."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1257
+msgid ""
+"Clears directory and allocation bitmap. Bootstrap is preserved. All file "
+"data becomes inaccessible."
+msgstr ""
+"Vymaže directory a alokačnú bitmapu. Bootstrap bude zachovaný. Všetky "
+"súborové dáta sa stanú nedostupnými."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1275
+msgid ""
+"This will recalculate the allocation bitmap from directory contents. Any "
+"inconsistencies in the bitmap will be corrected."
+msgstr ""
+"Toto prepočíta alokačnú bitmapu z obsahu directory. Prípadné nekonzistencie "
+"v bitmape budú opravené."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1287
+msgid "DINFO repair completed successfully."
+msgstr "Oprava DINFO úspešne dokončená."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1291
+msgid "Repair failed"
+msgstr "Oprava zlyhala"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1313
+msgid ""
+"This will read all files into memory, format the disk, and write files "
+"sequentially without gaps. Bootstrap will be preserved if present."
+msgstr ""
+"Toto načíta všetky súbory do pamäte, naformátuje disk a zapíše súbory "
+"sekvenčne bez medzier. Bootstrap bude zachovaný, ak existuje."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1361
+msgid ""
+"This will erase the directory and allocation bitmap. All file data will "
+"become inaccessible."
+msgstr ""
+"Toto vymaže directory a alokačnú bitmapu. Všetky súborové dáta sa stanú "
+"nedostupnými."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_fsmz_imgui.cpp:1363
+msgid ""
+"Bootstrap will be preserved (including Normal bootstrap data in file area)."
+msgstr ""
+"Bootstrap bude zachovaný (vrátane Normal bootstrap dát v súborovej oblasti)."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:195
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:200
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:293
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:354
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:521
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:635
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:765
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:874
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:159
+msgid "Track"
+msgstr "Track"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:196
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:294
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:355
+msgid "Side"
+msgstr "Strana"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:197
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:201
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:295
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:356
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:174
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_map_imgui.cpp:351
+msgid "Sector"
+msgstr "Sector"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:205
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:298
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:359
+msgid "Inverted data (FSMZ)"
+msgstr "Invertované dáta (FSMZ)"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:217
+msgid "No geometry data available."
+msgstr "Dáta geometrie nie sú dostupné."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:226
+msgid "Max sectors/track"
+msgstr "Max. sectorov/stopu"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:234
+msgid "Side 0"
+msgstr "Strana 0"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:305
+msgid "Side 1"
+msgstr "Strana 1"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:429
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:176
+msgid "Sector size"
+msgstr "Veľkosť sectora"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:437
+msgid "Sector order"
+msgstr "Poradie sectorov"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:444
+msgid "Filler"
+msgstr "Výplň"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:460
+msgid "Sector map"
+msgstr "Mapa sectorov"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:469
+msgid "Comma-separated sector IDs, e.g. 1,3,5,2,4,6"
+msgstr "Čiarkou oddelené sector ID, napr. 1,3,5,2,4,6"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:486
+msgid "No disk open."
+msgstr "Žiadny disk nie je otvorený."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:498
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:805
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:838
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:160
+msgid "Total tracks"
+msgstr "Celkom stôp"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:499
+msgid "Tracks/side"
+msgstr "Stopy/stranu"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:503
+msgid ""
+"Geometry modification operations. These change the disk structure - use with "
+"caution."
+msgstr ""
+"Operácie pre úpravu geometrie. Menia štruktúru disku - používajte opatrne."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:513
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:536
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:761
+msgid "Change Track"
+msgstr "Zmena stopy"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:514
+msgid ""
+"Changes the geometry of a single track (sector count, sector size, sector "
+"order). Existing data on the track is lost."
+msgstr ""
+"Zmení geometriu jednej stopy (počet sectorov, veľkosť sectora, poradie "
+"sectorov). Existujúce dáta na stope budú stratené."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:546
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:570
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:575
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:798
+msgid "Append Tracks"
+msgstr "Pridanie stôp"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:547
+msgid ""
+"Adds new tracks at the end of the disk image. For 2-sided disks, the count "
+"must be even."
+msgstr ""
+"Pridá nové stopy na koniec diskového obrazu. Pri 2-stranných diskoch musí "
+"byť počet párny."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:551
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:174
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_raw_io_imgui.cpp:106
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_raw_io_imgui.cpp:141
+msgid "Count"
+msgstr "Počet"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:573
+msgid "Maximum tracks reached"
+msgstr "Dosiahnutý maximálny počet stôp"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:579
+msgid "max"
+msgstr "max"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:588
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:613
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:618
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:834
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:848
+msgid "Shrink"
+msgstr "Zmenšenie"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:589
+msgid ""
+"Removes tracks from the end of the disk image. Data on removed tracks is "
+"permanently lost."
+msgstr ""
+"Odstráni stopy z konca diskového obrazu. Dáta na odstránených stopách budú "
+"trvale stratené."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:593
+msgid "New total tracks"
+msgstr "Nový celkový počet stôp"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:606
+msgid "removes"
+msgstr "odstráni"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:616
+msgid "Disk has only 1 track"
+msgstr "Disk má iba 1 stopu"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:630
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:871
+msgid "Edit Sector IDs"
+msgstr "Editácia sektorových ID"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:631
+msgid "Modifies sector IDs in the track header without changing data."
+msgstr "Modifikuje sektorové ID v hlavičke stopy bez zmeny dát."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:656
+msgid "Sector IDs for track"
+msgstr "Sektorové ID pre stopu"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:701
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:718
+msgid "Apply Preset"
+msgstr "Použiť preset"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:723
+msgid "Apply Sector IDs"
+msgstr "Použiť sektorové ID"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:728
+msgid "Cannot read sector IDs for this track."
+msgstr "Nemožno prečítať sektorové ID pre túto stopu."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:766
+msgid "New geometry"
+msgstr "Nová geometria"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:770
+msgid "WARNING: Existing data on this track will be lost!"
+msgstr "VAROVANIE: Existujúce dáta na tejto stope budú stratené!"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:775
+msgid "Change"
+msgstr "Zmena"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:802
+msgid "Tracks to add"
+msgstr "Počet stôp na pridanie"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:811
+msgid "Append"
+msgstr "Pridanie"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:840
+msgid "Tracks to remove"
+msgstr "Počet stôp na odobranie"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:843
+msgid "WARNING: Data on removed tracks will be permanently lost!"
+msgstr "VAROVANIE: Dáta na odstránených stopách budú trvale stratené!"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:886
+msgid "New"
+msgstr "Nové"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:891
+msgid ""
+"Only sector IDs in the track header will be modified. Sector data remains "
+"unchanged."
+msgstr ""
+"Budú zmenené len sektorové ID v hlavičke stopy. Dáta sektorov zostanú bez "
+"zmeny."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_geometry_imgui.cpp:896
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_settings_imgui.cpp:411
+msgid "Apply"
+msgstr "Použiť"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:243
+msgid "Out of range"
+msgstr "Mimo rozsahu"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:248
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_raw_io_imgui.cpp:154
+msgid "Origin"
+msgstr "Počiatok"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:252
+msgid "Whole Disk"
+msgstr "Celý disk"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:259
+msgid "CP/M Blocks"
+msgstr "CP/M bloky"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:281
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_raw_io_imgui.cpp:167
+msgid "Origin Track:"
+msgstr "Počiatočný track:"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:295
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_raw_io_imgui.cpp:179
+msgid "Origin Sector:"
+msgstr "Počiatočný sector:"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:311
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_raw_io_imgui.cpp:192
+msgid "First Block #:"
+msgstr "Prvý block #:"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:323
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_raw_io_imgui.cpp:202
+msgid "Sectors/Block:"
+msgstr "Sectory/block:"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:341
+msgid "Sector Order:"
+msgstr "Poradie sectorov:"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:352
+msgid ""
+"ID: Advances by sector ID (1, 2, 3, ...). If the next ID is not found on the "
+"track, moves to the next track starting from ID 1. Sectors with non-"
+"sequential IDs are skipped.\n"
+"\n"
+"Phys: Advances by physical position on the track as stored in the DSK image. "
+"Includes all sectors regardless of their ID numbering."
+msgstr ""
+"ID: Postupuje podľa sector ID (1, 2, 3, ...). Ak ďalšie ID nie je nájdené na "
+"stope, prejde na ďalšiu stopu od ID 1. Sectory s nesekvenčným ID sú "
+"preskočené.\n"
+"\n"
+"Phys: Postupuje podľa fyzickej pozície na stope tak, ako je uložená v DSK "
+"obraze. Zahŕňa všetky sectory bez ohľadu na ich číslovanie ID."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:398
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_raw_io_imgui.cpp:263
+msgid "Mode"
+msgstr "Režim"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:461
+msgid "Enter edit mode"
+msgstr "Vstúpiť do režimu editácie"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:476
+msgid "Write changes to disk"
+msgstr "Zapísať zmeny na disk"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:488
+msgid "Revert to original data"
+msgstr "Vrátiť na pôvodné dáta"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:526
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:530
+msgid "Unsaved Changes"
+msgstr "Neuložené zmeny"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:532
+msgid "Discard unsaved changes?"
+msgstr "Zahodiť neuložené zmeny?"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:535
+msgid "Discard"
+msgstr "Zahodiť"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:1083
+msgid "Read error!"
+msgstr "Chyba čítania!"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:1085
+msgid "No data."
+msgstr "Žiadne dáta."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:1225
+msgid "No disk data available."
+msgstr "Dáta disku nie sú dostupné."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:1241
+msgid "Export sectors to file"
+msgstr "Exportovať sectory do súboru"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_hexdump_imgui.cpp:1248
+msgid "Import sectors from file"
+msgstr "Importovať sectory zo súboru"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:155
+msgid "Disk Geometry"
+msgstr "Geometria disku"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:163
+msgid "KB"
+msgstr "KB"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:177
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_raw_io_imgui.cpp:301
+msgid "Data"
+msgstr "Dáta"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:204
+msgid "inverted"
+msgstr "invertovaná"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:206
+msgid "normal"
+msgstr "normálna"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:226
+msgid "Format Identification"
+msgstr "Identifikácia formátu"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:231
+msgid "DSK format"
+msgstr "DSK formát"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:233
+msgid "Filesystem"
+msgstr "Súborový systém"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:251
+msgid "FSMZ Details"
+msgstr "FSMZ detaily"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:267
+msgid "Usage"
+msgstr "Využitie"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:271
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1050
+msgid "Free blocks"
+msgstr "Voľné bloky"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:320
+msgid "CP/M Details"
+msgstr "CP/M detaily"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:328
+msgid "Directory entries"
+msgstr "Položky directory"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:346
+msgid "FSMZ Boot Area"
+msgstr "FSMZ boot oblasť"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:351
+msgid "FSMZ tracks"
+msgstr "FSMZ stopy"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:352
+msgid "FSMZ blocks"
+msgstr "FSMZ bloky"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_info_imgui.cpp:401
+msgid "No disk information available."
+msgstr "Informácie o disku nie sú dostupné."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_map_imgui.cpp:348
+msgid "FSMZ Boot track"
+msgstr "FSMZ boot stopa"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_map_imgui.cpp:391
+msgid "CP/M Allocation map"
+msgstr "CP/M alokačná mapa"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_map_imgui.cpp:392
+msgid "MRS Allocation map"
+msgstr "MRS alokačná mapa"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_map_imgui.cpp:393
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_map_imgui.cpp:394
+msgid "FSMZ Block map"
+msgstr "FSMZ mapa blokov"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_map_imgui.cpp:395
+msgid "Block map"
+msgstr "Mapa blokov"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_map_imgui.cpp:403
+msgid "No block map available for this disk."
+msgstr "Pre tento disk nie je dostupná mapa blokov."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:562
+msgid "System"
+msgstr "Systém"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:569
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:789
+msgid "Bad"
+msgstr "Chybný"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:816
+msgid "MRS FAT Map"
+msgstr "MRS FAT mapa"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:882
+msgid "Bad sector"
+msgstr "Chybný sector"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1023
+msgid "Set Addr"
+msgstr "Nastaviť adresy"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1107
+msgid "ID"
+msgstr "ID"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1207
+msgid "File ID"
+msgstr "File ID"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1931
+msgid "No MRS directory data."
+msgstr "Žiadne MRS directory dáta."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:1942
+msgid "FAT Map"
+msgstr "FAT mapa"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:2050
+msgid "MRS disk maintenance operations."
+msgstr "Operácie údržby MRS disku."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:2057
+msgid ""
+"Reads all files into memory, formats file area, and writes files "
+"sequentially without gaps. System area is preserved."
+msgstr ""
+"Načíta všetky súbory do pamäte, naformátuje súborovú oblasť a zapíše súbory "
+"sekvenčne bez medzier. Systémová oblasť bude zachovaná."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:2117
+msgid ""
+"Reinitializes FAT and directory. System area (boot + MRS driver) is "
+"preserved. All files become inaccessible."
+msgstr ""
+"Reinicializuje FAT a directory. Systémová oblasť (boot + MRS driver) bude "
+"zachovaná. Všetky súbory sa stanú nedostupnými."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:2135
+msgid ""
+"This will read all files into memory, format the file area, and write files "
+"sequentially without gaps. System area (boot code, MRS driver) will be "
+"preserved."
+msgstr ""
+"Toto načíta všetky súbory do pamäte, naformátuje súborovú oblasť a zapíše "
+"súbory sekvenčne bez medzier. Systémová oblasť (boot code, MRS driver) bude "
+"zachovaná."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_mrs_imgui.cpp:2184
+msgid ""
+"This will reinitialize the FAT table and directory. All files will become "
+"inaccessible. System area (boot code, MRS driver) will be preserved."
+msgstr ""
+"Toto reinicializuje FAT tabuľku a directory. Všetky súbory sa stanú "
+"nedostupnými. Systémová oblasť (boot code, MRS driver) bude zachovaná."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_raw_io_imgui.cpp:85
+msgid "Start Track"
+msgstr "Počiatočný track"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_raw_io_imgui.cpp:96
+msgid "Start Sector"
+msgstr "Počiatočný sector"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_raw_io_imgui.cpp:132
+msgid "Start Block"
+msgstr "Počiatočný block"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_raw_io_imgui.cpp:233
+msgid "Raw I/O - Get (Export)"
+msgstr "Raw I/O - Export"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_raw_io_imgui.cpp:234
+msgid "Raw I/O - Put (Import)"
+msgstr "Raw I/O - Import"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_raw_io_imgui.cpp:273
+msgid "Sector Order"
+msgstr "Poradie sectorov"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_raw_io_imgui.cpp:282
+msgid ""
+"ID: Advances by sector ID (1, 2, 3, ...). Skips non-sequential IDs.\n"
+"\n"
+"Phys: Advances by physical position on the track."
+msgstr ""
+"ID: Postupuje podľa sector ID (1, 2, 3, ...). Preskočí nesekvenčné ID.\n"
+"\n"
+"Phys: Postupuje podľa fyzickej pozície na stope."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_raw_io_imgui.cpp:307
+msgid "Byte offset"
+msgstr "Bajtový offset"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_raw_io_imgui.cpp:319
+msgid "Byte count"
+msgstr "Počet bajtov"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_raw_io_imgui.cpp:330
+msgid "0 = all (no limit)"
+msgstr "0 = všetko (bez limitu)"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_raw_io_imgui.cpp:345
+msgid "Path"
+msgstr "Cesta"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_raw_io_imgui.cpp:364
+msgid "Select File"
+msgstr "Vybrať súbor"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_raw_io_imgui.cpp:369
+msgid "File offset"
+msgstr "Offset v súbore"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_raw_io_imgui.cpp:384
+msgid ""
+"When checked, the whole file from 'File offset' onward is written. Count and "
+"Byte count are ignored."
+msgstr ""
+"Zapnuté: zapíše sa celý súbor od 'File offset' ďalej. Count a Byte count sa "
+"ignorujú."
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_raw_io_imgui.cpp:448
+msgid "Write data from file to disk?"
+msgstr "Zapísať dáta zo súboru na disk?"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_raw_io_imgui.cpp:452
+msgid "This will overwrite disk sectors. Continue?"
+msgstr "Toto prepíše sectory na disku. Pokračovať?"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_settings_imgui.cpp:116
+msgid "Language"
+msgstr "Jazyk"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_settings_imgui.cpp:174
+msgid "Font"
+msgstr "Písmo"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_settings_imgui.cpp:177
+msgid "Family"
+msgstr "Rodina"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_settings_imgui.cpp:228
+msgid "Style"
+msgstr "Štýl"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_settings_imgui.cpp:231
+msgid "Theme"
+msgstr "Motív"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_settings_imgui.cpp:258
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_settings_imgui.cpp:297
+msgid "Auto rename (~N)"
+msgstr "Automaticky premenovať (~N)"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_settings_imgui.cpp:261
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_settings_imgui.cpp:300
+msgid "Ask"
+msgstr "Opytat sa"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_settings_imgui.cpp:271
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_settings_imgui.cpp:309
+msgid "If file exists"
+msgstr "Ak subor existuje"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_settings_imgui.cpp:302
+msgid "Drag&Drop and CP/M User"
+msgstr ""
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_settings_imgui.cpp:321
+msgid ""
+"Behavior when a dropped or CP/M chuser operation collides\n"
+"with an existing name in the target user area.\n"
+"\n"
+"Also applies to CP/M Skip (silent) vs error reporting choice."
+msgstr ""
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_settings_imgui.cpp:341
+msgid "Windows"
+msgstr "Okná"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_settings_imgui.cpp:344
+msgid "Open disks in new window"
+msgstr "Otvárať disky v novom okne"
+
+#: /home/chaky/projects/mzdisk/src/mzdisk/panels/panel_settings_imgui.cpp:348
+msgid ""
+"File > Open Disk and Recent open the DSK in a new detached window instead of "
+"replacing the disk in the current window."
+msgstr ""
+"Súbor > Otvoriť disk a Nedávne otvoria DSK v novom okne namiesto nahradenia "
+"disku v aktuálnom okne."
+
+#, fuzzy
+#~ msgid "Reset to current directory"
+#~ msgstr "Exportovať do adresára"
+
+#, fuzzy
+#~ msgid "Create Directory"
+#~ msgstr "Vybrať adresár"
+
+#, fuzzy
+#~ msgid "File Name:"
+#~ msgstr "Názov súboru"
+
+#, fuzzy
+#~ msgid "Directory Path:"
+#~ msgstr "Adresár"
+
+#, fuzzy
+#~ msgid "The selected file already exists!"
+#~ msgstr "Subor uz existuje:"
+
+#, fuzzy
+#~ msgid "B"
+#~ msgstr "KB"
+
+#, fuzzy
+#~ msgid "File name"
+#~ msgstr "Názov súboru"
+
+#~ msgid "Custom Sector Map"
+#~ msgstr "Vlastná mapa sectorov"
+
+#~ msgid "Create New Disk"
+#~ msgstr "Vytvoriť nový disk"
+
+#~ msgid "+ Add rule"
+#~ msgstr "+ Pridať pravidlo"
+
+#~ msgid "Map"
+#~ msgstr "Mapa"
+
+#~ msgid "Remove rule"
+#~ msgstr "Odstrániť pravidlo"
+
+#~ msgid "Format filesystem (initialize directory structures)"
+#~ msgstr "Formátovať súborový systém (inicializovať adresárové štruktúry)"
+
+#~ msgid "Create"
+#~ msgstr "Vytvoriť"
+
+#~ msgid "Invert (XOR 0xFF)"
+#~ msgstr "Inverzia (XOR 0xFF)"
+
+#~ msgid "Edit"
+#~ msgstr "Editácia"
+
+#~ msgid "Write"
+#~ msgstr "Zapísať"
+
+#~ msgid "Revert"
+#~ msgstr "Vrátiť"
+
+#~ msgid "Close Editor"
+#~ msgstr "Zavrieť editor"
+
+#~ msgid "Put"
+#~ msgstr "Import"
+
+#~ msgid "Whole file (auto count)"
+#~ msgstr "Celý súbor (auto počet)"
+
+#~ msgid "Default"
+#~ msgstr "Predvolené"
+
+#~ msgid "Settings"
+#~ msgstr "Nastavenia"
+
+#~ msgid "File already exists at target:"
+#~ msgstr "Súbor v cieli už existuje:"
+
+#~ msgid "Choice will apply to all"
+#~ msgstr "Voľba sa použije na všetky"
+
+#~ msgid "remaining files in this drop."
+#~ msgstr "zostávajúcich súborov v tomto drop."
+
+#~ msgid "Cancel all"
+#~ msgstr "Zrušiť všetko"
+
+#~ msgid "Export All"
+#~ msgstr "Exportovať všetko"
+
+#~ msgid "Export all to directory"
+#~ msgstr "Exportovať všetko do adresára"
+
+#~ msgid "Drag&Drop"
+#~ msgstr "Drag&Drop"
+
+#~ msgid ""
+#~ "Behavior when dropping a file to a target that already has a file with "
+#~ "the same name."
+#~ msgstr ""
+#~ "Správanie pri pustení súboru na cieľ, ktorý už má súbor s rovnakým menom."
+
+#~ msgid "Last operation"
+#~ msgstr "Posledná operácia"
+
+#~ msgid "Export to MZF (CPM-IC)"
+#~ msgstr "Export do MZF (CPM-IC)"

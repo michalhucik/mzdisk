@@ -1,0 +1,29 @@
+# Build artefakty
+build-libs/
+build-cli/
+build-gui/
+build-tests/
+
+# Distribuce
+portable/
+
+# Zkompilované lokalizace (generují se z .po)
+# /locale/           - runtime dist (make locale)
+# src/locale/...mo   - pojistka, .mo nikdy nepatří do zdrojů
+/locale/
+src/locale/**/*.mo
+
+# Generovaná HTML dokumentace
+docs-html/
+
+# referenční DSK a MZF soubory pro testování
+refdata/
+
+# Dočasné soubory testů
+mzdisk.ini
+mzdisk-imgui.ini
+./temp/
+test_work/
+
+# backup soubory
+*~

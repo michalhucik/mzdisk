@@ -1,0 +1,2 @@
+/* Ikona aplikace mzdisk pro Windows */
+IDI_ICON1 ICON "../../ui_resources/imgui/images/logo/mzdisk-logo.ico"

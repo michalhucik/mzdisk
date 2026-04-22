@@ -1,0 +1,46 @@
+{
+    "version": 6,
+    "configurePresets": [
+        {
+            "name": "libs",
+            "generator": "MSYS Makefiles",
+            "binaryDir": "${sourceDir}/build-libs"
+        },
+        {
+            "name": "cli",
+            "generator": "MSYS Makefiles",
+            "binaryDir": "${sourceDir}/build-cli"
+        },
+        {
+            "name": "gui",
+            "generator": "MSYS Makefiles",
+            "binaryDir": "${sourceDir}/build-gui"
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "libs",
+            "configurePreset": "libs",
+            "environment": {
+                "TEMP": "C:\\msys64\\tmp",
+                "TMP": "C:\\msys64\\tmp"
+            }
+        },
+        {
+            "name": "cli",
+            "configurePreset": "cli",
+            "environment": {
+                "TEMP": "C:\\msys64\\tmp",
+                "TMP": "C:\\msys64\\tmp"
+            }
+        },
+        {
+            "name": "gui",
+            "configurePreset": "gui",
+            "environment": {
+                "TEMP": "C:\\msys64\\tmp",
+                "TMP": "C:\\msys64\\tmp"
+            }
+        }
+    ]
+}
