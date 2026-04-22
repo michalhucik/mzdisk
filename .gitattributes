@@ -1,0 +1,24 @@
+# Konzistentní zakončení řádků napříč Linux a MSYS2.
+#
+# text=auto - git sám pozná, co je text a co binár.
+# eol=lf    - textové soubory se commitují i checkoutují v LF,
+#             bez ohledu na OS a per-user core.autocrlf nastavení.
+#
+# Zabraňuje falešně "změněným" souborům, kdyby někdo na Windows
+# (mimo MSYS2) soubor uložil s CRLF.
+
+* text=auto eol=lf
+
+# Skripty a Makefile MUSÍ být LF i na Windows, jinak neběží v MSYS2.
+*.sh     text eol=lf
+Makefile text eol=lf
+
+# Pojistka - explicitní binární soubory (text=auto by je už poznal).
+*.png    binary
+*.jpg    binary
+*.jpeg   binary
+*.ico    binary
+*.ttf    binary
+*.mo     binary
+*.dsk    binary
+*.mzf    binary
