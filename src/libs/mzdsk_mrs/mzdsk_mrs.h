@@ -95,6 +95,20 @@ extern "C" {
      */
 #define FSMRS_MAX_DIR_BUFFER ( 8 * FSMRS_SECTOR_SIZE )
 
+    /**
+     * @brief Velikost in-memory bufferu pro FAT tabulku v bajtech.
+     *
+     * 3 sektory = 1536 B. Originální MRS layout používá fyzicky 3 FAT
+     * sektory, ale třetí je ve FAT označen markerem 0xFD (DIR). Buffer
+     * musí pojmout všechny 3 sektory pro správnou auto-detekci.
+     *
+     * Bajty 0 .. FSMRS_COUNT_BLOCKS-1 (1440) reprezentují FAT data pro
+     * jednotlivé bloky (1 bajt na blok). Bajty FSMRS_COUNT_BLOCKS .. 1535
+     * (96 B) jsou padding 3. FAT sektoru - nereprezentují žádný blok,
+     * existují pouze pro korektní I/O round-trip 3. fyzického FAT sektoru.
+     */
+#define FSMRS_FAT_BUFFER_SIZE ( 3 * FSMRS_SECTOR_SIZE )
+
 
     /* =====================================================================
      * Speciální hodnoty ve FAT
@@ -186,7 +200,7 @@ extern "C" {
         uint16_t used_files;            /**< Počet obsazených souborů v adresáři */
         uint16_t max_files;             /**< Celkový počet slotů v adresáři (dir_sectors * 16) */
         uint16_t usable_files;          /**< Počet použitelných slotů (bez systémových a nedostupných) */
-        uint8_t  fat[FSMRS_COUNT_BLOCKS]; /**< Kopie FAT tabulky v paměti (1440 bajtů) */
+        uint8_t  fat[FSMRS_FAT_BUFFER_SIZE]; /**< Kopie FAT tabulky v paměti (1536 bajtů, drží až 3 FAT sektory). */
         uint8_t  dir[FSMRS_MAX_DIR_BUFFER]; /**< Kopie adresáře v paměti (deinvertovaná) */
     } st_FSMRS_CONFIG;
 
@@ -757,7 +771,7 @@ extern "C" {
      * ===================================================================== */
 
     /** @brief Verze knihovny mzdsk_mrs. */
-#define MZDSK_MRS_VERSION "2.5.0"
+#define MZDSK_MRS_VERSION "2.6.0"
 
     /**
      * @brief Vrátí řetězec s verzí knihovny mzdsk_mrs.

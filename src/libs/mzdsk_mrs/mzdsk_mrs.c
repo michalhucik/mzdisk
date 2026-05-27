@@ -162,7 +162,7 @@ static en_MZDSK_RES fsmrs_load_directory ( st_FSMRS_CONFIG *config ) {
             if ( item->fname[0] != 0x1A ) {
                 config->usable_files++;
             }
-            if ( item->fname[0] > 0x20 && item->file_id >= 1 ) {
+            if ( fsmrs_is_dir_item_active ( item ) ) {
                 config->used_files++;
             }
         }
@@ -190,14 +190,22 @@ st_FSMRS_DIR_ITEM* fsmrs_get_dir_item ( st_FSMRS_CONFIG *config, uint16_t index 
 /**
  * @brief Určí, zda je adresářový slot aktivní.
  *
+ * Kritéria aktivního slotu:
+ * - fname[0] > 0x20 (první znak není mezera ani řídicí znak)
+ * - file_id >= 1 (file_id == 0 je systémový slot, např. "///////.")
+ * - bsize <= FSMRS_COUNT_BLOCKS (rozumná velikost - soubor se musí
+ *   vejít na disk; větší hodnota indikuje garbage v dir slotu, který
+ *   originální MRS driver ignoroval i když fname vypadá platně)
+ *
  * @param[in] item  Ukazatel na položku. Nesmí být NULL.
- * @return 1 pokud je slot aktivní (fname[0] > 0x20), jinak 0.
+ * @return 1 pokud je slot aktivní, 0 jinak.
  */
 int fsmrs_is_dir_item_active ( const st_FSMRS_DIR_ITEM *item ) {
     if ( item == NULL ) return 0;
-    /* Aktivní soubor má fname[0] > 0x20 a file_id >= 1.
-       file_id == 0 je speciální/systémová položka (např. "///////." na pozici 0). */
-    return ( item->fname[0] > 0x20 && item->file_id >= 1 ) ? 1 : 0;
+    if ( item->fname[0] <= 0x20 ) return 0;
+    if ( item->file_id == 0 ) return 0;
+    if ( item->bsize > FSMRS_COUNT_BLOCKS ) return 0;
+    return 1;
 }
 
 
@@ -293,9 +301,40 @@ en_MZDSK_RES fsmrs_init ( st_MZDSK_DISC *disc, uint16_t fat_block, st_FSMRS_CONF
         return MZDSK_RES_FORMAT_ERROR;
     }
 
+    /*
+     * Kompenzace originálního MRS layoutu (Veselý 1993, viz fsmrs_format_fs):
+     *
+     * Originální MRS driver zapisuje 3 fyzické FAT sektory, ale třetí
+     * FAT sektor (na bloku fat_block+2) označuje ve FAT bajtem 0xFD
+     * (DIR marker), ne 0xFA. Naivní detekce by tedy vrátila fat_sectors=2
+     * a dir_sectors=7, přičemž první z těch "DIR" sektorů by ve skutečnosti
+     * obsahoval FAT data pro bloky 1024-1439 a poslední DIR sektor (block
+     * fat_block+8) by ležel mimo skutečný adresář (sloty s file_id > 89).
+     *
+     * Důsledky bez této kompenzace:
+     * - V adresáři se zobrazuje 16 nesmyslných záznamů z 3. FAT sektoru
+     *   plus všechna data co náhodou leží na bloku fat_block+8.
+     * - Soubory, jejichž datové bloky leží >= 1024, jsou nečitelné
+     *   (fsmrs_read_file najde míň bloků než říká bsize -> FORMAT_ERROR).
+     *
+     * Detekce: fat_sectors == 2, dir_block == fat_block+2, dir_sectors >= 2.
+     * Reakce: posuneme dir_block o 1 dál, zkrátíme dir_sectors o 1,
+     * a fat_sectors zvýšíme na 3 (3. FAT sektor se načte níže standardním
+     * cyklem). data_block zůstává stejný (invariant dir_block + dir_sectors
+     * == data_block je zachován).
+     */
+    if ( config->fat_sectors == 2 &&
+         config->dir_block == (uint16_t) ( fat_block + 2 ) &&
+         config->dir_sectors >= 2 ) {
+        config->fat_sectors = 3;
+        config->dir_block = (uint16_t) ( fat_block + 3 );
+        config->dir_sectors--;
+        /* data_block beze změny */
+    }
+
     /* Sanita: fat_sectors je odvozeno z diskových dat a může být až 476
      * (celá stopa FAT markerů). Bez této kontroly by cyklus níže zapsal
-     * mimo config->fat[FSMRS_COUNT_BLOCKS] (1440 B) pro fat_sectors >= 3.
+     * mimo config->fat (FSMRS_FAT_BUFFER_SIZE = 1536 B) pro fat_sectors > 3.
      * Audit H-7. */
     if ( (size_t) config->fat_sectors * FSMRS_SECTOR_SIZE > sizeof ( config->fat ) ) {
         return MZDSK_RES_FORMAT_ERROR;
@@ -710,9 +749,13 @@ en_MZDSK_RES fsmrs_write_file ( st_FSMRS_CONFIG *config, const uint8_t *fname, c
     /* Transakční alokace: snapshot FAT před změnami, abychom při selhání
      * write_block uprostřed mohli rollbackovat. Bez toho by config->fat
      * obsahoval orphaned záznamy (bloky označené jako fid, ale dir o nich
-     * neví), což vede k leak volného místa v in-memory config. Audit H-8. */
+     * neví), což vede k leak volného místa v in-memory config. Audit H-8.
+     *
+     * Snapshotujeme pouze prvních FSMRS_COUNT_BLOCKS bajtů - write_file
+     * alokuje výhradně bloky < fat_coverage (omezeno na FSMRS_COUNT_BLOCKS),
+     * takže zbytek bufferu (padding 3. FAT sektoru) se nemění. */
     uint8_t fat_snapshot[FSMRS_COUNT_BLOCKS];
-    memcpy ( fat_snapshot, config->fat, sizeof ( config->fat ) );
+    memcpy ( fat_snapshot, config->fat, sizeof ( fat_snapshot ) );
 
     /* Alokace bloků a zápis dat */
     const uint8_t *data = (const uint8_t *) src;
@@ -742,7 +785,7 @@ en_MZDSK_RES fsmrs_write_file ( st_FSMRS_CONFIG *config, const uint8_t *fname, c
             /* Rollback FAT snapshot: zapsané bloky na disku zůstanou jako
              * "ghost data", ale config->fat je konzistentní s původním stavem.
              * Následná operace tyto bloky bude správně považovat za volné. */
-            memcpy ( config->fat, fat_snapshot, sizeof ( config->fat ) );
+            memcpy ( config->fat, fat_snapshot, sizeof ( fat_snapshot ) );
             return res;
         }
 
@@ -751,7 +794,7 @@ en_MZDSK_RES fsmrs_write_file ( st_FSMRS_CONFIG *config, const uint8_t *fname, c
     }
 
     if ( blocks_written != bsize ) {
-        memcpy ( config->fat, fat_snapshot, sizeof ( config->fat ) );
+        memcpy ( config->fat, fat_snapshot, sizeof ( fat_snapshot ) );
         return MZDSK_RES_DISK_FULL;
     }
 
@@ -923,34 +966,12 @@ en_MZDSK_RES fsmrs_defrag ( st_MZDSK_DISC *disc,
     st_FSMRS_CONFIG config;
     char msg[128];
 
-    /* Krok 1: Inicializace konfigurace z aktuálního stavu disku */
+    /* Krok 1: Inicializace konfigurace z aktuálního stavu disku.
+     * Kompenzace originálního MRS layoutu (3. FAT sektor maskovaný jako DIR)
+     * se aplikuje uvnitř fsmrs_init - viz tam komentář u detekce
+     * fat_sectors==2 && dir_block==fat_block+2. */
     res = fsmrs_init ( disc, fat_block, &config );
     if ( res != MZDSK_RES_OK ) return res;
-
-    /*
-     * Rozšíření FAT pokrytí o "skrytý" 3. FAT sektor.
-     *
-     * Originální MRS driver zapisuje 3 FAT sektory, ale 3. sektor
-     * označuje ve FAT jako DIR (0xFD). Naše knihovna auto-detekuje
-     * pouze 2 FAT sektory (bloky označené 0xFA), takže bloky
-     * 1024-1439 jsou považovány za volné, i když mohou obsahovat
-     * data souborů.
-     *
-     * Pro defragmentaci potřebujeme kompletní FAT pokrytí, aby
-     * fsmrs_read_file mohla najít všechny bloky všech souborů.
-     */
-    if ( config.fat_sectors == 2 && config.dir_block == fat_block + 2 ) {
-        uint8_t extra_fat[FSMRS_SECTOR_SIZE];
-        res = fsmrs_read_block ( disc, fat_block + 2, extra_fat );
-        if ( res == MZDSK_RES_OK ) {
-            fsmrs_invert_buffer ( extra_fat, FSMRS_SECTOR_SIZE );
-            /* Zkopíruj jen relevantní část: bloky 1024 .. FSMRS_COUNT_BLOCKS-1 */
-            uint16_t extra_count = FSMRS_COUNT_BLOCKS - 1024;
-            memcpy ( &config.fat[1024], extra_fat, extra_count );
-            /* Dočasně zvýšíme fat_sectors, aby fsmrs_read_file viděla celý rozsah */
-            config.fat_sectors = 3;
-        }
-    }
 
     if ( config.used_files == 0 ) {
         if ( progress_cb ) progress_cb ( "Defrag: no files on disk, nothing to do\n", cb_data );

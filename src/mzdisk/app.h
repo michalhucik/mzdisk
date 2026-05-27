@@ -19,7 +19,7 @@ extern "C" {
 
 
 /** @brief Verze mzdisk GUI. */
-#define MZDISK_VERSION "0.8.0"
+#define MZDISK_VERSION "0.8.1"
 
 /** @brief Název aplikace. */
 #define MZDISK_APP_NAME "mzdisk"

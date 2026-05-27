@@ -1,6 +1,6 @@
 # mzdsk-mrs - MRS Filesystem Tool
 
-Tool version: 2.12.0. Part of the [mzdisk](https://github.com/michalhucik/mzdisk/) project.
+Tool version: 2.12.1. Part of the [mzdisk](https://github.com/michalhucik/mzdisk/) project.
 
 > **Disclaimer:** Always work on a copy of your DSK image, never on the
 > original. The author provides no warranty and accepts no liability for

@@ -1,5 +1,29 @@
 # Changelog
 
+## 2026-05-27
+
+### Oprava čtení MRS disků s originálním layoutem (Veselý 1993)
+
+Bugfix release - opravuje čtení disků naformátovaných originálním
+MRS driverem (typicky 720 KB DSK obrazy s 54+ soubory). Před opravou
+se v adresáři objevovaly nesmyslné záznamy poskládané z FAT bajtů
+a soubory s datovými bloky >= 1024 byly nečitelné ("Format error"
+v GUI při exportu).
+
+**Release:**
+
+- **mzdisk GUI v0.8.1**
+- **mzdisk CLI v0.8.1**
+
+**Změněné verze v tomto release:**
+
+| Komponenta         | Verze            |
+|--------------------|------------------|
+| `mzdsk-mrs`        | 2.12.0 -> 2.12.1 |
+| `mzdsk_mrs` (lib)  | 2.5.0 -> 2.6.0   |
+
+Ostatní CLI nástroje a knihovny beze změny.
+
 ## 2026-04-22
 
 ### Zveřejnění projektu na GitHubu

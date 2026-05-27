@@ -76,7 +76,7 @@
 
 
 /** @brief Verze nástroje mzdsk-mrs. */
-#define MZDSK_MRS_TOOL_VERSION "2.12.0"
+#define MZDSK_MRS_TOOL_VERSION "2.12.1"
 
 
 /** @brief Globální flag `--overwrite` (audit M-16). */

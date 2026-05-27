@@ -3,6 +3,15 @@
 #
 #  make libs          -> build-libs/   (sdílené knihovny .a)
 #  make cli           -> build-cli/    (CLI nástroje, závisí na libs)
+#  make install-cli      -> nainstaluje CLI binárky do $(DESTDIR)$(BINDIR)
+#                           (implicitně /usr/local/bin)
+#  make install-cli-docs -> nainstaluje docs CLI do $(DESTDIR)$(DOCDIR)
+#                           (implicitně /usr/local/share/doc/mzdisk;
+#                            HTML verze se přibalí, pokud existuje docs-html/)
+#  make uninstall-cli    -> odebere CLI binárky z $(DESTDIR)$(BINDIR)
+#  make uninstall-cli-docs -> odebere docs CLI z $(DESTDIR)$(DOCDIR)
+#  Cíle install-* a uninstall-* lze přepsat proměnnými PREFIX=,
+#  BINDIR=, DOCDIR=, DESTDIR=.
 #  make gui           -> build-gui/    (GUI aplikace, závisí na libs)
 #  make test             -> build-tests/  (C unit testy + CLI shell testy)
 #  make test-libs        -> jen C unit testy knihoven
@@ -59,6 +68,7 @@ JOBS              := $(shell nproc)
 
 .PHONY: all libs cli gui clean libs-clean cli-clean gui-clean \
         libs-rebuild cli-rebuild gui-rebuild rebuild \
+        install-cli install-cli-docs uninstall-cli uninstall-cli-docs \
         test test-libs test-cli test-cli-refdata tests-clean \
         portable portable-full portable-gui portable-gui-clean \
         portable-cli portable-cli-clean \
@@ -94,6 +104,107 @@ cli-clean:
 	@if [ -d $(BUILD_CLI_DIR) ]; then rm -rf $(BUILD_CLI_DIR); fi
 
 cli-rebuild: cli-clean cli
+
+# --- Instalace / odinstalace CLI nástrojů a dokumentace ---
+#
+# Standardní GNU konvence:
+#   PREFIX  - kořen instalace, default /usr/local
+#   BINDIR  - cílový adresář pro binárky, default $(PREFIX)/bin
+#   DOCDIR  - cílový adresář pro dokumentaci, default
+#             $(PREFIX)/share/doc/mzdisk
+#   DESTDIR - staging prefix (např. pro tvorbu balíčků), default prázdný
+#
+# Příklady:
+#   make install-cli                       # /usr/local/bin
+#   make install-cli-docs                  # /usr/local/share/doc/mzdisk
+#   make install-cli PREFIX=$$HOME/.local  # ~/.local/bin
+#   make install-cli BINDIR=/opt/mzdisk/bin
+#   make install-cli DESTDIR=/tmp/stage    # /tmp/stage/usr/local/bin
+#
+# install-cli-docs kopíruje:
+#   docs/cz/tools-*.md  -> $(DOCDIR)/cz/
+#   docs/en/tools-*.md  -> $(DOCDIR)/en/
+#   docs-html/cz/tools-*.html (pokud existuje) -> $(DOCDIR)/cz/
+#   docs-html/en/tools-*.html (pokud existuje) -> $(DOCDIR)/en/
+#
+# uninstall-* odeberou jen soubory, které install-* vytvořily (mzdsk-*
+# binárky, tools-* docs). Adresáře se smažou jen pokud zůstanou prázdné.
+
+PREFIX ?= /usr/local
+BINDIR ?= $(PREFIX)/bin
+DOCDIR ?= $(PREFIX)/share/doc/mzdisk
+DESTDIR ?=
+
+install-cli: cli
+	@echo ""
+	@echo "=== Installing CLI binaries to $(DESTDIR)$(BINDIR)/ ==="
+	@mkdir -p "$(DESTDIR)$(BINDIR)"
+	@for f in $(BUILD_CLI_DIR)/mzdsk-*$(EXE_SUFFIX); do \
+		install -m 0755 "$$f" "$(DESTDIR)$(BINDIR)/" && \
+		echo "  $$(basename $$f)"; \
+	done
+	@echo "=== Done ==="
+
+uninstall-cli:
+	@echo ""
+	@echo "=== Removing CLI binaries from $(DESTDIR)$(BINDIR)/ ==="
+	@for f in $(BUILD_CLI_DIR)/mzdsk-*$(EXE_SUFFIX); do \
+		base=$$(basename $$f); \
+		target="$(DESTDIR)$(BINDIR)/$$base"; \
+		if [ -e "$$target" ]; then \
+			rm -f "$$target" && echo "  removed $$base"; \
+		else \
+			echo "  skip    $$base (not present)"; \
+		fi; \
+	done
+	@rmdir "$(DESTDIR)$(BINDIR)" 2>/dev/null || true
+	@echo "=== Done ==="
+
+install-cli-docs:
+	@echo ""
+	@echo "=== Installing CLI docs to $(DESTDIR)$(DOCDIR)/ ==="
+	@mkdir -p "$(DESTDIR)$(DOCDIR)/cz" "$(DESTDIR)$(DOCDIR)/en"
+	@for f in docs/cz/tools-*.md; do \
+		[ -f "$$f" ] || continue; \
+		install -m 0644 "$$f" "$(DESTDIR)$(DOCDIR)/cz/" && \
+		echo "  cz/$$(basename $$f)"; \
+	done
+	@for f in docs/en/tools-*.md; do \
+		[ -f "$$f" ] || continue; \
+		install -m 0644 "$$f" "$(DESTDIR)$(DOCDIR)/en/" && \
+		echo "  en/$$(basename $$f)"; \
+	done
+	@if [ -d docs-html ]; then \
+		echo "--- Including HTML docs from docs-html/ ---"; \
+		for f in docs-html/cz/tools-*.html; do \
+			[ -f "$$f" ] || continue; \
+			install -m 0644 "$$f" "$(DESTDIR)$(DOCDIR)/cz/" && \
+			echo "  cz/$$(basename $$f)"; \
+		done; \
+		for f in docs-html/en/tools-*.html; do \
+			[ -f "$$f" ] || continue; \
+			install -m 0644 "$$f" "$(DESTDIR)$(DOCDIR)/en/" && \
+			echo "  en/$$(basename $$f)"; \
+		done; \
+	else \
+		echo "--- HTML docs not present (run 'make docs-html' first to include them) ---"; \
+	fi
+	@echo "=== Done ==="
+
+uninstall-cli-docs:
+	@echo ""
+	@echo "=== Removing CLI docs from $(DESTDIR)$(DOCDIR)/ ==="
+	@for sub in cz en; do \
+		dir="$(DESTDIR)$(DOCDIR)/$$sub"; \
+		[ -d "$$dir" ] || continue; \
+		for f in "$$dir"/tools-*.md "$$dir"/tools-*.html; do \
+			[ -e "$$f" ] || continue; \
+			rm -f "$$f" && echo "  removed $$sub/$$(basename $$f)"; \
+		done; \
+		rmdir "$$dir" 2>/dev/null || true; \
+	done
+	@rmdir "$(DESTDIR)$(DOCDIR)" 2>/dev/null || true
+	@echo "=== Done ==="
 
 # --- GUI aplikace (build-gui/, závisí na libs) ---
 

@@ -14,8 +14,8 @@
 </p>
 
 <p align="center">
-  <a href="docs/en/Changelog.md"><img src="https://img.shields.io/badge/GUI%20ver.-0.8.0-brightgreen" alt="GUI 0.8.0"></a>
-  <a href="docs/en/Changelog.md"><img src="https://img.shields.io/badge/CLI%20ver.-0.8.0-brightgreen" alt="CLI 0.8.0"></a>
+  <a href="docs/en/Changelog.md"><img src="https://img.shields.io/badge/GUI%20ver.-0.8.1-brightgreen" alt="GUI 0.8.1"></a>
+  <a href="docs/en/Changelog.md"><img src="https://img.shields.io/badge/CLI%20ver.-0.8.1-brightgreen" alt="CLI 0.8.1"></a>
   <img src="https://img.shields.io/badge/license-GPLv3-blue" alt="GPLv3">
   <img src="https://img.shields.io/badge/platforms-Linux%20%7C%20Windows-lightgrey" alt="platforms">
   <img src="https://img.shields.io/badge/Sharp%20MZ-700%20%7C%20800%20%7C%201500-orange" alt="Sharp MZ">

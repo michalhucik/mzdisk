@@ -1,6 +1,6 @@
 # mzdsk-mrs - Práce s MRS souborovým systémem
 
-Verze nástroje: 2.12.0. Součást projektu [mzdisk](https://github.com/michalhucik/mzdisk/).
+Verze nástroje: 2.12.1. Součást projektu [mzdisk](https://github.com/michalhucik/mzdisk/).
 
 > **Upozornění:** Vždy pracujte s kopií DSK obrazu, ne s originálem.
 > Autor projektu neposkytuje žádné záruky a neodpovídá za ztráty ani
