@@ -158,7 +158,7 @@ or a single file system. All of them are part of the portable distribution.
 
 Options supported across all tools:
 
-- `--format json|csv` - machine-readable output (for scripting)
+- `--output json|csv` (`-o`) - machine-readable output (for scripting)
 - `--charset eu|jp|utf8-eu|utf8-jp` - file name conversion
 - `--dump-charset raw|eu|jp|utf8-eu|utf8-jp` - character mode in the hexdump
 

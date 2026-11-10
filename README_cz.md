@@ -158,7 +158,7 @@ nebo jeden filesystem. Všechny jsou součástí portable distribuce.
 
 Podporované volby napříč nástroji:
 
-- `--format json|csv` - strojově čitelný výstup (pro skriptování)
+- `--output json|csv` (`-o`) - strojově čitelný výstup (pro skriptování)
 - `--charset eu|jp|utf8-eu|utf8-jp` - konverze jmen souborů
 - `--dump-charset raw|eu|jp|utf8-eu|utf8-jp` - znakový režim v hexdumpu
 
