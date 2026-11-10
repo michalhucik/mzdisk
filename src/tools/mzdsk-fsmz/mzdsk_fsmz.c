@@ -81,7 +81,7 @@ static en_MZF_NAME_ENCODING g_name_encoding = MZF_NAME_ASCII_EU;
 
 
 /** @brief Verze nástroje mzdsk-fsmz. */
-#define MZDSK_FSMZ_VERSION "1.14.2"
+#define MZDSK_FSMZ_VERSION "1.14.3"
 
 
 /** @brief Globální flag `--overwrite` (audit M-16). */
@@ -1363,7 +1363,8 @@ static en_MZDSK_RES cmd_lock_by_id ( st_MZDSK_DISC *disc, uint8_t item_id, uint8
  *
  * @param disc Ukazatel na otevřený disk. Nesmí být NULL.
  * @param item_id ID souboru v adresáři.
- * @param ftype Nový souborový typ.
+ * @param ftype Nový souborový typ. Volající musí vyloučit 0x00 (značka
+ *              smazané položky); funkce hodnotu nekontroluje.
  * @param fsmz_dir_items Maximální počet položek adresáře.
  *
  * @return MZDSK_RES_OK při úspěchu, jinak chybový kód.
@@ -2440,7 +2441,7 @@ static void print_usage ( FILE *out ) {
     fprintf ( out, "    --force        Ignore lock flag (required to rename a locked file)\n" );
     fprintf ( out, "  lock <name> 0|1      Lock (1) or unlock (0) file by name\n" );
     fprintf ( out, "  lock --id N 0|1      Lock (1) or unlock (0) file by ID\n" );
-    fprintf ( out, "  chtype --id N T  Change ftype of file by ID (T is hex)\n" );
+    fprintf ( out, "  chtype --id N T  Change ftype of file by ID (T is hex, 01-FF)\n" );
     fprintf ( out, "  set <name> [--fstrt HEX] [--fexec HEX] [--ftype HEX]\n" );
     fprintf ( out, "                   Update STRT/EXEC/ftype of existing file by name\n" );
     fprintf ( out, "  set --id N [--fstrt HEX] [--fexec HEX] [--ftype HEX]\n" );
@@ -3269,8 +3270,10 @@ int main ( int argc, char *argv[] ) {
             return EXIT_FAILURE;
         }
         uint8_t ftype;
-        if ( parse_hex_byte ( sub_argv[optind], &ftype ) != EXIT_SUCCESS ) {
-            fprintf ( stderr, "Error: Invalid ftype value '%s'\n", sub_argv[optind] );
+        /* 0x00 označuje smazanou položku adresáře - soubor by zmizel
+           z adresáře bez uvolnění bloků (bug 2026-11-10-001) */
+        if ( parse_hex_byte ( sub_argv[optind], &ftype ) != EXIT_SUCCESS || ftype == 0x00 ) {
+            fprintf ( stderr, "Error: Invalid ftype value '%s' (expected 0x01-0xFF)\n", sub_argv[optind] );
             mzdsk_disc_close ( &disc );
             return EXIT_FAILURE;
         }

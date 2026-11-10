@@ -823,8 +823,48 @@ test_fsmz_put_atomicity() {
     assert_eq "$sha_after" "$sha_before" "disk unchanged after put failure" || return 1
 }
 
+## chtype s typem 00 musí selhat a disk nezměnit (bug 2026-11-10-001).
+## Typ 0x00 označuje smazanou položku - soubor by zmizel z adresáře
+## bez uvolnění bloků.
+test_fsmz_chtype_rejects_zero() {
+    local dsk="$TEST_TMPDIR/fsmz_chtype_zero.dsk"
+    "$MZDSK_CREATE" "$dsk" --format-basic 80 2>/dev/null || return 1
+
+    local mzf="$TEST_TMPDIR/chtype_zero.mzf"
+    create_test_mzf "$mzf" "CHTYPE" 512
+    "$MZDSK_FSMZ" "$dsk" put "$mzf" >/dev/null 2>&1 || return 1
+
+    local sha_before=$(sha1sum "$dsk" | awk '{print $1}')
+    local err
+    err=$("$MZDSK_FSMZ" "$dsk" chtype --id 0 00 2>&1 >/dev/null)
+    assert_neq "$?" "0" "chtype 00 must fail" || return 1
+    assert_contains "$err" "expected 0x01-0xFF" "error names the valid range" || return 1
+    local sha_after=$(sha1sum "$dsk" | awk '{print $1}')
+    assert_eq "$sha_after" "$sha_before" "disk unchanged after chtype 00" || return 1
+    assert_eq "$(fsmz_file_count "$dsk")" "1" "file still listed in directory" || return 1
+}
+
+## Pozitivní test: chtype s platným typem změní ftype položky adresáře.
+test_fsmz_chtype_changes_type() {
+    local dsk="$TEST_TMPDIR/fsmz_chtype_ok.dsk"
+    "$MZDSK_CREATE" "$dsk" --format-basic 80 2>/dev/null || return 1
+
+    local mzf="$TEST_TMPDIR/chtype_ok.mzf"
+    create_test_mzf "$mzf" "CHTYPE" 512
+    "$MZDSK_FSMZ" "$dsk" put "$mzf" >/dev/null 2>&1 || return 1
+
+    "$MZDSK_FSMZ" "$dsk" chtype --id 0 05 >/dev/null 2>&1
+    assert_eq "$?" "0" "chtype 05 must succeed" || return 1
+    local out
+    out=$("$MZDSK_FSMZ" "$dsk" dir 2>/dev/null)
+    assert_contains "$out" "type = 0x05" "dir shows the new ftype" || return 1
+    assert_eq "$(fsmz_file_count "$dsk")" "1" "file still listed in directory" || return 1
+}
+
 
 run_test test_fsmz_repair
+run_test test_fsmz_chtype_rejects_zero
+run_test test_fsmz_chtype_changes_type
 run_test test_fsmz_bootstrap_put_get
 run_test test_fsmz_bootstrap_clear
 run_test test_fsmz_era_respects_lock
