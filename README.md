@@ -18,7 +18,7 @@
   <a href="docs/en/Changelog.md"><img src="https://img.shields.io/badge/CLI%20ver.-0.8.1-brightgreen" alt="CLI 0.8.1"></a>
   <a href="https://github.com/michalhucik/mzdisk/actions/workflows/ci.yml"><img src="https://github.com/michalhucik/mzdisk/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI"></a>
   <img src="https://img.shields.io/badge/license-GPLv3-blue" alt="GPLv3">
-  <img src="https://img.shields.io/badge/platforms-Linux%20%7C%20Windows-lightgrey" alt="platforms">
+  <img src="https://img.shields.io/badge/platforms-Linux%20%7C%20Windows%20%7C%20macOS-lightgrey" alt="platforms">
   <img src="https://img.shields.io/badge/Sharp%20MZ-700%20%7C%20800%20%7C%201500-orange" alt="Sharp MZ">
   <img src="https://img.shields.io/badge/language-C11%20%2F%20C%2B%2B17-purple" alt="C11 / C++17">
 </p>
@@ -202,7 +202,10 @@ Prerequisites:
 - CMake 3.16+
 - C compiler with C11 support (GCC 10+ or Clang 12+)
 - For the GUI additionally: SDL3 and OpenGL
-- Linux or Windows (MSYS2 / MinGW-w64)
+- Linux, Windows (MSYS2 / MinGW-w64) or macOS
+- On macOS: libraries, CLI tools and tests only (the GUI build is not
+  supported there yet); the tests need `gettext` and GNU `coreutils`
+  from Homebrew
 
 ```bash
 # Shared libraries

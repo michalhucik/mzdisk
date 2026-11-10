@@ -18,7 +18,7 @@
   <a href="docs/cz/Changelog.md"><img src="https://img.shields.io/badge/CLI%20ver.-0.8.1-brightgreen" alt="CLI 0.8.1"></a>
   <a href="https://github.com/michalhucik/mzdisk/actions/workflows/ci.yml"><img src="https://github.com/michalhucik/mzdisk/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI"></a>
   <img src="https://img.shields.io/badge/licence-GPLv3-blue" alt="GPLv3">
-  <img src="https://img.shields.io/badge/platformy-Linux%20%7C%20Windows-lightgrey" alt="platformy">
+  <img src="https://img.shields.io/badge/platformy-Linux%20%7C%20Windows%20%7C%20macOS-lightgrey" alt="platformy">
   <img src="https://img.shields.io/badge/Sharp%20MZ-700%20%7C%20800%20%7C%201500-orange" alt="Sharp MZ">
   <img src="https://img.shields.io/badge/jazyk-C11%20%2F%20C%2B%2B17-purple" alt="C11 / C++17">
 </p>
@@ -202,7 +202,10 @@ Předpoklady:
 - CMake 3.16+
 - C kompilátor s podporou C11 (GCC 10+ nebo Clang 12+)
 - Pro GUI navíc: SDL3 a OpenGL
-- Linux nebo Windows (MSYS2 / MinGW-w64)
+- Linux, Windows (MSYS2 / MinGW-w64) nebo macOS
+- Na macOS: jen knihovny, CLI nástroje a testy (build GUI tam zatím
+  není podporován); testy potřebují `gettext` a GNU `coreutils`
+  z Homebrew
 
 ```bash
 # Sdílené knihovny
