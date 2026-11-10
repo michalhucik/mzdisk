@@ -1,5 +1,45 @@
 # Changelog
 
+## 2026-11-10
+
+### FSMZ file type fixes, macOS build and CI
+
+Bugfix release.
+
+- **`mzdsk-fsmz chtype`** rejects type `00`. It used to be accepted
+  and marked the entry as deleted: the file disappeared from the
+  directory while its blocks stayed allocated. The valid range is
+  `01`-`FF`, same as for `set --ftype`.
+- **GUI, FSMZ directory:** file type `05` was shown as "BRD" (same as
+  `04`); the correct mnemonic is "RB".
+- **CLI documentation:** fixed the file type mnemonics and the `dir`
+  output example for `mzdsk-fsmz`, the sector ID in the Lemmings
+  example for `mzdsk-raw` and the `--format-basic` example; added the
+  `--overwrite` and `--yes` / `-y` options for `mzdsk-fsmz`,
+  `mzdsk-cpm` and `mzdsk-mrs`. The README said `--format json|csv`
+  instead of the correct `--output json|csv`.
+- **macOS:** the libraries, CLI tools and tests now build on macOS.
+  The GUI is not built there yet.
+- **CI:** every push to `main` on GitHub builds the project and runs
+  the tests on Linux, macOS and Windows (GitHub Actions).
+- The `sharpmz_ascii` library was upgraded to 2.2.1 (new KOI8-CS and
+  display code character sets; mzdisk does not use them yet, tool
+  behaviour is unchanged).
+
+**Release:**
+
+- **mzdisk GUI v0.8.2**
+- **mzdisk CLI v0.8.2**
+
+**Versions changed in this release:**
+
+| Component             | Version          |
+|-----------------------|------------------|
+| `mzdsk-fsmz`          | 1.14.2 -> 1.14.3 |
+| `sharpmz_ascii` (lib) | 2.1.1 -> 2.2.1   |
+
+Other CLI tools and libraries unchanged.
+
 ## 2026-05-27
 
 ### Fix reading MRS disks with original layout (Veselý 1993)

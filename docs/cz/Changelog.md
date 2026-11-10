@@ -1,5 +1,44 @@
 # Changelog
 
+## 2026-11-10
+
+### Opravy typů souborů FSMZ, sestavení na macOS a CI
+
+Opravné vydání.
+
+- **`mzdsk-fsmz chtype`** odmítne typ `00`. Dříve prošel a položku
+  označil jako smazanou: soubor zmizel z adresáře, ale jeho bloky
+  zůstaly obsazené. Platný rozsah je `01`-`FF`, stejně jako u
+  `set --ftype`.
+- **GUI, FSMZ adresář:** typ souboru `05` se zobrazoval jako "BRD"
+  (stejně jako `04`), správně je "RB".
+- **Dokumentace CLI:** opraveny zkratky typů souborů a příklad výstupu
+  `dir` u `mzdsk-fsmz`, ID sektoru v příkladu Lemmings u `mzdsk-raw`
+  a příklad `--format-basic`; doplněny volby `--overwrite` a
+  `--yes` / `-y` u `mzdsk-fsmz`, `mzdsk-cpm` a `mzdsk-mrs`. README
+  uvádělo `--format json|csv` místo správného `--output json|csv`.
+- **macOS:** knihovny, CLI nástroje a testy jdou sestavit i na macOS.
+  GUI se tam zatím nesestavuje.
+- **CI:** každý push do `main` na GitHubu sestaví projekt a spustí
+  testy na Linuxu, macOS a Windows (GitHub Actions).
+- Knihovna `sharpmz_ascii` povýšena na 2.2.1 (nové znakové sady
+  KOI8-CS a display kódy; mzdisk je zatím nepoužívá, chování nástrojů
+  se nemění).
+
+**Release:**
+
+- **mzdisk GUI v0.8.2**
+- **mzdisk CLI v0.8.2**
+
+**Změněné verze v tomto release:**
+
+| Komponenta            | Verze            |
+|-----------------------|------------------|
+| `mzdsk-fsmz`          | 1.14.2 -> 1.14.3 |
+| `sharpmz_ascii` (lib) | 2.1.1 -> 2.2.1   |
+
+Ostatní CLI nástroje a knihovny beze změny.
+
 ## 2026-05-27
 
 ### Oprava čtení MRS disků s originálním layoutem (Veselý 1993)

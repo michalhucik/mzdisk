@@ -27,7 +27,7 @@
  * Sdílená napříč všemi mzdsk-* binárkami. Nesouvisí s verzí GUI
  * aplikace mzdisk ani s individuálními verzemi jednotlivých nástrojů.
  */
-#define MZDISK_CLI_RELEASE_VERSION "0.8.1"
+#define MZDISK_CLI_RELEASE_VERSION "0.8.2"
 
 /**
  * @brief Jméno release celé sady CLI nástrojů mzdisk.

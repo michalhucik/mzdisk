@@ -14,8 +14,8 @@
 </p>
 
 <p align="center">
-  <a href="docs/cz/Changelog.md"><img src="https://img.shields.io/badge/GUI%20ver.-0.8.1-brightgreen" alt="GUI 0.8.1"></a>
-  <a href="docs/cz/Changelog.md"><img src="https://img.shields.io/badge/CLI%20ver.-0.8.1-brightgreen" alt="CLI 0.8.1"></a>
+  <a href="docs/cz/Changelog.md"><img src="https://img.shields.io/badge/GUI%20ver.-0.8.2-brightgreen" alt="GUI 0.8.2"></a>
+  <a href="docs/cz/Changelog.md"><img src="https://img.shields.io/badge/CLI%20ver.-0.8.2-brightgreen" alt="CLI 0.8.2"></a>
   <a href="https://github.com/michalhucik/mzdisk/actions/workflows/ci.yml"><img src="https://github.com/michalhucik/mzdisk/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI"></a>
   <img src="https://img.shields.io/badge/licence-GPLv3-blue" alt="GPLv3">
   <img src="https://img.shields.io/badge/platformy-Linux%20%7C%20Windows%20%7C%20macOS-lightgrey" alt="platformy">
@@ -227,7 +227,7 @@ make portable-full
 # Samostatná HTML dokumentace (volitelně, generovaná z docs/*/*.md)
 make docs-html
 
-# Testy (488 testů - knihovny, GUI logika, CLI integrační)
+# Testy (536 testů - knihovny, GUI logika, CLI integrační)
 make test
 ```
 

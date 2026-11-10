@@ -14,8 +14,8 @@
 </p>
 
 <p align="center">
-  <a href="docs/en/Changelog.md"><img src="https://img.shields.io/badge/GUI%20ver.-0.8.1-brightgreen" alt="GUI 0.8.1"></a>
-  <a href="docs/en/Changelog.md"><img src="https://img.shields.io/badge/CLI%20ver.-0.8.1-brightgreen" alt="CLI 0.8.1"></a>
+  <a href="docs/en/Changelog.md"><img src="https://img.shields.io/badge/GUI%20ver.-0.8.2-brightgreen" alt="GUI 0.8.2"></a>
+  <a href="docs/en/Changelog.md"><img src="https://img.shields.io/badge/CLI%20ver.-0.8.2-brightgreen" alt="CLI 0.8.2"></a>
   <a href="https://github.com/michalhucik/mzdisk/actions/workflows/ci.yml"><img src="https://github.com/michalhucik/mzdisk/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI"></a>
   <img src="https://img.shields.io/badge/license-GPLv3-blue" alt="GPLv3">
   <img src="https://img.shields.io/badge/platforms-Linux%20%7C%20Windows%20%7C%20macOS-lightgrey" alt="platforms">
@@ -227,7 +227,7 @@ make portable-full
 # HTML documentation only (optional, generated from docs/*/*.md)
 make docs-html
 
-# Tests (488 tests - libraries, GUI logic, CLI integration)
+# Tests (536 tests - libraries, GUI logic, CLI integration)
 make test
 ```
 
