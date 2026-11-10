@@ -34,6 +34,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>     /* mkdtemp() na macOS (jinde je ve stdlib.h) */
 
 /**
  * @brief Doporučená velikost bufferu pro cestu dočasného adresáře testu.
