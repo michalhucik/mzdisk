@@ -338,6 +338,8 @@ Volba `dump-block`:
 | `--user` | 0-15 | 0 | Číslo CP/M uživatele (dir: všichni pokud neuvedeno) |
 | `--ro` | - | - | Vynucený read-only režim |
 | `--force` | - | - | Obejít kontrolu, že disk je CP/M filesystém (viz níže) |
+| `--overwrite` | - | - | Povolit příkazům `get` a `get-block` přepsat existující výstupní soubor |
+| `--yes`, `-y` | - | - | Přeskočit interaktivní potvrzení u příkazů `format` a `defrag` |
 | `--output FMT` | text\|json\|csv | text | Výstupní formát (text, json, csv) |
 | `-o FMT` | text\|json\|csv | text | Zkratka pro --output |
 | `--version` | - | - | Zobrazit verzi programu |
@@ -385,6 +387,19 @@ z geometrie DSK obrazu (počet sektorů na stopu a počet stran).
 |--------|---------|----------------|---------|-----|-------|
 | sd | 9x512B | 2048 B | 128 | 4 | SD (1-stranný i 2-stranný) |
 | hd | 18x512B | 4096 B | 128 | 4 | HD (1-stranný i 2-stranný) |
+
+**--overwrite** - Příkazy `get` a `get-block` standardně odmítnou zapsat
+do výstupního souboru, který na hostiteli už existuje (chyba
+`Output file '...' already exists. Use --overwrite to replace it.`,
+návratový kód 1). Volba `--overwrite` přepis povolí. Netýká se
+`get --all`, kde kolize jmen řeší `--on-duplicate`.
+
+**--yes**, **-y** - Příkazy `format` a `defrag` se před provedením zeptají
+na potvrzení (`Are you sure? [y/N]`), pokud je standardní vstup terminál.
+Volba `--yes` dotaz přeskočí. Je-li standardní vstup roura nebo soubor,
+nástroj se neptá a operaci provede rovnou. Ve skriptech přesto vždy
+uvádějte `--yes`: na Windows (MSYS2/MinGW) se nástroj zeptá i při vstupu
+přesměrovaném z `/dev/null` a operaci zruší (`Aborted.`, návratový kód 1).
 
 **--user N** - CP/M podporuje 16 uživatelů (0-15). Každý uživatel má
 vlastní pohled na adresář. Volba ovlivňuje všechny operace. U příkazu

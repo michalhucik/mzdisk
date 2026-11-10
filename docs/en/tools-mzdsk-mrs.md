@@ -75,6 +75,8 @@ mzdsk-mrs [options] <image.dsk> <command> [arguments...]
 |--------|--------|---------|-------------|
 | `--fat-block N` | number | 36 | Starting block of the FAT |
 | `--ro` | - | - | Force read-only mode |
+| `--overwrite` | - | - | Allow `get` and `get-block` to overwrite an existing output file |
+| `--yes`, `-y` | - | - | Skip the interactive confirmation prompt of `init` and `defrag` |
 | `--output FMT` | text\|json\|csv | text | Output format (text, json, csv) |
 | `-o FMT` | text\|json\|csv | text | Short for --output |
 | `--version` | - | - | Show program version |
@@ -89,6 +91,21 @@ command (see the `dump-block` section).
 **--fat-block N** - The MRS driver uses a hardcoded FAT location which
 for standard 720 KB disks starts at allocation block 36 (equivalent
 to track 4, sector 1). For non-standard layouts this can be overridden.
+
+**--overwrite** - By default `get` and `get-block` refuse to write to
+an output file that already exists on the host (error
+`Output file '...' already exists. Use --overwrite to replace it.`,
+exit code 1). The `--overwrite` option allows the file to be replaced.
+It does not apply to `get --all`, where name collisions are handled by
+`--on-duplicate`.
+
+**--yes**, **-y** - The `init` and `defrag` commands ask for confirmation
+(`Are you sure? [y/N]`) before running when standard input is a terminal.
+The `--yes` option skips the prompt. When standard input is a pipe or
+a file, the tool does not ask and runs the operation directly. Always
+pass `--yes` in scripts anyway: on Windows (MSYS2/MinGW) the tool still
+prompts when standard input is redirected from `/dev/null` and aborts
+the operation (`Aborted.`, exit code 1).
 
 **--ro** - Forces read-only mode. Commands `put`, `era`, `ren`,
 `set-addr`, `init`, `defrag` and `put-block` will fail with an error

@@ -1,6 +1,6 @@
 # mzdsk-fsmz - FSMZ Filesystem Tool (MZ-BASIC)
 
-Tool version: 1.14.2. Part of the [mzdisk](https://github.com/michalhucik/mzdisk/) project.
+Tool version: 1.14.3. Part of the [mzdisk](https://github.com/michalhucik/mzdisk/) project.
 
 > **Disclaimer:** Always work on a copy of your DSK image, never on the
 > original. The author provides no warranty and accepts no liability for
@@ -84,6 +84,8 @@ Options can be placed before the DSK file or between the DSK file and the comman
 |--------|--------|---------|-------------|
 | `--ipldisk` | - | off | Use IPLDISK extended directory (127 entries instead of 63) |
 | `--ro` | - | off | Open disk image in read-only mode |
+| `--overwrite` | - | off | Allow `get` and `get-block` to overwrite an existing output file |
+| `--yes`, `-y` | - | off | Skip the interactive confirmation prompt of `format` and `defrag` |
 | `--output FMT` | text\|json\|csv | text | Output format (text, json, csv) |
 | `-o FMT` | text\|json\|csv | text | Short for --output |
 | `--charset MODE` | eu\|jp\|utf8-eu\|utf8-jp | eu | Sharp MZ character set conversion |
@@ -134,6 +136,21 @@ Available modes:
 only. Selects the Sharp MZ character set conversion for the hexdump ASCII
 column. Mode meanings are the same as for --charset, see above.
 
+**--overwrite** - By default `get` and `get-block` refuse to write to
+an output file that already exists on the host (error
+`Output file '...' already exists. Use --overwrite to replace it.`,
+exit code 1). The `--overwrite` option allows the file to be replaced.
+It does not apply to `get --all`, where name collisions are handled by
+`--on-duplicate`.
+
+**--yes**, **-y** - The `format` and `defrag` commands ask for confirmation
+(`Are you sure? [y/N]`) before running when standard input is a terminal.
+The `--yes` option skips the prompt. When standard input is a pipe or
+a file, the tool does not ask and runs the operation directly. Always
+pass `--yes` in scripts anyway: on Windows (MSYS2/MinGW) the tool still
+prompts when standard input is redirected from `/dev/null` and aborts
+the operation (`Aborted.`, exit code 1).
+
 **--ro** - opens the disk image in read-only mode. All write operations
 (put, era, ren, lock, chtype, set, format, repair, defrag, boot put/clear/bottom/mini/over,
 boot with --fstrt/--fexec/--ftype/--name) will be rejected.
@@ -161,16 +178,30 @@ mzdsk-fsmz mydisk.dsk dir
 Output:
 
 ```
-Directory of mydisk.dsk (MZ-BASIC)
 
- ID  Type  Name              Size    Load    Exec    Block  Locked
-  0  0x01  GAME              4096    0x1200  0x1200  48     -
-  1  0x05  BASIC PROG        2048    0x7F53  0x7F53  64     *
-  2  0x01  LOADER            1024    0xC000  0xC000  72     -
+FSMZ Disk info:
+	Total disk size: 2048 blocks ( 512 kB )
+	Used: 123 blocks ( 30 kB )
+	Free: 1925 blocks ( 481 kB )
 
-  3 file(s), 7168 bytes used
-  Free: 153600 bytes (600 blocks)
+
+FSMZ Read directory items:
+
+id = 0 - "DATAFILE"
+	type = 0x03, locked: 0, start = 0x0000, size = 0x4192, exec = 0x0000
+	block = 48, size = 16.39 kB  ( 66 blocks )
+
+id = 1 - "ZAPIS DAT"
+	type = 0x02, locked: 1, start = 0x0000, size = 0x0893, exec = 0x0000
+	block = 114, size = 2.14 kB  ( 9 blocks )
+
+
+COUNT ITEMS: 2
 ```
+
+The file type is printed as the numeric `ftype` value (e.g. `0x03`),
+not as a mnemonic. See [chtype](#chtype---change-file-type) for the
+meaning of the values.
 
 Filtering by file type:
 
@@ -378,10 +409,17 @@ mzdsk-fsmz [options] <image.dsk> chtype --id N T
 ```
 
 T is a hex value for the file type:
-- `01` - OBJ (machine code binary)
-- `02` - BTM (bootstrap)
-- `03` - BSD (BASIC data)
-- `05` - BAS (BASIC program)
+- `01` - OBJ (machine code)
+- `02` - BTX (BASIC program)
+- `03` - BSD (BASIC sequential data; the IPLPRO bootstrap uses the same type)
+- `04` - BRD (BASIC data file)
+- `05` - RB
+
+The mnemonics follow the file type table in the MZ-800 ROM and match the
+ones listed by `mzdsk-cpm` for its `--ftype` option. The tool accepts any
+value `01`-`FF` and does not print the mnemonics itself. The value `00`
+is rejected with an error: it marks a deleted directory entry, so the file
+would vanish from the directory without its blocks being freed.
 
 ### Example
 

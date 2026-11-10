@@ -74,6 +74,8 @@ mzdsk-mrs [volby] <obraz.dsk> <příkaz> [argumenty...]
 |-------|---------|---------|-------|
 | `--fat-block N` | číslo | 36 | Číslo bloku, kde začíná FAT |
 | `--ro` | - | - | Vynutit režim pouze pro čtení |
+| `--overwrite` | - | - | Povolit příkazům `get` a `get-block` přepsat existující výstupní soubor |
+| `--yes`, `-y` | - | - | Přeskočit interaktivní potvrzení u příkazů `init` a `defrag` |
 | `--output FMT` | text\|json\|csv | text | Výstupní formát (text, json, csv) |
 | `-o FMT` | text\|json\|csv | text | Zkratka pro --output |
 | `--version` | - | - | Zobrazit verzi programu |
@@ -88,6 +90,19 @@ Volba `--dump-charset MODE` je dostupná pouze u příkazu `dump-block`
 **--fat-block N** - MRS driver používá hardcoded pozici FAT, která
 pro standardní 720K disketu začíná na alokačním bloku 36 (odpovídá
 4. stopě, 1. sektoru). Pro nestandardní rozložení lze pozici změnit.
+
+**--overwrite** - Příkazy `get` a `get-block` standardně odmítnou zapsat
+do výstupního souboru, který na hostiteli už existuje (chyba
+`Output file '...' already exists. Use --overwrite to replace it.`,
+návratový kód 1). Volba `--overwrite` přepis povolí. Netýká se
+`get --all`, kde kolize jmen řeší `--on-duplicate`.
+
+**--yes**, **-y** - Příkazy `init` a `defrag` se před provedením zeptají
+na potvrzení (`Are you sure? [y/N]`), pokud je standardní vstup terminál.
+Volba `--yes` dotaz přeskočí. Je-li standardní vstup roura nebo soubor,
+nástroj se neptá a operaci provede rovnou. Ve skriptech přesto vždy
+uvádějte `--yes`: na Windows (MSYS2/MinGW) se nástroj zeptá i při vstupu
+přesměrovaném z `/dev/null` a operaci zruší (`Aborted.`, návratový kód 1).
 
 **--ro** - Vynutí otevření disku v režimu pouze pro čtení. Příkazy
 `put`, `era`, `ren`, `set-addr`, `init`, `defrag` a `put-block` pak selžou

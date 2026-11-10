@@ -1,6 +1,6 @@
 # mzdsk-fsmz - Práce s FSMZ souborovým systémem (MZ-BASIC)
 
-Verze nástroje: 1.14.2. Součást projektu [mzdisk](https://github.com/michalhucik/mzdisk/).
+Verze nástroje: 1.14.3. Součást projektu [mzdisk](https://github.com/michalhucik/mzdisk/).
 
 > **Upozornění:** Vždy pracujte s kopií DSK obrazu, ne s originálem.
 > Autor projektu neposkytuje žádné záruky a neodpovídá za ztráty ani
@@ -84,6 +84,8 @@ Volby mohou být před DSK souborem i mezi DSK souborem a příkazem.
 |-------|---------|---------|-------|
 | `--ipldisk` | - | - | Použít rozšířený adresář IPLDISK (127 položek místo 63) |
 | `--ro` | - | - | Otevřít obraz pouze pro čtení |
+| `--overwrite` | - | - | Povolit příkazům `get` a `get-block` přepsat existující výstupní soubor |
+| `--yes`, `-y` | - | - | Přeskočit interaktivní potvrzení u příkazů `format` a `defrag` |
 | `--output FMT` | text\|json\|csv | text | Výstupní formát (text, json, csv) |
 | `-o FMT` | text\|json\|csv | text | Zkratka pro --output |
 | `--charset MODE` | eu\|jp\|utf8-eu\|utf8-jp | eu | Konverze Sharp MZ znakové sady |
@@ -132,6 +134,19 @@ Dostupné režimy:
 Nastaví konverzi Sharp MZ znakové sady v ASCII sloupci hexdumpu. Význam
 režimů je shodný s volbou --charset, viz výše.
 
+**--overwrite** - Příkazy `get` a `get-block` standardně odmítnou zapsat
+do výstupního souboru, který na hostiteli už existuje (chyba
+`Output file '...' already exists. Use --overwrite to replace it.`,
+návratový kód 1). Volba `--overwrite` přepis povolí. Netýká se
+`get --all`, kde kolize jmen řeší `--on-duplicate`.
+
+**--yes**, **-y** - Příkazy `format` a `defrag` se před provedením zeptají
+na potvrzení (`Are you sure? [y/N]`), pokud je standardní vstup terminál.
+Volba `--yes` dotaz přeskočí. Je-li standardní vstup roura nebo soubor,
+nástroj se neptá a operaci provede rovnou. Ve skriptech přesto vždy
+uvádějte `--yes`: na Windows (MSYS2/MinGW) se nástroj zeptá i při vstupu
+přesměrovaném z `/dev/null` a operaci zruší (`Aborted.`, návratový kód 1).
+
 **--ro** - Otevře diskový obraz pouze pro čtení. Operace modifikující
 disk (put, era, ren, lock, chtype, set, format, repair, defrag, boot put/clear/bottom/mini/over,
 boot s --fstrt/--fexec/--ftype/--name) budou odmítnuté.
@@ -159,16 +174,29 @@ mzdsk-fsmz disk.dsk dir
 Výstup:
 
 ```
-=== disk.dsk - FSMZ directory ===
 
- ID  Type  Filename           Size   Load   Exec   Block  Lock
- --  ----  -----------------  -----  -----  -----  -----  ----
-  0  OBJ   MONITOR            4096   1200   1200    0030
-  1  BTM   BASIC PROG         2048   7F00   7F00    0040
-  2  BSD   DATA FILE           512   0000   0000    0048
+FSMZ Disk info:
+	Total disk size: 2048 blocks ( 512 kB )
+	Used: 123 blocks ( 30 kB )
+	Free: 1925 blocks ( 481 kB )
 
-Files: 3, Used: 52 blocks, Free: 587 blocks
+
+FSMZ Read directory items:
+
+id = 0 - "DATAFILE"
+	type = 0x03, locked: 0, start = 0x0000, size = 0x4192, exec = 0x0000
+	block = 48, size = 16.39 kB  ( 66 blocks )
+
+id = 1 - "ZAPIS DAT"
+	type = 0x02, locked: 1, start = 0x0000, size = 0x0893, exec = 0x0000
+	block = 114, size = 2.14 kB  ( 9 blocks )
+
+
+COUNT ITEMS: 2
 ```
+
+Typ souboru se vypisuje jako číselná hodnota `ftype` (např. `0x03`),
+ne jako zkratka. Význam hodnot viz [chtype](#chtype---změna-typu-souboru).
 
 Filtrování podle typu souboru:
 
@@ -368,10 +396,17 @@ mzdsk-fsmz [volby] <obraz.dsk> chtype --id N T
 ```
 
 T je hex hodnota typu souboru:
-- `01` - OBJ (binární program)
-- `02` - BTM (bootstrap)
-- `03` - BSD (BASIC data)
-- `05` - BAS (BASIC program)
+- `01` - OBJ (strojový kód)
+- `02` - BTX (program BASICu)
+- `03` - BSD (sekvenční data BASICu; stejný typ má bootstrap IPLPRO)
+- `04` - BRD (datový soubor BASICu)
+- `05` - RB
+
+Zkratky odpovídají tabulce typů v ROM MZ-800 a jsou shodné s těmi,
+které uvádí `mzdsk-cpm` u volby `--ftype`. Nástroj přijme libovolnou
+hodnotu `01`-`FF` a zkratky sám nevypisuje. Hodnotu `00` odmítne chybou:
+označuje smazanou položku adresáře, soubor by zmizel z adresáře bez
+uvolnění bloků.
 
 ### Příklad
 
