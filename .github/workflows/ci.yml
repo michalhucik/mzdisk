@@ -11,6 +11,7 @@
 #              GUI se zde nesestavuje. libintl (pro GUI testy) a GNU
 #              coreutils (sha1sum, stat -c v CLI testech) jsou z Homebrew.
 #    windows - MSYS2 UCRT64: knihovny, CLI nástroje, všechny testy a GUI.
+#              Balíček vim dodává xxd, který používají CLI testy.
 #
 #  Build i testy jdou výhradně přes cíle kořenového Makefile, aby CI
 #  ověřovalo totéž, co vývojář spouští lokálně.
@@ -39,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out sources
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install build dependencies
         run: |
@@ -53,14 +54,27 @@ jobs:
         run: make cli
 
       - name: Run tests
-        run: make test
+        # Výstup testů se ukládá do test.log; při selhání z něj další krok
+        # udělá anotace (jsou vidět i bez přihlášení, na rozdíl od logu).
+        run: |
+          set -o pipefail
+          make test 2>&1 | tee test.log
+
+      - name: Report test failures
+        if: failure()
+        run: |
+          [ -f test.log ] || exit 0
+          # GitHub zobrazí nejvýše 10 anotací na krok a úroveň.
+          grep -n -E 'FAIL|[Ee]rror|\*\*\*|not found|No such file|undefined|Undefined' test.log \
+            | head -n 9 | while IFS= read -r line; do echo "::error::${line}"; done
+          tail -n 9 test.log | while IFS= read -r line; do echo "::warning::tail: ${line}"; done
 
   macos:
     name: macOS (libs, CLI, tests)
     runs-on: macos-latest
     steps:
       - name: Check out sources
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install build dependencies
         run: |
@@ -77,7 +91,20 @@ jobs:
         run: make cli
 
       - name: Run tests
-        run: make test
+        # Výstup testů se ukládá do test.log; při selhání z něj další krok
+        # udělá anotace (jsou vidět i bez přihlášení, na rozdíl od logu).
+        run: |
+          set -o pipefail
+          make test 2>&1 | tee test.log
+
+      - name: Report test failures
+        if: failure()
+        run: |
+          [ -f test.log ] || exit 0
+          # GitHub zobrazí nejvýše 10 anotací na krok a úroveň.
+          grep -n -E 'FAIL|[Ee]rror|\*\*\*|not found|No such file|undefined|Undefined' test.log \
+            | head -n 9 | while IFS= read -r line; do echo "::error::${line}"; done
+          tail -n 9 test.log | while IFS= read -r line; do echo "::warning::tail: ${line}"; done
 
   windows:
     name: Windows MSYS2 UCRT64 (libs, CLI, tests, GUI)
@@ -87,7 +114,7 @@ jobs:
         shell: msys2 {0}
     steps:
       - name: Check out sources
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up MSYS2
         uses: msys2/setup-msys2@v2
@@ -101,6 +128,7 @@ jobs:
             mingw-w64-ucrt-x86_64-gettext-runtime
             mingw-w64-ucrt-x86_64-gettext-tools
             mingw-w64-ucrt-x86_64-sdl3
+            vim
 
       - name: Build libraries
         run: make libs
@@ -109,7 +137,20 @@ jobs:
         run: make cli
 
       - name: Run tests
-        run: make test
+        # Výstup testů se ukládá do test.log; při selhání z něj další krok
+        # udělá anotace (jsou vidět i bez přihlášení, na rozdíl od logu).
+        run: |
+          set -o pipefail
+          make test 2>&1 | tee test.log
+
+      - name: Report test failures
+        if: failure()
+        run: |
+          [ -f test.log ] || exit 0
+          # GitHub zobrazí nejvýše 10 anotací na krok a úroveň.
+          grep -n -E 'FAIL|[Ee]rror|\*\*\*|not found|No such file|undefined|Undefined' test.log \
+            | head -n 9 | while IFS= read -r line; do echo "::error::${line}"; done
+          tail -n 9 test.log | while IFS= read -r line; do echo "::warning::tail: ${line}"; done
 
       - name: Build GUI
         run: make gui
