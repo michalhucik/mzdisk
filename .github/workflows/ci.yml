@@ -11,7 +11,7 @@
 #              GUI se zde nesestavuje. libintl (pro GUI testy) a GNU
 #              coreutils (sha1sum, stat -c v CLI testech) jsou z Homebrew.
 #    windows - MSYS2 UCRT64: knihovny, CLI nástroje, všechny testy a GUI.
-#              Balíček vim dodává xxd, který používají CLI testy.
+#              Balíčky vim (xxd) a diffutils (cmp) potřebují CLI testy.
 #
 #  Build i testy jdou výhradně přes cíle kořenového Makefile, aby CI
 #  ověřovalo totéž, co vývojář spouští lokálně.
@@ -129,6 +129,7 @@ jobs:
             mingw-w64-ucrt-x86_64-gettext-tools
             mingw-w64-ucrt-x86_64-sdl3
             vim
+            diffutils
 
       # C testy mají natvrdo cestu "/tmp/...". Nativní (MinGW) binárka ji
       # vyhodnotí jako \tmp na aktuálním disku, ne jako MSYS2 /tmp, takže
