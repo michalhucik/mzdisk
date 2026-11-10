@@ -64,7 +64,9 @@ PORTABLE_CLI_DIR  := portable/$(PORTABLE_CLI_NAME)
 PORTABLE_GUI_ZIP  := portable/$(PORTABLE_GUI_NAME).zip
 PORTABLE_CLI_ZIP  := portable/$(PORTABLE_CLI_NAME).zip
 
-JOBS              := $(shell nproc)
+# Počet paralelních úloh. `nproc` je z GNU coreutils; na macOS bez nich
+# se použije sysctl, jinak konzervativní 2.
+JOBS              := $(shell nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 2)
 
 .PHONY: all libs cli gui clean libs-clean cli-clean gui-clean \
         libs-rebuild cli-rebuild gui-rebuild rebuild \

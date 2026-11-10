@@ -1,0 +1,115 @@
+# ===========================================================================
+#  mzdisk - průběžná integrace (GitHub Actions)
+#
+#  Spouští se při push a pull requestu do větve main veřejného zrcadla
+#  a ručně (workflow_dispatch).
+#
+#  Úlohy:
+#    linux   - Ubuntu: knihovny, CLI nástroje, všechny testy (C + CLI).
+#              GUI se zde nesestavuje (vyžaduje SDL3).
+#    macos   - macOS: knihovny, CLI nástroje, všechny testy (C + CLI).
+#              GUI se zde nesestavuje. libintl (pro GUI testy) a GNU
+#              coreutils (sha1sum, stat -c v CLI testech) jsou z Homebrew.
+#    windows - MSYS2 UCRT64: knihovny, CLI nástroje, všechny testy a GUI.
+#
+#  Build i testy jdou výhradně přes cíle kořenového Makefile, aby CI
+#  ověřovalo totéž, co vývojář spouští lokálně.
+# ===========================================================================
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Nový běh na téže větvi zruší ten rozpracovaný.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  linux:
+    name: Linux (libs, CLI, tests)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out sources
+        uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake gettext
+
+      - name: Build libraries
+        run: make libs
+
+      - name: Build CLI tools
+        run: make cli
+
+      - name: Run tests
+        run: make test
+
+  macos:
+    name: macOS (libs, CLI, tests)
+    runs-on: macos-latest
+    steps:
+      - name: Check out sources
+        uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          brew install cmake gettext coreutils
+          # gettext je keg-only: CMake (FindIntl) ho najde přes CMAKE_PREFIX_PATH.
+          echo "CMAKE_PREFIX_PATH=$(brew --prefix gettext)" >> "$GITHUB_ENV"
+          # GNU coreutils bez prefixu "g" (sha1sum, stat -c, nproc) pro CLI testy.
+          echo "$(brew --prefix coreutils)/libexec/gnubin" >> "$GITHUB_PATH"
+
+      - name: Build libraries
+        run: make libs
+
+      - name: Build CLI tools
+        run: make cli
+
+      - name: Run tests
+        run: make test
+
+  windows:
+    name: Windows MSYS2 UCRT64 (libs, CLI, tests, GUI)
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - name: Check out sources
+        uses: actions/checkout@v4
+
+      - name: Set up MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: >-
+            make
+            mingw-w64-ucrt-x86_64-gcc
+            mingw-w64-ucrt-x86_64-cmake
+            mingw-w64-ucrt-x86_64-gettext-runtime
+            mingw-w64-ucrt-x86_64-gettext-tools
+            mingw-w64-ucrt-x86_64-sdl3
+
+      - name: Build libraries
+        run: make libs
+
+      - name: Build CLI tools
+        run: make cli
+
+      - name: Run tests
+        run: make test
+
+      - name: Build GUI
+        run: make gui

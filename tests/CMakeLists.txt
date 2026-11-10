@@ -33,8 +33,18 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 # Předkompilované knihovny z build-libs/
 set(MZDSK_LIBS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../build-libs)
 
+# Linker macOS (ld64) volby --start-group/--end-group nezná; statické
+# knihovny prochází opakovaně sám, takže se na Apple platformě vynechávají.
+if(APPLE)
+    set(MZDSK_LINK_GROUP_START "")
+    set(MZDSK_LINK_GROUP_END "")
+else()
+    set(MZDSK_LINK_GROUP_START "-Wl,--start-group")
+    set(MZDSK_LINK_GROUP_END "-Wl,--end-group")
+endif()
+
 set(MZDSK_ALL_LIBS
-    -Wl,--start-group
+    ${MZDSK_LINK_GROUP_START}
     ${MZDSK_LIBS_DIR}/libmzdsk_detect.a
     ${MZDSK_LIBS_DIR}/libmzdsk_global.a
     ${MZDSK_LIBS_DIR}/libmzdsk_ipldisk.a
@@ -48,13 +58,20 @@ set(MZDSK_ALL_LIBS
     ${MZDSK_LIBS_DIR}/libgeneric_driver.a
     ${MZDSK_LIBS_DIR}/libendianity.a
     ${MZDSK_LIBS_DIR}/libsharpmz_ascii.a
-    -Wl,--end-group
+    ${MZDSK_LINK_GROUP_END}
 )
 
 # Na Windows (MSYS2/MinGW) je gettext v separátní libintl.dll,
 # na Linuxu je součástí glibc - není potřeba explicitně linkovat.
+# Na macOS libintl v systému není; bere se z gettextu (např. Homebrew,
+# keg-only - cestu předat přes CMAKE_PREFIX_PATH). GUI testy ji potřebují
+# kvůli panel_*.c, které includují i18n.h.
 if(WIN32)
     list(APPEND MZDSK_ALL_LIBS intl)
+elseif(APPLE)
+    find_package(Intl REQUIRED)
+    include_directories(${Intl_INCLUDE_DIRS})
+    list(APPEND MZDSK_ALL_LIBS ${Intl_LIBRARIES})
 endif()
 
 # memory_driver.c - standalone verze s realloc podporou

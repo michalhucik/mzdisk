@@ -16,6 +16,7 @@
 <p align="center">
   <a href="docs/cz/Changelog.md"><img src="https://img.shields.io/badge/GUI%20ver.-0.8.1-brightgreen" alt="GUI 0.8.1"></a>
   <a href="docs/cz/Changelog.md"><img src="https://img.shields.io/badge/CLI%20ver.-0.8.1-brightgreen" alt="CLI 0.8.1"></a>
+  <a href="https://github.com/michalhucik/mzdisk/actions/workflows/ci.yml"><img src="https://github.com/michalhucik/mzdisk/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI"></a>
   <img src="https://img.shields.io/badge/licence-GPLv3-blue" alt="GPLv3">
   <img src="https://img.shields.io/badge/platformy-Linux%20%7C%20Windows-lightgrey" alt="platformy">
   <img src="https://img.shields.io/badge/Sharp%20MZ-700%20%7C%20800%20%7C%201500-orange" alt="Sharp MZ">
@@ -239,6 +240,21 @@ Build výstupy:
 - `build-gui/mzdisk` (Linux) nebo `build-gui/mzdisk.exe` (Windows)
 - `build-tests/` - testovací binárky
 - `portable/` - distribuční složky
+
+### Průběžná integrace (CI)
+
+Každý push a pull request do větve `main` na GitHubu spouští workflow
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml) (GitHub Actions):
+
+- **Linux (Ubuntu)** - `make libs`, `make cli`, `make test`
+- **macOS** - `make libs`, `make cli`, `make test`
+- **Windows (MSYS2 UCRT64)** - `make libs`, `make cli`, `make test`, `make gui`
+
+CI používá stejné cíle Makefile jako lokální build. GUI se v CI sestavuje
+jen na Windows. Na macOS testy potřebují `gettext` (libintl) a GNU
+`coreutils` z Homebrew. Aktuální stav ukazuje odznak CI v záhlaví tohoto
+souboru; výsledky jednotlivých běhů jsou na záložce
+[Actions](https://github.com/michalhucik/mzdisk/actions).
 
 ---
 

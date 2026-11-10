@@ -27,9 +27,19 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 # Cesta k předkompilovaným .a souborům
 set(LIBS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../build-libs)
 
+# Linker macOS (ld64) volby --start-group/--end-group nezná; statické
+# knihovny prochází opakovaně sám, takže se na Apple platformě vynechávají.
+if(APPLE)
+    set(MZDSK_LINK_GROUP_START "")
+    set(MZDSK_LINK_GROUP_END "")
+else()
+    set(MZDSK_LINK_GROUP_START "-Wl,--start-group")
+    set(MZDSK_LINK_GROUP_END "-Wl,--end-group")
+endif()
+
 # Všechny mzdsk knihovny jako link group (řeší vzájemné závislosti statických .a)
 set(MZDSK_ALL_LIBS
-    -Wl,--start-group
+    ${MZDSK_LINK_GROUP_START}
     ${LIBS_DIR}/libmzdsk_detect.a
     ${LIBS_DIR}/libmzdsk_cpm.a
     ${LIBS_DIR}/libmzdsk_mrs.a
@@ -43,7 +53,7 @@ set(MZDSK_ALL_LIBS
     ${LIBS_DIR}/libendianity.a
     ${LIBS_DIR}/libsharpmz_ascii.a
     ${LIBS_DIR}/libgeneric_driver.a
-    -Wl,--end-group
+    ${MZDSK_LINK_GROUP_END}
 )
 
 # --- CLI nástroje ---
