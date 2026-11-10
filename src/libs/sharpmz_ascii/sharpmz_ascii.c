@@ -34,6 +34,41 @@
 #include <string.h>
 #include "sharpmz_ascii.h"
 
+/**
+ * @brief Velikost jednoho slotu rotujícího bufferu v bajtech.
+ *
+ * Stačí na nejdelší dynamicky skládaný výstup: 3 bajty UTF-8 (codepoint
+ * do U+FFFF) + null terminátor.
+ */
+#define SHARPMZ_UTF8_SLOT_SIZE 4
+
+/**
+ * @brief Vrátí další slot thread-local rotujícího bufferu pro UTF-8 výstup.
+ *
+ * Společný buffer všech funkcí knihovny, které skládají UTF-8 výstup za běhu
+ * (ASCII větve *_convert_to_UTF8() a koi8cs_encode_utf8()). Sloty se
+ * přidělují cyklicky, takže vrácený ukazatel zůstává platný přes dalších
+ * SHARPMZ_UTF8_ROTATING_SLOTS - 1 volání této funkce ve stejném vlákně.
+ *
+ * @return Ukazatel na slot o velikosti SHARPMZ_UTF8_SLOT_SIZE bajtů.
+ *         Obsah slotu není inicializován - volající musí zapsat i null
+ *         terminátor. Nikdy nevrací NULL.
+ *
+ * @post Vnitřní index slotu je posunut o 1 (modulo počet slotů).
+ * @note Thread-safe: buffer i index jsou v thread-local storage (__thread,
+ *       rozšíření GCC/Clang). Ukazatel nesmí být předán jinému vláknu, které
+ *       by ho používalo po skončení vlákna volajícího.
+ */
+static char *sharpmz_utf8_next_slot(void)
+{
+    static __thread char slots[SHARPMZ_UTF8_ROTATING_SLOTS][SHARPMZ_UTF8_SLOT_SIZE];
+    static __thread unsigned int next_slot = 0;
+
+    char *buf = slots[next_slot];
+    next_slot = (next_slot + 1) % SHARPMZ_UTF8_ROTATING_SLOTS;
+    return buf;
+}
+
 
 /**
  * @brief Konverzní tabulka Sharp MZ kódů 0x90-0xC0 na ASCII znaky.
@@ -114,7 +149,7 @@ uint8_t sharpmz_cnv_to(uint8_t c)
 /**
  * @brief Vrátí řetězec s verzí knihovny sharpmz_ascii.
  *
- * @return Ukazatel na statický řetězec s verzí (např. "2.1.0").
+ * @return Ukazatel na statický řetězec s verzí (např. "2.2.1").
  *         Platný po celou dobu běhu programu.
  */
 const char *sharpmz_ascii_version(void)
@@ -206,31 +241,25 @@ uint8_t sharpmz_convert_to_ASCII(uint8_t c, int *converted, int *printable)
  * @param[out] converted 1 pokud se podařila konverze, 0 pokud ne.
  * @param[out] printable 1 pokud MZ znak reprezentuje tisknutelný glyf, 0 pokud ne.
  * @return Ukazatel na null-terminated UTF-8 řetězec. Pro speciální znaky
- *         jde o pointer do read-only segmentu, pro ASCII znaky o ukazatel
- *         do thread-local rotujícího bufferu (viz SHARPMZ_UTF8_ROTATING_SLOTS).
+ *         jde o řetězcový literál, pro ASCII znaky o slot thread-local
+ *         rotujícího bufferu (viz SHARPMZ_UTF8_ROTATING_SLOTS).
  *
  * @pre converted nesmí být NULL.
  * @pre printable nesmí být NULL.
  *
  * @note Funkce je thread-safe; rotující buffer umožňuje více volání v jednom
- *       výrazu. Pro uchování výsledku přes více než
- *       SHARPMZ_UTF8_ROTATING_SLOTS volání proveďte vlastní kopii.
+ *       výrazu. Pro uchování výsledku přes SHARPMZ_UTF8_ROTATING_SLOTS nebo
+ *       více dalších volání UTF-8 funkcí knihovny proveďte vlastní kopii.
  */
 const char *sharpmz_eu_convert_to_UTF8(uint8_t c, int *converted, int *printable)
 {
-    /* Rotující thread-local buffer - umožňuje více volání v jednom výrazu */
-    /* (např. printf) a je bezpečný v multithreaded kódu. Viz audit L-4. */
-    static __thread char ascii_bufs [ SHARPMZ_UTF8_ROTATING_SLOTS ][ 2 ] = { { 0 } };
-    static __thread unsigned int ascii_slot = 0;
-
     /* Zkusíme ASCII konverzi */
     uint8_t ascii_ch = sharpmz_convert_to_ASCII(c, converted, printable);
     if (*converted)
     {
-        char *buf = ascii_bufs [ ascii_slot ];
-        ascii_slot = ( ascii_slot + 1 ) % SHARPMZ_UTF8_ROTATING_SLOTS;
-        buf [ 0 ] = (char)ascii_ch;
-        buf [ 1 ] = '\0';
+        char *buf = sharpmz_utf8_next_slot();
+        buf[0] = (char)ascii_ch;
+        buf[1] = '\0';
         return buf;
     }
 
@@ -444,8 +473,9 @@ uint8_t sharpmz_jp_convert_to_ASCII(uint8_t c, int *converted, int *printable)
  * @param[in]  c         Vstupní znak v Sharp MZ ASCII (0x00-0xFF).
  * @param[out] converted 1 pokud se podařila konverze, 0 pokud ne.
  * @param[out] printable 1 pokud MZ znak reprezentuje tisknutelný glyf, 0 pokud ne.
- * @return Ukazatel na null-terminated UTF-8 řetězec (pro ASCII vstup thread-local
- *         rotující buffer - viz sharpmz_eu_convert_to_UTF8 pro detaily).
+ * @return Ukazatel na null-terminated UTF-8 řetězec (pro ASCII vstup slot
+ *         thread-local rotujícího bufferu - viz sharpmz_eu_convert_to_UTF8
+ *         pro detaily životnosti).
  *
  * @pre converted nesmí být NULL.
  * @pre printable nesmí být NULL.
@@ -455,18 +485,13 @@ uint8_t sharpmz_jp_convert_to_ASCII(uint8_t c, int *converted, int *printable)
  */
 const char *sharpmz_jp_convert_to_UTF8(uint8_t c, int *converted, int *printable)
 {
-    /* Rotující thread-local buffer - viz poznámka u sharpmz_eu_convert_to_UTF8. */
-    static __thread char ascii_bufs [ SHARPMZ_UTF8_ROTATING_SLOTS ][ 2 ] = { { 0 } };
-    static __thread unsigned int ascii_slot = 0;
-
     /* Zkusíme ASCII konverzi */
     uint8_t ascii_ch = sharpmz_jp_convert_to_ASCII(c, converted, printable);
     if (*converted)
     {
-        char *buf = ascii_bufs [ ascii_slot ];
-        ascii_slot = ( ascii_slot + 1 ) % SHARPMZ_UTF8_ROTATING_SLOTS;
-        buf [ 0 ] = (char)ascii_ch;
-        buf [ 1 ] = '\0';
+        char *buf = sharpmz_utf8_next_slot();
+        buf[0] = (char)ascii_ch;
+        buf[1] = '\0';
         return buf;
     }
 
@@ -754,6 +779,319 @@ uint8_t sharpmz_jp_convert_UTF8_to(const char *c)
 }
 
 /* ======================================================================== */
+/* KOI8-CS implementace                                                     */
+/* ======================================================================== */
+
+/* Tabulka koi8cs_to_unicode[256] vygenerovaná z Cstools-3.44. */
+#include "koi8cs_table.h"
+
+/**
+ * @brief Inverzní tabulka pro ASCII transliteraci KOI8-CS znaků.
+ *
+ * Index = KOI8-CS byte (0x00-0xFF). Hodnota = nejbližší ASCII písmeno
+ * bez diakritiky (např. 'a' pro 0xC1=á, 'C' pro 0xE7=CH digraph).
+ * 0 = nedefinováno / ne písmeno (pak vrátíme ' ').
+ *
+ * Pokrývá pouze KOI8-CS specifické bytes 0x80-0xFF. Pro 0x00-0x7F se
+ * používá passthrough mimo tuto tabulku.
+ */
+static const uint8_t koi8cs_to_ascii_translit[256] = {
+    /* 0x00-0x7F passthrough (nepoužito, tabulka jen pro 0x80-0xFF) */
+    [0xC1] = 'a', [0xC3] = 'c', [0xC4] = 'd', [0xC5] = 'e',
+    [0xC6] = 'r', [0xC7] = 'c', /* ch digraph -> 'c' (první písmeno) */
+    [0xC8] = 'u', [0xC9] = 'i', [0xCA] = 'u', [0xCB] = 'l',
+    [0xCC] = 'l', [0xCD] = 'o', [0xCE] = 'n', [0xCF] = 'o',
+    [0xD0] = 'o', [0xD1] = 'a', [0xD2] = 'r', [0xD3] = 's',
+    [0xD4] = 't', [0xD5] = 'u', [0xD7] = 'e', [0xD8] = 'a',
+    [0xD9] = 'y', [0xDA] = 'z',
+    [0xE1] = 'A', [0xE3] = 'C', [0xE4] = 'D', [0xE5] = 'E',
+    [0xE6] = 'R', [0xE7] = 'C', /* CH digraph -> 'C' */
+    [0xE8] = 'U', [0xE9] = 'I', [0xEA] = 'U', [0xEB] = 'L',
+    [0xEC] = 'L', [0xED] = 'O', [0xEE] = 'N', [0xEF] = 'O',
+    [0xF0] = 'O', [0xF1] = 'A', [0xF2] = 'R', [0xF3] = 'S',
+    [0xF4] = 'T', [0xF5] = 'U', [0xF7] = 'E', [0xF8] = 'A',
+    [0xF9] = 'Y', [0xFA] = 'Z',
+    /* Modifier letters (caron, circumflex, acute) bez ASCII ekvivalentu:
+     * 0xDC caron, 0xDE circumflex, 0xE0 acute, 0xFE degree -> 0 (mezera) */
+};
+
+/**
+ * @brief Zakóduje Unicode codepoint do UTF-8 sekvence (rotující buffer).
+ *
+ * Podporuje rozsah U+0000 - U+FFFF (1-3 bajty UTF-8).
+ *
+ * @param[in] cp Unicode codepoint (0x0000-0xFFFF).
+ * @return Ukazatel na null-terminated UTF-8 řetězec ve slotu thread-local
+ *         rotujícího bufferu (viz sharpmz_utf8_next_slot()). Pro cp == 0
+ *         vrací prázdný řetězec "".
+ *
+ * @note Funkce je thread-safe (rotující buffer v thread-local storage).
+ */
+static const char *koi8cs_encode_utf8(uint16_t cp)
+{
+    char *buf = sharpmz_utf8_next_slot();
+    if (cp == 0) { buf[0] = 0; return buf; }
+    if (cp < 0x80) {
+        buf[0] = (char)cp;
+        buf[1] = 0;
+    } else if (cp < 0x800) {
+        buf[0] = (char)(0xC0 | (cp >> 6));
+        buf[1] = (char)(0x80 | (cp & 0x3F));
+        buf[2] = 0;
+    } else {
+        buf[0] = (char)(0xE0 | (cp >> 12));
+        buf[1] = (char)(0x80 | ((cp >> 6) & 0x3F));
+        buf[2] = (char)(0x80 | (cp & 0x3F));
+        buf[3] = 0;
+    }
+    return buf;
+}
+
+/**
+ * @brief Konvertuje znak z KOI8-CS do ASCII s informací o úspěšnosti.
+ *
+ * Viz Doxygen v sharpmz_ascii.h.
+ */
+uint8_t sharpmz_koi8cs_convert_to_ASCII(uint8_t c, int *converted, int *printable)
+{
+    if (c < 0x20) {
+        *printable = 0;
+        *converted = 1;
+        return ' ';
+    }
+    if (c < 0x7F) {
+        *printable = 1;
+        *converted = 1;
+        return c;
+    }
+    if (c == 0x7F) {
+        *printable = 0;
+        *converted = 1;
+        return ' ';
+    }
+    /* 0x80-0xFF: KOI8-CS specifický rozsah */
+    uint8_t a = koi8cs_to_ascii_translit[c];
+    if (a != 0) {
+        *printable = 1;
+        *converted = 1;
+        return a;
+    }
+    /* Nedefinováno nebo není ASCII písmeno (modifier letters, degree, ...) */
+    *printable = 0;
+    *converted = 0;
+    return ' ';
+}
+
+/**
+ * @brief Konvertuje jeden znak z KOI8-CS do ASCII (bez příznaků).
+ *
+ * Viz Doxygen v sharpmz_ascii.h.
+ */
+uint8_t sharpmz_koi8cs_cnv_from(uint8_t c)
+{
+    int conv, prn;
+    return sharpmz_koi8cs_convert_to_ASCII(c, &conv, &prn);
+}
+
+/**
+ * @brief Konvertuje jeden znak z ASCII do KOI8-CS.
+ *
+ * Viz Doxygen v sharpmz_ascii.h.
+ */
+uint8_t sharpmz_koi8cs_cnv_to(uint8_t c)
+{
+    if (c < 0x80) return c;
+    return ' ';
+}
+
+/**
+ * @brief Konvertuje jeden znak z KOI8-CS do UTF-8.
+ *
+ * Viz Doxygen v sharpmz_ascii.h.
+ */
+const char *sharpmz_koi8cs_convert_to_UTF8(uint8_t c, int *converted, int *printable)
+{
+    /* Řídicí znaky a ASCII printable - 1:1 do slotu rotujícího bufferu */
+    if (c < 0x7F) {
+        char *buf = sharpmz_utf8_next_slot();
+        *printable = (c >= 0x20);
+        *converted = 1;
+        buf[0] = (char)c;
+        buf[1] = '\0';
+        return buf;
+    }
+    if (c == 0x7F) {
+        *printable = 0;
+        *converted = 1;
+        return " ";
+    }
+
+    uint16_t cp = koi8cs_to_unicode[c];
+
+    /* Digraf: "ch" pro 0xC7, "CH" pro 0xE7 (marker 0xFFFE) */
+    if (cp == 0xFFFE) {
+        *printable = 1;
+        *converted = 1;
+        if (c == 0xC7) return "ch";
+        if (c == 0xE7) return "CH";
+        return " ";
+    }
+
+    /* Nedefinovaný KOI8-CS byte */
+    if (cp == 0x0000) {
+        *printable = 0;
+        *converted = 0;
+        return " ";
+    }
+
+    *printable = 1;
+    *converted = 1;
+    return koi8cs_encode_utf8(cp);
+}
+
+/**
+ * @brief Konvertuje UTF-8 znak na KOI8-CS byte.
+ *
+ * Viz Doxygen v sharpmz_ascii.h.
+ */
+uint8_t sharpmz_koi8cs_convert_UTF8_to(const char *c)
+{
+    if (!c) return 0x20;
+    const unsigned char *s = (const unsigned char *)c;
+
+    /* ASCII (1 byte) - KOI8-CS sdílí 0x00-0x7F s ASCII.
+     * Speciální handling digrafů: "ch" -> 0xC7, "CH" -> 0xE7. */
+    if (s[0] < 0x80) {
+        if (s[0] == 'c' && s[1] == 'h') return 0xC7;
+        if (s[0] == 'C' && s[1] == 'H') return 0xE7;
+        return s[0];
+    }
+
+    /* Vícebajtový UTF-8 - dekódujeme codepoint a hledáme v tabulce */
+    uint16_t cp = 0;
+    if (s[0] < 0xC0) return 0x20; /* nevalidní continuation */
+    else if (s[0] < 0xE0) {
+        cp = ((s[0] & 0x1F) << 6) | (s[1] & 0x3F);
+    } else if (s[0] < 0xF0) {
+        cp = ((s[0] & 0x0F) << 12) | ((s[1] & 0x3F) << 6) | (s[2] & 0x3F);
+    } else {
+        return 0x20; /* mimo BMP, KOI8-CS jen do U+FFFF */
+    }
+
+    /* Sekvenční lookup v tabulce (52 high-bit znaků, dostatečně rychlé) */
+    for (int i = 0x80; i < 0x100; i++) {
+        if (koi8cs_to_unicode[i] == cp && cp != 0 && cp != 0xFFFE) {
+            return (uint8_t)i;
+        }
+    }
+    return 0x20;
+}
+
+/* ======================================================================== */
+/* Display kódy (CG-ROM index) - tabulka !ADCN                              */
+/* ======================================================================== */
+
+/**
+ * @brief Převodní tabulka Sharp MZ ASCII -> display kód (EU varianta).
+ *
+ * Adapted from mzdisk mz_vcode.c (Michal Hucik, GPLv3). Zdrojová data:
+ * ROM MZ-800, dolní monitor, tabulka !ADCN na adrese 0x0A92.
+ *
+ * Index = Sharp MZ ASCII (0x00-0xFF), hodnota = display kód (CG-ROM index).
+ * Hodnota 0xF0 = "žádný znak" (nezobrazitelný).
+ */
+static const uint8_t sharpmz_adcn_eu[256] = {
+    /* 0x00 */ 0xF0, 0xF0, 0xF0, 0xF3, 0xF0, 0xF5, 0xF0, 0xF0,
+    /* 0x08 */ 0xF0, 0xF0, 0xF0, 0xF0, 0xF0, 0xF0, 0xF0, 0xF0,
+    /* 0x10 */ 0xF0, 0xC1, 0xC2, 0xC3, 0xC4, 0xC5, 0xC6, 0xF0,
+    /* 0x18 */ 0xF0, 0xF0, 0xF0, 0xF0, 0xF0, 0xF0, 0xF0, 0xF0,
+    /* 0x20 */ 0x00, 0x61, 0x62, 0x63, 0x64, 0x65, 0x66, 0x67,
+    /* 0x28 */ 0x68, 0x69, 0x6B, 0x6A, 0x2F, 0x2A, 0x2E, 0x2D,
+    /* 0x30 */ 0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27,
+    /* 0x38 */ 0x28, 0x29, 0x4F, 0x2C, 0x51, 0x2B, 0x57, 0x49,
+    /* 0x40 */ 0x55, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
+    /* 0x48 */ 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F,
+    /* 0x50 */ 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17,
+    /* 0x58 */ 0x18, 0x19, 0x1A, 0x52, 0x59, 0x54, 0x50, 0x45,
+    /* 0x60 */ 0xC7, 0xC8, 0xC9, 0xCA, 0xCB, 0xCC, 0xCD, 0xCE,
+    /* 0x68 */ 0xCF, 0xDF, 0xE7, 0xE8, 0xE5, 0xE9, 0xEC, 0xED,
+    /* 0x70 */ 0xD0, 0xD1, 0xD2, 0xD3, 0xD4, 0xD5, 0xD6, 0xD7,
+    /* 0x78 */ 0xD8, 0xD9, 0xDA, 0xDB, 0xDC, 0xDD, 0xDE, 0xC0,
+    /* 0x80 */ 0x80, 0xBD, 0x9D, 0xB1, 0xB5, 0xB9, 0xB4, 0x9E,
+    /* 0x88 */ 0xB2, 0xB6, 0xBA, 0xBE, 0x9F, 0xB3, 0xB7, 0xBB,
+    /* 0x90 */ 0xBF, 0xA3, 0x85, 0xA4, 0xA5, 0xA6, 0x94, 0x87,
+    /* 0x98 */ 0x88, 0x9C, 0x82, 0x98, 0x84, 0x92, 0x90, 0x83,
+    /* 0xA0 */ 0x91, 0x81, 0x9A, 0x97, 0x93, 0x95, 0x89, 0xA1,
+    /* 0xA8 */ 0xAF, 0x8B, 0x86, 0x96, 0xA2, 0xAB, 0xAA, 0x8A,
+    /* 0xB0 */ 0x8E, 0xB0, 0xAD, 0x8D, 0xA7, 0xA8, 0xA9, 0x8F,
+    /* 0xB8 */ 0x8C, 0xAE, 0xAC, 0x9B, 0xA0, 0x99, 0xBC, 0xB8,
+    /* 0xC0 */ 0x40, 0x3B, 0x3A, 0x70, 0x3C, 0x71, 0x5A, 0x3D,
+    /* 0xC8 */ 0x43, 0x56, 0x3F, 0x1E, 0x4A, 0x1C, 0x5D, 0x3E,
+    /* 0xD0 */ 0x5C, 0x1F, 0x5F, 0x5E, 0x37, 0x7B, 0x7F, 0x36,
+    /* 0xD8 */ 0x7A, 0x7E, 0x33, 0x4B, 0x4C, 0x1D, 0x6C, 0x5B,
+    /* 0xE0 */ 0x78, 0x41, 0x35, 0x34, 0x74, 0x30, 0x38, 0x75,
+    /* 0xE8 */ 0x39, 0x4D, 0x6F, 0x6E, 0x32, 0x77, 0x76, 0x72,
+    /* 0xF0 */ 0x73, 0x47, 0x7C, 0x53, 0x31, 0x4E, 0x6D, 0x48,
+    /* 0xF8 */ 0x46, 0x7D, 0x44, 0x1B, 0x58, 0x79, 0x42, 0x60
+};
+
+/**
+ * @brief Konvertuje Sharp MZ ASCII na display kód.
+ *
+ * Viz Doxygen v sharpmz_ascii.h.
+ */
+uint8_t sharpmz_display_cnv_to(uint8_t ascii, sharpmz_charset_t charset)
+{
+    /* JP varianta - korekce na pozicích 0x6C a 0x6D (MZ-1500 CG-ROM rozdíl) */
+    if (charset == SHARPMZ_CHARSET_DISPLAY_JP) {
+        if (ascii == 0x6C) return 0xE9;
+        if (ascii == 0x6D) return 0xEA;
+    }
+    return sharpmz_adcn_eu[ascii];
+}
+
+/**
+ * @brief Konvertuje display kód na Sharp MZ ASCII (inverze !ADCN).
+ *
+ * Viz Doxygen v sharpmz_ascii.h. Implementace: sekvenční hledání prvního
+ * ASCII bytu, jehož sharpmz_display_cnv_to() vrátí daný display_code.
+ * Pro display kódy 0x80-0xFF (grafické symboly bez ASCII ekvivalentu)
+ * vrací ' '.
+ */
+uint8_t sharpmz_display_cnv_from(uint8_t display_code, sharpmz_charset_t charset)
+{
+    for (int i = 0; i < 256; i++) {
+        if (sharpmz_display_cnv_to((uint8_t)i, charset) == display_code) {
+            return (uint8_t)i;
+        }
+    }
+    return ' ';
+}
+
+/**
+ * @brief Konvertuje display kód na UTF-8 řetězec.
+ *
+ * Viz Doxygen v sharpmz_ascii.h.
+ */
+const char *sharpmz_display_to_utf8(uint8_t display_code, sharpmz_charset_t charset)
+{
+    uint8_t ascii = sharpmz_display_cnv_from(display_code, charset);
+    /* Mapování ASCII -> UTF-8 přes EU/JP variantu (display_eu -> EU, display_jp -> JP) */
+    sharpmz_charset_t ascii_set =
+        (charset == SHARPMZ_CHARSET_DISPLAY_JP) ? SHARPMZ_CHARSET_JP
+                                                : SHARPMZ_CHARSET_EU;
+    int conv, prn;
+    const char *result;
+    if (ascii_set == SHARPMZ_CHARSET_JP) {
+        result = sharpmz_jp_convert_to_UTF8(ascii, &conv, &prn);
+    } else {
+        result = sharpmz_eu_convert_to_UTF8(ascii, &conv, &prn);
+    }
+    if (!conv) return " ";
+    return result;
+}
+
+/* ======================================================================== */
 /* Charset-dispatchované wrappery a řetězcové funkce                        */
 /* ======================================================================== */
 
@@ -777,31 +1115,29 @@ static int sharpmz_utf8_char_len(unsigned char lead_byte)
 }
 
 /**
- * @brief Konvertuje jeden Sharp MZ znak na UTF-8 řetězec.
+ * @brief Konvertuje jeden znak (libovolný charset) na UTF-8 řetězec.
  *
- * Wrapper nad sharpmz_eu_convert_to_UTF8() / sharpmz_jp_convert_to_UTF8().
- * Pro znaky bez Unicode ekvivalentu vrací mezeru (" ").
- *
- * @param[in] mz_code  Sharp MZ kód znaku (0x00-0xFF).
- * @param[in] charset  Varianta znakové sady (EU nebo JP).
- * @return Ukazatel na statický null-terminated UTF-8 řetězec. Nikdy nevrací NULL.
- *         Platný do dalšího volání této funkce nebo odpovídající per-char funkce.
- *
- * @pre charset musí být SHARPMZ_CHARSET_EU nebo SHARPMZ_CHARSET_JP.
- * @note Funkce není reentrantní kvůli statickému bufferu pro ASCII znaky.
+ * Viz Doxygen v sharpmz_ascii.h.
  */
-const char *sharpmz_to_utf8(uint8_t mz_code, sharpmz_charset_t charset)
+const char *sharpmz_to_utf8(uint8_t code, sharpmz_charset_t charset)
 {
     int converted, printable;
     const char *result;
 
-    if (charset == SHARPMZ_CHARSET_JP)
-    {
-        result = sharpmz_jp_convert_to_UTF8(mz_code, &converted, &printable);
-    }
-    else
-    {
-        result = sharpmz_eu_convert_to_UTF8(mz_code, &converted, &printable);
+    switch (charset) {
+        case SHARPMZ_CHARSET_JP:
+            result = sharpmz_jp_convert_to_UTF8(code, &converted, &printable);
+            break;
+        case SHARPMZ_CHARSET_KOI8CS:
+            result = sharpmz_koi8cs_convert_to_UTF8(code, &converted, &printable);
+            break;
+        case SHARPMZ_CHARSET_DISPLAY_EU:
+        case SHARPMZ_CHARSET_DISPLAY_JP:
+            return sharpmz_display_to_utf8(code, charset);
+        case SHARPMZ_CHARSET_EU:
+        default:
+            result = sharpmz_eu_convert_to_UTF8(code, &converted, &printable);
+            break;
     }
 
     if (!converted) return " ";
@@ -809,18 +1145,9 @@ const char *sharpmz_to_utf8(uint8_t mz_code, sharpmz_charset_t charset)
 }
 
 /**
- * @brief Konvertuje jeden UTF-8 znak na Sharp MZ kód.
+ * @brief Konvertuje jeden UTF-8 znak na byte v daném kódování.
  *
- * Wrapper nad sharpmz_eu_convert_UTF8_to() / sharpmz_jp_convert_UTF8_to().
- * Rozlišuje legitimní mapování na mezeru (vstup je U+0020) od neznámého
- * znaku (konverzní funkce vrátila 0x20 jako fallback).
- *
- * @param[in] utf8     Ukazatel na null-terminated UTF-8 řetězec.
- * @param[in] charset  Varianta znakové sady (EU nebo JP).
- * @return Sharp MZ kód (0x00-0xFF) při úspěchu, -1 pokud znak není nalezen.
- *
- * @pre utf8 nesmí být NULL a musí ukazovat na validní UTF-8 sekvenci.
- * @pre charset musí být SHARPMZ_CHARSET_EU nebo SHARPMZ_CHARSET_JP.
+ * Viz Doxygen v sharpmz_ascii.h.
  */
 int sharpmz_from_utf8(const char *utf8, sharpmz_charset_t charset)
 {
@@ -828,17 +1155,30 @@ int sharpmz_from_utf8(const char *utf8, sharpmz_charset_t charset)
 
     const unsigned char *s = (const unsigned char *)utf8;
 
-    /* ASCII mezera (U+0020) se legitimně mapuje na MZ 0x20 */
+    /* ASCII mezera (U+0020) se legitimně mapuje na byte 0x20 */
     if (s[0] == 0x20) return 0x20;
 
     uint8_t result;
-    if (charset == SHARPMZ_CHARSET_JP)
-    {
-        result = sharpmz_jp_convert_UTF8_to(utf8);
-    }
-    else
-    {
-        result = sharpmz_eu_convert_UTF8_to(utf8);
+    switch (charset) {
+        case SHARPMZ_CHARSET_JP:
+            result = sharpmz_jp_convert_UTF8_to(utf8);
+            break;
+        case SHARPMZ_CHARSET_KOI8CS:
+            result = sharpmz_koi8cs_convert_UTF8_to(utf8);
+            break;
+        case SHARPMZ_CHARSET_DISPLAY_EU:
+            /* UTF-8 -> Sharp MZ ASCII (EU) -> display kód */
+            result = sharpmz_eu_convert_UTF8_to(utf8);
+            if (result == 0x20) return -1;
+            return sharpmz_display_cnv_to(result, SHARPMZ_CHARSET_DISPLAY_EU);
+        case SHARPMZ_CHARSET_DISPLAY_JP:
+            result = sharpmz_jp_convert_UTF8_to(utf8);
+            if (result == 0x20) return -1;
+            return sharpmz_display_cnv_to(result, SHARPMZ_CHARSET_DISPLAY_JP);
+        case SHARPMZ_CHARSET_EU:
+        default:
+            result = sharpmz_eu_convert_UTF8_to(utf8);
+            break;
     }
 
     /* Konverzní funkce vrací 0x20 jako fallback pro neznámé znaky.
