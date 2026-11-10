@@ -206,7 +206,7 @@ extern void mzdisk_config_clear_recent ( st_MZDISK_CONFIG *cfg );
  */
 typedef struct st_MZDISK_CONFIG_WATCH {
     long long last_mtime_sec;     /**< st_mtime v sekundách (0 = neznámý). */
-    long long last_mtime_nsec;    /**< st_mtim.tv_nsec na FS s podporou (0 jinak). */
+    long long last_mtime_nsec;    /**< Nanosekundy mtime: st_mtim.tv_nsec (Linux), st_mtimespec.tv_nsec (macOS), jinak 0. */
     long long last_size;          /**< Velikost souboru v bajtech (-1 = neznámý/neexistuje). */
     unsigned  last_check_ms;      /**< SDL_GetTicks() hodnota posledního pollu. */
     unsigned  poll_interval_ms;   /**< Throttling interval mezi reálnými stat() voláními (výchozí 500). */

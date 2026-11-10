@@ -357,7 +357,10 @@ static void config_stat_file ( const char *path, long long *mtime_sec,
         return;
     }
     *mtime_sec = (long long) st.st_mtime;
-#if defined(__linux__) || defined(__APPLE__)
+#if defined(__APPLE__)
+    /* macOS: nanosekundová složka je v st_mtimespec, st_mtim tam není. */
+    *mtime_nsec = (long long) st.st_mtimespec.tv_nsec;
+#elif defined(__linux__)
     /* struct timespec st_mtim dostupný na Linuxu. */
     *mtime_nsec = (long long) st.st_mtim.tv_nsec;
 #else
