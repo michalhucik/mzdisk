@@ -229,7 +229,16 @@ make docs-html
 
 # Testy (536 testů - knihovny, GUI logika, CLI integrační)
 make test
+
+# Instalace CLI nástrojů a jejich dokumentace (výchozí /usr/local;
+# lze změnit přes PREFIX=, BINDIR=, DOCDIR=, DESTDIR=)
+make install
+make uninstall
 ```
+
+> **Poznámka:** `make install` instaluje jen CLI nástroje a jejich
+> dokumentaci. GUI aplikace se neinstaluje - je to samostatný adresář
+> (`make portable-gui`), který si zkopírujete, kam chcete.
 
 > **Poznámka:** Generování HTML dokumentace je volitelný krok. `make portable`
 > a `make portable-cli` fungují i bez Pythonu a HTML soubory se do balíku

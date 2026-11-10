@@ -10,8 +10,12 @@
 #                            HTML verze se přibalí, pokud existuje docs-html/)
 #  make uninstall-cli    -> odebere CLI binárky z $(DESTDIR)$(BINDIR)
 #  make uninstall-cli-docs -> odebere docs CLI z $(DESTDIR)$(DOCDIR)
-#  Cíle install-* a uninstall-* lze přepsat proměnnými PREFIX=,
-#  BINDIR=, DOCDIR=, DESTDIR=.
+#  make install         -> install-cli + install-cli-docs
+#  make uninstall       -> uninstall-cli + uninstall-cli-docs
+#  Cíle install* a uninstall* lze přepsat proměnnými PREFIX=,
+#  BINDIR=, DOCDIR=, DESTDIR=. GUI se neinstaluje - hledá zdroje
+#  (ui_resources/, locale/) relativně k pracovnímu adresáři, proto se
+#  distribuuje jako samostatný adresář z `make portable-gui`.
 #  make gui           -> build-gui/    (GUI aplikace, závisí na libs)
 #  make test             -> build-tests/  (C unit testy + CLI shell testy)
 #  make test-libs        -> jen C unit testy knihoven
@@ -70,6 +74,7 @@ JOBS              := $(shell nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null 
 
 .PHONY: all libs cli gui clean libs-clean cli-clean gui-clean \
         libs-rebuild cli-rebuild gui-rebuild rebuild \
+        install uninstall \
         install-cli install-cli-docs uninstall-cli uninstall-cli-docs \
         test test-libs test-cli test-cli-refdata tests-clean \
         portable portable-full portable-gui portable-gui-clean \
@@ -131,11 +136,22 @@ cli-rebuild: cli-clean cli
 #
 # uninstall-* odeberou jen soubory, které install-* vytvořily (mzdsk-*
 # binárky, tools-* docs). Adresáře se smažou jen pokud zůstanou prázdné.
+#
+# `install` a `uninstall` jsou souhrnné cíle pro CLI nástroje a jejich
+# dokumentaci (install-cli + install-cli-docs, resp. uninstall-cli +
+# uninstall-cli-docs). GUI aplikaci neinstalují: ta hledá ui_resources/
+# a locale/ relativně k pracovnímu adresáři a zapisuje tam i nastavení,
+# takže se šíří jako samostatný adresář (`make portable-gui`), který si
+# uživatel zkopíruje, kam chce.
 
 PREFIX ?= /usr/local
 BINDIR ?= $(PREFIX)/bin
 DOCDIR ?= $(PREFIX)/share/doc/mzdisk
 DESTDIR ?=
+
+install: install-cli install-cli-docs
+
+uninstall: uninstall-cli uninstall-cli-docs
 
 install-cli: cli
 	@echo ""

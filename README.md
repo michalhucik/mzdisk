@@ -229,7 +229,17 @@ make docs-html
 
 # Tests (536 tests - libraries, GUI logic, CLI integration)
 make test
+
+# Install the CLI tools and their documentation (default /usr/local;
+# override with PREFIX=, BINDIR=, DOCDIR=, DESTDIR=)
+make install
+make uninstall
 ```
+
+> **Note:** `make install` installs only the CLI tools and their
+> documentation. The GUI application is not installed - it is a
+> self-contained folder (`make portable-gui`) that you copy wherever
+> you like.
 
 > **Note:** HTML documentation generation is an optional step. `make portable`
 > and `make portable-cli` work without Python, and HTML files are included
