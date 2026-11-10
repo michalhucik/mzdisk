@@ -139,12 +139,21 @@ static int test_gui_fsmz_delete ( void )
     return 0;
 }
 
-/** @brief Textový popis typu (OBJ, BTX, BSD). */
+/**
+ * @brief Textový popis typu - přesné zkratky pro známé kódy.
+ *
+ * Ověřuje mapování 0x01-0x05 na OBJ/BTX/BSD/BRD/RB (regrese: 0x05 dříve
+ * vracelo "BRD" stejně jako 0x04) a zástupný řetězec pro neznámý kód.
+ */
 static int test_gui_fsmz_type_str ( void )
 {
-    TEST_ASSERT_NOT_NULL ( panel_fsmz_type_str ( 0x01 ) );
-    TEST_ASSERT ( strlen ( panel_fsmz_type_str ( 0x01 ) ) > 0, "OBJ type non-empty" );
-    TEST_ASSERT_NOT_NULL ( panel_fsmz_type_str ( 0x02 ) );
+    TEST_ASSERT_EQ_STR ( panel_fsmz_type_str ( 0x01 ), "OBJ" );
+    TEST_ASSERT_EQ_STR ( panel_fsmz_type_str ( 0x02 ), "BTX" );
+    TEST_ASSERT_EQ_STR ( panel_fsmz_type_str ( 0x03 ), "BSD" );
+    TEST_ASSERT_EQ_STR ( panel_fsmz_type_str ( 0x04 ), "BRD" );
+    TEST_ASSERT_EQ_STR ( panel_fsmz_type_str ( 0x05 ), "RB" );
+    TEST_ASSERT_EQ_STR ( panel_fsmz_type_str ( 0x00 ), "???" );
+    TEST_ASSERT_EQ_STR ( panel_fsmz_type_str ( 0xFF ), "???" );
     return 0;
 }
 

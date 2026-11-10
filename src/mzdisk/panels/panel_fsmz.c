@@ -252,7 +252,7 @@ const char* panel_fsmz_type_str ( uint8_t ftype )
         case 0x02: return "BTX";
         case 0x03: return "BSD";
         case 0x04: return "BRD";
-        case 0x05: return "BRD";
+        case 0x05: return "RB";
         default:   return "???";
     }
 }

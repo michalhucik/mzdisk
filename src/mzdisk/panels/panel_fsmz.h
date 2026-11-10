@@ -181,8 +181,12 @@ extern en_MZDSK_RES panel_fsmz_set_addr ( st_MZDSK_DISC *disc,
 /**
  * @brief Vrátí textový popis souborového typu FSMZ.
  *
- * @param ftype Kód typu (0x01=OBJ, 0x02=BTX, 0x03=BSD, 0x05=BRD).
- * @return Statický řetězec.
+ * Zkratky odpovídají tabulce typů v ROM MZ-800 a volbě --ftype nástroje
+ * mzdsk-cpm.
+ *
+ * @param ftype Kód typu (0x01=OBJ, 0x02=BTX, 0x03=BSD, 0x04=BRD, 0x05=RB).
+ * @return Statický řetězec se zkratkou typu; pro neznámý kód "???".
+ *         Nikdy nevrací NULL, volající řetězec neuvolňuje.
  */
 extern const char* panel_fsmz_type_str ( uint8_t ftype );
 
