@@ -26,8 +26,7 @@
 
 static char s_tmpdir[256];
 static int setup_tmpdir ( void ) {
-    strncpy ( s_tmpdir, "/tmp/mzdsk_test_dnd_XXXXXX", sizeof ( s_tmpdir ) );
-    return mkdtemp ( s_tmpdir ) != NULL ? 0 : -1;
+    return test_make_tmpdir ( s_tmpdir, sizeof ( s_tmpdir ), "dnd" ) != NULL ? 0 : -1;
 }
 
 
@@ -89,7 +88,7 @@ static int create_fsmz_with_file ( const char *dsk_path, const char *name,
     generic_driver_close ( &fh );
     free ( h.spec.memspec.ptr );
 
-    /* 2. vytvořit MZF soubor v /tmp */
+    /* 2. vytvořit MZF soubor v dočasném adresáři testu */
     char mzf_path[512];
     snprintf ( mzf_path, sizeof ( mzf_path ), "%s.mzf", dsk_path );
     if ( make_mzf_file ( mzf_path, 0x01, name, body, body_len ) != EXIT_SUCCESS ) {

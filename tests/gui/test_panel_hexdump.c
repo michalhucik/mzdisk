@@ -22,8 +22,7 @@
 
 static char s_tmpdir[256];
 static int setup_tmpdir ( void ) {
-    strncpy ( s_tmpdir, "/tmp/mzdsk_test_hd_XXXXXX", sizeof ( s_tmpdir ) );
-    return mkdtemp ( s_tmpdir ) != NULL ? 0 : -1;
+    return test_make_tmpdir ( s_tmpdir, sizeof ( s_tmpdir ), "hd" ) != NULL ? 0 : -1;
 }
 
 static int create_fsmz_disc ( st_MZDSK_DISC *disc, const char *path )

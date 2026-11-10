@@ -186,8 +186,8 @@ static int test_execute_basic ( void )
         TEST_FAIL ( "getcwd failed" );
     }
 
-    char tmpdir[] = "/tmp/mzdsk_test_create_XXXXXX";
-    if ( mkdtemp ( tmpdir ) == NULL ) {
+    char tmpdir[TEST_TMP_PATH_MAX];
+    if ( test_make_tmpdir ( tmpdir, sizeof ( tmpdir ), "create" ) == NULL ) {
         TEST_FAIL ( "mkdtemp failed" );
     }
 
@@ -243,8 +243,8 @@ static int test_execute_basic ( void )
 /** @brief Execute CP/M SD preset -> vytvoří DSK s CP/M. */
 static int test_execute_cpm_sd ( void )
 {
-    char tmpdir[] = "/tmp/mzdsk_test_create_XXXXXX";
-    if ( mkdtemp ( tmpdir ) == NULL ) {
+    char tmpdir[TEST_TMP_PATH_MAX];
+    if ( test_make_tmpdir ( tmpdir, sizeof ( tmpdir ), "create" ) == NULL ) {
         TEST_FAIL ( "mkdtemp failed" );
     }
 
@@ -293,8 +293,8 @@ static int test_execute_cpm_sd ( void )
 /** @brief Execute Custom (neformátovaný) preset. */
 static int test_execute_custom_unformatted ( void )
 {
-    char tmpdir[] = "/tmp/mzdsk_test_create_XXXXXX";
-    if ( mkdtemp ( tmpdir ) == NULL ) {
+    char tmpdir[TEST_TMP_PATH_MAX];
+    if ( test_make_tmpdir ( tmpdir, sizeof ( tmpdir ), "create" ) == NULL ) {
         TEST_FAIL ( "mkdtemp failed" );
     }
 

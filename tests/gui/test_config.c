@@ -176,8 +176,8 @@ static int test_config_save_load_roundtrip ( void )
         TEST_FAIL ( "getcwd failed" );
     }
 
-    char tmpdir[] = "/tmp/mzdsk_test_cfg_XXXXXX";
-    if ( mkdtemp ( tmpdir ) == NULL ) {
+    char tmpdir[TEST_TMP_PATH_MAX];
+    if ( test_make_tmpdir ( tmpdir, sizeof ( tmpdir ), "cfg" ) == NULL ) {
         TEST_FAIL ( "mkdtemp failed" );
     }
 
@@ -246,9 +246,7 @@ static int test_config_save_load_roundtrip ( void )
 static int watch_tmpdir_enter ( char *tmpdir, size_t size, char *orig_dir, size_t orig_size )
 {
     if ( getcwd ( orig_dir, orig_size ) == NULL ) return -1;
-    strncpy ( tmpdir, "/tmp/mzdsk_test_watch_XXXXXX", size );
-    tmpdir[size - 1] = '\0';
-    if ( mkdtemp ( tmpdir ) == NULL ) return -1;
+    if ( test_make_tmpdir ( tmpdir, size, "watch" ) == NULL ) return -1;
     if ( chdir ( tmpdir ) != 0 ) { rmdir ( tmpdir ); return -1; }
     return 0;
 }
@@ -266,7 +264,7 @@ static void watch_tmpdir_leave ( const char *tmpdir, const char *orig_dir )
 /** @brief Watch init nad neexistujícím souborem - poll vrátí false bez pádu. */
 static int test_watch_init_on_missing_file ( void )
 {
-    char tmpdir[64], orig_dir[1024];
+    char tmpdir[TEST_TMP_PATH_MAX], orig_dir[1024];
     if ( watch_tmpdir_enter ( tmpdir, sizeof ( tmpdir ), orig_dir, sizeof ( orig_dir ) ) != 0 ) {
         TEST_FAIL ( "tmpdir setup failed" );
     }
@@ -289,7 +287,7 @@ static int test_watch_init_on_missing_file ( void )
 /** @brief Watch detekuje externí změnu (simulováno druhým save s jiným obsahem). */
 static int test_watch_detects_external_change ( void )
 {
-    char tmpdir[64], orig_dir[1024];
+    char tmpdir[TEST_TMP_PATH_MAX], orig_dir[1024];
     if ( watch_tmpdir_enter ( tmpdir, sizeof ( tmpdir ), orig_dir, sizeof ( orig_dir ) ) != 0 ) {
         TEST_FAIL ( "tmpdir setup failed" );
     }
@@ -337,7 +335,7 @@ static int test_watch_detects_external_change ( void )
 /** @brief Po vlastním save + mark_saved watch nedetekuje false-positive. */
 static int test_watch_ignores_own_save ( void )
 {
-    char tmpdir[64], orig_dir[1024];
+    char tmpdir[TEST_TMP_PATH_MAX], orig_dir[1024];
     if ( watch_tmpdir_enter ( tmpdir, sizeof ( tmpdir ), orig_dir, sizeof ( orig_dir ) ) != 0 ) {
         TEST_FAIL ( "tmpdir setup failed" );
     }
@@ -368,7 +366,7 @@ static int test_watch_ignores_own_save ( void )
 /** @brief Throttling: poll v intervalu < poll_interval_ms vrátí false bez stat(). */
 static int test_watch_throttle ( void )
 {
-    char tmpdir[64], orig_dir[1024];
+    char tmpdir[TEST_TMP_PATH_MAX], orig_dir[1024];
     if ( watch_tmpdir_enter ( tmpdir, sizeof ( tmpdir ), orig_dir, sizeof ( orig_dir ) ) != 0 ) {
         TEST_FAIL ( "tmpdir setup failed" );
     }
@@ -397,7 +395,7 @@ static int test_watch_throttle ( void )
 /** @brief Atomický save nenechá za sebou *.tmp.* soubory v úspěšném scénáři. */
 static int test_atomic_save_no_partial ( void )
 {
-    char tmpdir[64], orig_dir[1024];
+    char tmpdir[TEST_TMP_PATH_MAX], orig_dir[1024];
     if ( watch_tmpdir_enter ( tmpdir, sizeof ( tmpdir ), orig_dir, sizeof ( orig_dir ) ) != 0 ) {
         TEST_FAIL ( "tmpdir setup failed" );
     }
@@ -499,10 +497,8 @@ static void touch_file ( const char *path )
 /** @brief Připraví unikátní tmpdir pro test, vrátí jeho cestu (statický buf). */
 static const char *make_tmpdir ( void )
 {
-    static char tmpdir[64];
-    strncpy ( tmpdir, "/tmp/mzdsk_test_dup_XXXXXX", sizeof ( tmpdir ) );
-    if ( mkdtemp ( tmpdir ) == NULL ) return NULL;
-    return tmpdir;
+    static char tmpdir[TEST_TMP_PATH_MAX];
+    return test_make_tmpdir ( tmpdir, sizeof ( tmpdir ), "dup" );
 }
 
 
@@ -656,14 +652,13 @@ static int test_resolve_dup_rename_no_ext ( void )
 /**
  * @brief RENAME: tečka je v adresářové cestě, ne v názvu souboru.
  *
- * Např. `/tmp/mzdsk_test_dup_XXXXXX.dir/FILE` - funkce nesmí
+ * Např. `<tmp>/mzdsk_test_dup_XXXXXX.dir/FILE` - funkce nesmí
  * považovat tečku v adresářové cestě za oddělovač přípony.
  */
 static int test_resolve_dup_rename_dot_in_dir ( void )
 {
     char dirpath[256];
-    strncpy ( dirpath, "/tmp/mzdsk_test_dup_XXXXXX", sizeof ( dirpath ) );
-    if ( mkdtemp ( dirpath ) == NULL ) TEST_FAIL ( "mkdtemp failed" );
+    if ( test_make_tmpdir ( dirpath, sizeof ( dirpath ), "dup" ) == NULL ) TEST_FAIL ( "mkdtemp failed" );
 
     /* přejmenovat tmpdir na "<puvodni>.dir" */
     char dirdot[320];

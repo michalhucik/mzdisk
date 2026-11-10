@@ -131,13 +131,6 @@ jobs:
             vim
             diffutils
 
-      # C testy mají natvrdo cestu "/tmp/...". Nativní (MinGW) binárka ji
-      # vyhodnotí jako \tmp na aktuálním disku, ne jako MSYS2 /tmp, takže
-      # ten adresář musí existovat na disku s pracovní kopií.
-      # Viz devdocs/bugs 2026-11-10-002 (neveřejné) - obejití, ne oprava.
-      - name: Create \tmp on the workspace drive
-        run: mkdir -p "$(pwd -W | cut -c1-2)/tmp"
-
       - name: Build libraries
         run: make libs
 

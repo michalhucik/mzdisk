@@ -32,7 +32,72 @@
 #define TEST_FRAMEWORK_H
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+
+/**
+ * @brief Doporučená velikost bufferu pro cestu dočasného adresáře testu.
+ *
+ * Musí pojmout základní dočasný adresář systému (na Windows typicky
+ * `C:/Users/<jméno>/AppData/Local/Temp`), oddělovač a jméno
+ * `mzdsk_test_<name>_XXXXXX`.
+ */
+#define TEST_TMP_PATH_MAX 256
+
+/**
+ * @brief Vytvoří unikátní dočasný adresář testu a vrátí jeho cestu.
+ *
+ * Základní adresář se bere z prvního neprázdného z proměnných prostředí
+ * `TMPDIR`, `TEMP`, `TMP`; když není nastavená žádná, použije se `/tmp`.
+ * Natvrdo zapsané `/tmp` nestačí: testovací binárky jsou na Windows
+ * nativní (MinGW) programy a `/tmp` vyhodnotí jako `\tmp` na aktuálním
+ * disku, ne jako MSYS2 `/tmp` (bug 2026-11-10-002).
+ *
+ * Výsledná cesta má tvar `<základ>/mzdsk_test_<name>_XXXXXX`, kde
+ * `XXXXXX` nahradí `mkdtemp()`. Koncové oddělovače základu se odříznou
+ * a na Windows se zpětná lomítka převedou na obyčejná, aby cesta měla
+ * jednotné oddělovače.
+ *
+ * @param[out] buf  Buffer pro výslednou cestu. Nesmí být NULL.
+ * @param[in]  size Velikost @p buf v bajtech (doporučeno
+ *                  TEST_TMP_PATH_MAX).
+ * @param[in]  name Krátké jméno testu vložené do názvu adresáře.
+ *                  Nesmí být NULL.
+ * @return @p buf při úspěchu; NULL, pokud se cesta do bufferu nevejde
+ *         nebo `mkdtemp()` selže (pak platí errno z `mkdtemp()`).
+ *
+ * @post Při úspěchu adresář existuje a je prázdný; smazat ho musí
+ *       volající. Při neúspěchu je obsah @p buf nedefinovaný.
+ * @note Funkce čte prostředí přes `getenv()`, není tedy bezpečná vůči
+ *       souběžné změně prostředí z jiného vlákna.
+ */
+static inline char *test_make_tmpdir ( char *buf, size_t size, const char *name )
+{
+    static const char *const vars[] = { "TMPDIR", "TEMP", "TMP" };
+    const char *base = NULL;
+    for ( size_t i = 0; i < sizeof ( vars ) / sizeof ( vars[0] ); i++ ) {
+        const char *v = getenv ( vars[i] );
+        if ( v != NULL && v[0] != '\0' ) { base = v; break; }
+    }
+    if ( base == NULL ) base = "/tmp";
+
+    /* odříznout koncové oddělovače (kořen "/" zůstane prázdný = "/...") */
+    size_t base_len = strlen ( base );
+    while ( base_len > 0 && ( base[base_len - 1] == '/' || base[base_len - 1] == '\\' ) ) {
+        base_len--;
+    }
+
+    int n = snprintf ( buf, size, "%.*s/mzdsk_test_%s_XXXXXX", (int) base_len, base, name );
+    if ( n < 0 || (size_t) n >= size ) return NULL;
+
+#ifdef _WIN32
+    for ( char *p = buf; *p != '\0'; p++ ) {
+        if ( *p == '\\' ) *p = '/';
+    }
+#endif
+
+    return mkdtemp ( buf );
+}
 
 /** @brief Počítadla testů - deklarace v každém testovacím souboru. */
 static int g_test_passed = 0;

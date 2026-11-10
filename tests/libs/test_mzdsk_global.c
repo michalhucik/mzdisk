@@ -107,8 +107,8 @@ static int test_error_messages ( void )
 static int test_disc_open_close ( void )
 {
     /* nejdřív vytvořit DSK soubor */
-    char tmpdir[] = "/tmp/mzdsk_test_global_XXXXXX";
-    if ( mkdtemp ( tmpdir ) == NULL ) TEST_FAIL ( "mkdtemp" );
+    char tmpdir[TEST_TMP_PATH_MAX];
+    if ( test_make_tmpdir ( tmpdir, sizeof ( tmpdir ), "global" ) == NULL ) TEST_FAIL ( "mkdtemp" );
 
     char filepath[512];
     snprintf ( filepath, sizeof ( filepath ), "%s/test.dsk", tmpdir );
@@ -190,8 +190,8 @@ static int test_disc_close_partial_init ( void )
 /** @brief Save -> reopen -> data zachována. */
 static int test_disc_save_reopen ( void )
 {
-    char tmpdir[] = "/tmp/mzdsk_test_save_XXXXXX";
-    if ( mkdtemp ( tmpdir ) == NULL ) TEST_FAIL ( "mkdtemp" );
+    char tmpdir[TEST_TMP_PATH_MAX];
+    if ( test_make_tmpdir ( tmpdir, sizeof ( tmpdir ), "save" ) == NULL ) TEST_FAIL ( "mkdtemp" );
 
     char filepath[512];
     snprintf ( filepath, sizeof ( filepath ), "%s/save.dsk", tmpdir );
@@ -244,8 +244,8 @@ static int test_sector_info_cb ( void )
 {
     /* FSMZ stopa 0 (16x256B) by měla být INVERTED */
     /* Vytvořit minimální FSMZ disc pro test */
-    char tmpdir[] = "/tmp/mzdsk_test_sicb_XXXXXX";
-    if ( mkdtemp ( tmpdir ) == NULL ) TEST_FAIL ( "mkdtemp" );
+    char tmpdir[TEST_TMP_PATH_MAX];
+    if ( test_make_tmpdir ( tmpdir, sizeof ( tmpdir ), "sicb" ) == NULL ) TEST_FAIL ( "mkdtemp" );
 
     char filepath[512];
     snprintf ( filepath, sizeof ( filepath ), "%s/fsmz.dsk", tmpdir );

@@ -23,8 +23,7 @@
 
 static char s_tmpdir[256];
 static int setup_tmpdir ( void ) {
-    strncpy ( s_tmpdir, "/tmp/mzdsk_test_sess_XXXXXX", sizeof ( s_tmpdir ) );
-    return mkdtemp ( s_tmpdir ) != NULL ? 0 : -1;
+    return test_make_tmpdir ( s_tmpdir, sizeof ( s_tmpdir ), "sess" ) != NULL ? 0 : -1;
 }
 
 /**
