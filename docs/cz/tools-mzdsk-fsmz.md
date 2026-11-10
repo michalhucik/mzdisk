@@ -687,7 +687,7 @@ mzdsk-fsmz disk.dsk put-block 15 fixed_dinfo.bin
 Kompletní workflow - vytvoření diskety a naplnění soubory:
 
 ```bash
-mzdsk-create --format-basic disk.dsk
+mzdsk-create disk.dsk --format-basic 80
 mzdsk-fsmz disk.dsk put loader.mzf
 mzdsk-fsmz disk.dsk put game.mzf
 mzdsk-fsmz disk.dsk dir
@@ -757,7 +757,7 @@ mzdsk-fsmz disk.dsk defrag
 
 Blokové operace (get-block, put-block) postupují sekvenčně podle ID sektorů
 (jako řadič disketové jednotky: ID 1, 2, 3, ...). Sektory s nesekvenčním ID
-(např. LEMMINGS disk se sektory 1-9 + 22 na jedné stopě) nejsou přes
+(např. LEMMINGS disk se sektory 1-9 + 21 na jedné stopě) nejsou přes
 blokové příkazy dostupné.
 
 Pro přístup k těmto sektorům použijte `mzdsk-raw` s volbou `--order phys`,

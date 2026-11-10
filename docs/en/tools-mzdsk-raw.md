@@ -99,7 +99,7 @@ The `--order id|phys` option controls how sectors are traversed:
 - **id** (default) - sequential by sector ID (1, 2, 3, ...). At the end
   of a track, moves to the next track starting from ID 1. Emulates floppy
   disk controller behavior. Sectors with non-sequential IDs (e.g. LEMMINGS
-  sector 22 on a track with IDs 1-9) are skipped.
+  sector 21 on a track with IDs 1-9) are skipped.
 
 - **phys** - by physical position in the DSK image (sinfo[] array in the
   track header). Captures all sectors including non-sequential ones.

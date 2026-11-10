@@ -698,7 +698,7 @@ mzdsk-fsmz mydisk.dsk put-block 15 fixed_dinfo.bin
 Full workflow - create, format, populate, and inspect a disk:
 
 ```bash
-mzdsk-create --format-basic blank.dsk
+mzdsk-create blank.dsk --format-basic 80
 mzdsk-fsmz blank.dsk put loader.mzf
 mzdsk-fsmz blank.dsk put game.mzf
 mzdsk-fsmz blank.dsk dir
@@ -774,7 +774,7 @@ mzdsk-fsmz mydisk.dsk defrag
 
 Block operations (get-block, put-block) traverse sectors sequentially by
 sector ID (like an FDC controller: ID 1, 2, 3, ...). Sectors with
-non-sequential IDs (e.g. LEMMINGS disk with sectors 1-9 + 22 on a single
+non-sequential IDs (e.g. LEMMINGS disk with sectors 1-9 + 21 on a single
 track) are not accessible through block commands.
 
 To access these sectors, use `mzdsk-raw` with the `--order phys` option,

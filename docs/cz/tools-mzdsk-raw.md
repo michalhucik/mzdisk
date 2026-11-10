@@ -96,7 +96,7 @@ Volba `--order id|phys` řídí, jak se postupuje od jednoho sektoru k dalšímu
 
 - **id** (výchozí) - sekvenčně podle ID sektoru (1, 2, 3, ...). Na konci
   stopy přejde na další stopu od ID 1. Emuluje chování řadiče disketové
-  jednotky. Sektory s nesekvenčním ID (např. LEMMINGS sektor 22 na stopě
+  jednotky. Sektory s nesekvenčním ID (např. LEMMINGS sektor 21 na stopě
   s ID 1-9) jsou přeskočeny.
 
 - **phys** - podle fyzické pozice v DSK obrazu (pole sinfo[] v hlavičce
