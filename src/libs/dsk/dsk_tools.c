@@ -213,6 +213,9 @@ void dsk_tools_make_sector_map ( uint8_t sectors, en_DSK_SECTOR_ORDER_TYPE secto
 /**
  * Vytvoření hlavičky pro stopu.
  *
+ * Každému sektoru zapíše do Sector Info i skutečnou délku dat
+ * (dsk_decode_sector_size ( ssize )), jak vyžaduje Extended CPC DSK.
+ *
  * @param h Handler
  * @param dsk_offset Offset v souboru
  * @param track Číslo stopy
@@ -220,6 +223,8 @@ void dsk_tools_make_sector_map ( uint8_t sectors, en_DSK_SECTOR_ORDER_TYPE secto
  * @param sectors Počet sektorů
  * @param ssize Kódovaná velikost sektoru
  * @param sector_map Seznam ID jednotlivých sektorů
+ * @param filler Filler byte zapsaný do hlavičky stopy
+ * @param gap Délka GAP#3 zapsaná do hlavičky stopy
  * @return EXIT_FAILURE | EXIT_SUCCESS
  */
 int dsk_tools_create_track_header ( st_HANDLER *h, uint32_t dsk_offset, uint8_t track, uint8_t side, uint8_t sectors, en_DSK_SECTOR_SIZE ssize, uint8_t *sector_map, uint8_t filler, uint8_t gap ) {
@@ -244,6 +249,7 @@ int dsk_tools_create_track_header ( st_HANDLER *h, uint32_t dsk_offset, uint8_t 
         trkhdr->sinfo[i].side = side;
         trkhdr->sinfo[i].sector = sector_map[i];
         trkhdr->sinfo[i].ssize = ssize;
+        dsk_sector_info_set_data_length ( &trkhdr->sinfo[i], dsk_decode_sector_size ( ssize ) );
     }
 
     return generic_driver_ppwrite ( h, dsk_offset, trkhdr, sizeof ( st_DSK_TRACK_INFO ) );
@@ -808,6 +814,22 @@ static int dsk_diag_check_single_track ( st_HANDLER *h, st_DSK_DIAG_TRACK *dt,
         return 0;
     }
 
+    /* Kontrola délky dat v Sector Info. Extended CPC DSK ji vyžaduje,
+     * dsk_tools < 3.4.0 ji ale nechávaly nulovou (bug 2026-11-10-003).
+     * Hlásí se jen nula - nenulová délka odlišná od velikosti dané N se
+     * neposuzuje. Chybu čtení hlavičky zde neřešíme, zachytí ji kontrola
+     * čitelnosti dat níže. */
+    st_DSK_TRACK_INFO trkhdr;
+    if ( EXIT_SUCCESS == dsk_read_on_offset ( h, offset, &trkhdr, sizeof ( trkhdr ) ) ) {
+        uint8_t si;
+        for ( si = 0; si < sh_trk_info.sectors; si++ ) {
+            if ( dsk_sector_info_get_data_length ( &trkhdr.sinfo[si] ) == 0 ) {
+                dt->flags |= DSK_DIAG_TRACK_ZERO_DATALEN;
+                break;
+            }
+        }
+    }
+
     /* Výpočet velikosti sektorových dat a kontrola čitelnosti */
     uint16_t sectors_size = dsk_decode_sector_size ( sh_trk_info.ssize ) * sh_trk_info.sectors;
 
@@ -926,8 +948,9 @@ static void dsk_diag_analyze_summary ( st_DSK_DIAG_RESULT *result, const st_DSK_
         result->image_flags |= DSK_DIAG_IMAGE_ODD_DOUBLE;
     }
 
-    /* Počítání tsize diferencí a per-track chyb */
+    /* Počítání tsize diferencí, nulových délek dat a per-track chyb */
     uint8_t tsize_diffs = 0;
+    uint8_t zero_datalen = 0;
     int has_track_errors = 0;
 
     uint8_t i;
@@ -935,19 +958,29 @@ static void dsk_diag_analyze_summary ( st_DSK_DIAG_RESULT *result, const st_DSK_
         if ( result->tracks[i].flags & DSK_DIAG_TRACK_BAD_TSIZE ) {
             tsize_diffs++;
         }
+        if ( result->tracks[i].flags & DSK_DIAG_TRACK_ZERO_DATALEN ) {
+            zero_datalen++;
+        }
         if ( result->tracks[i].flags != DSK_DIAG_TRACK_OK ) {
-            /* Ignoruj čistě BAD_TSIZE - to je image-level chyba */
-            uint16_t non_tsize_flags = result->tracks[i].flags & ~DSK_DIAG_TRACK_BAD_TSIZE;
-            if ( non_tsize_flags != 0 ) {
+            /* Ignoruj BAD_TSIZE a ZERO_DATALEN - ty mají vlastní
+             * image-level flagy a jsou opravitelné */
+            uint16_t other_flags = result->tracks[i].flags
+                                 & ~( DSK_DIAG_TRACK_BAD_TSIZE | DSK_DIAG_TRACK_ZERO_DATALEN );
+            if ( other_flags != 0 ) {
                 has_track_errors = 1;
             }
         }
     }
 
     result->tsize_differences = tsize_diffs;
+    result->zero_datalen_tracks = zero_datalen;
 
     if ( tsize_diffs > 0 ) {
         result->image_flags |= DSK_DIAG_IMAGE_BAD_TSIZE;
+    }
+
+    if ( zero_datalen > 0 ) {
+        result->image_flags |= DSK_DIAG_IMAGE_ZERO_DATALEN;
     }
 
     if ( has_track_errors ) {
@@ -1025,7 +1058,8 @@ int dsk_tools_diag_has_repairable_errors ( const st_DSK_DIAG_RESULT *result ) {
     uint16_t repairable_mask = DSK_DIAG_IMAGE_BAD_TRACKCOUNT
                              | DSK_DIAG_IMAGE_BAD_TSIZE
                              | DSK_DIAG_IMAGE_TRAILING_DATA
-                             | DSK_DIAG_IMAGE_TRACKCOUNT_EXCEEDED;
+                             | DSK_DIAG_IMAGE_TRACKCOUNT_EXCEEDED
+                             | DSK_DIAG_IMAGE_ZERO_DATALEN;
 
     return ( result->image_flags & repairable_mask ) ? 1 : 0;
 }
@@ -1066,6 +1100,10 @@ int dsk_tools_diag_has_fatal_errors ( const st_DSK_DIAG_RESULT *result ) {
  * - tsize pole (BAD_TSIZE)
  * - trailing data za poslední stopou (TRAILING_DATA) - soubor se zkrátí
  *   na `expected_image_size` přes `generic_driver_truncate`
+ * - nulové délky dat sektorů v Sector Info (ZERO_DATALEN) - doplní se
+ *   velikost, se kterou sektor počítá dsk_compute_sector_offset()
+ *   (dekódované ssize sektoru, při nule ssize stopy); nenulové délky,
+ *   data sektorů a ostatní pole Sector Info zůstávají beze změny
  *
  * @param h Handler (musí být otevřený pro zápis)
  * @param diag Diagnostický výsledek z dsk_tools_diagnose()
@@ -1140,6 +1178,48 @@ int dsk_tools_repair ( st_HANDLER *h, const st_DSK_DIAG_RESULT *diag ) {
             return EXIT_FAILURE;
         }
         dsk_log ( DSK_LOG_INFO, "DSK header repaired successfully." );
+    }
+
+    /* Oprava nulových délek dat v Sector Info. Offsety stop bereme
+       z diagnostiky (skutečné pozice nalezené skenem), takže oprava
+       nezávisí na tom, zda byla tsize v hlavičce správně. */
+    if ( diag->image_flags & DSK_DIAG_IMAGE_ZERO_DATALEN ) {
+        uint32_t fixed_sectors = 0;
+        uint32_t fixed_tracks = 0;
+        uint8_t i;
+        for ( i = 0; i < diag->count_tracks; i++ ) {
+            const st_DSK_DIAG_TRACK *dt = &diag->tracks[i];
+            if ( !( dt->flags & DSK_DIAG_TRACK_ZERO_DATALEN ) ) continue;
+
+            st_DSK_TRACK_INFO trkhdr;
+            if ( EXIT_SUCCESS != dsk_read_on_offset ( h, dt->offset, &trkhdr, sizeof ( trkhdr ) ) ) {
+                dsk_log ( DSK_LOG_ERROR, "can't read track header for repair, abstrack: %d", dt->abstrack );
+                return EXIT_FAILURE;
+            }
+
+            uint8_t fixed = 0;
+            uint8_t si;
+            for ( si = 0; si < trkhdr.sectors && si < DSK_MAX_SECTORS; si++ ) {
+                st_DSK_SECTOR_INFO *sinfo = &trkhdr.sinfo[si];
+                if ( dsk_sector_info_get_data_length ( sinfo ) != 0 ) continue;
+                /* Stejné pravidlo jako dsk_compute_sector_offset() */
+                uint8_t ssize = ( sinfo->ssize != 0 ) ? sinfo->ssize : trkhdr.ssize;
+                dsk_sector_info_set_data_length ( sinfo, dsk_decode_sector_size ( ssize ) );
+                fixed++;
+            }
+
+            if ( fixed ) {
+                if ( EXIT_SUCCESS != dsk_write_on_offset ( h, dt->offset, &trkhdr, sizeof ( trkhdr ) ) ) {
+                    dsk_log ( DSK_LOG_ERROR, "can't write track header for repair, abstrack: %d", dt->abstrack );
+                    return EXIT_FAILURE;
+                }
+                fixed_sectors += fixed;
+                fixed_tracks++;
+            }
+        }
+        /* Jeden souhrnný řádek - starý obraz má chybu na všech stopách */
+        dsk_log ( DSK_LOG_INFO, "Repaired sector data length: %u sector(s) on %u track(s)",
+                  (unsigned) fixed_sectors, (unsigned) fixed_tracks );
     }
 
     /* Oprava trailing dat - soubor zkrátíme na expected_image_size.
@@ -1269,6 +1349,12 @@ int dsk_tools_check_dsk ( st_HANDLER *h, int print_info, int dsk_autofix ) {
 
     if ( diag->tsize_differences != 0 ) {
         dsk_log ( DSK_LOG_WARNING, "DSK BUG: Some tracks have bad size info in DSK header." );
+        errors++;
+    }
+
+    if ( diag->image_flags & DSK_DIAG_IMAGE_ZERO_DATALEN ) {
+        dsk_log ( DSK_LOG_WARNING, "DSK BUG: %d track(s) have sectors with zero data length in sector info.",
+                  diag->zero_datalen_tracks );
         errors++;
     }
 

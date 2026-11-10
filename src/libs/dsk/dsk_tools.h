@@ -199,6 +199,13 @@ extern "C" {
      * zapisuje přes dsk_tools_create_track_sectors), ale některé nástroje
      * (např. mzdsk-dsk tracks, externí reformátovací utility) je čtou.
      *
+     * Každému sektoru se do Sector Info zapíše i skutečná délka dat
+     * (dsk_decode_sector_size ( ssize )), kterou formát Extended CPC DSK
+     * vyžaduje. Verze < 3.4.0 ji nechávaly nulovou (bug 2026-11-10-003).
+     *
+     * @post Pro i < sectors platí
+     *       dsk_sector_info_get_data_length ( &sinfo[i] ) == dsk_decode_sector_size ( ssize ).
+     *
      * @param h Handler.
      * @param dsk_offset Offset v souboru.
      * @param track Číslo stopy.
@@ -330,6 +337,7 @@ extern "C" {
         DSK_DIAG_TRACK_BAD_SSIZE        = 0x0020, /**< Neplatná kódovaná velikost sektoru */
         DSK_DIAG_TRACK_BAD_TSIZE        = 0x0040, /**< tsize v DSK hlavičce nesedí se skutečností */
         DSK_DIAG_TRACK_DATA_UNREADABLE  = 0x0080, /**< Sektorová data nelze přečíst */
+        DSK_DIAG_TRACK_ZERO_DATALEN     = 0x0100, /**< >= 1 sektor má v Sector Info nulovou délku dat (opravitelné, není fatální) */
     } en_DSK_DIAG_TRACK_FLAG;
 
 
@@ -366,8 +374,9 @@ extern "C" {
         DSK_DIAG_IMAGE_ODD_DOUBLE            = 0x0004, /**< 2-sided s lichým počtem stop */
         DSK_DIAG_IMAGE_BAD_TSIZE             = 0x0008, /**< >= 1 stopa má špatnou tsize */
         DSK_DIAG_IMAGE_TRAILING_DATA         = 0x0010, /**< Data za poslední stopou */
-        DSK_DIAG_IMAGE_TRACK_ERRORS          = 0x0020, /**< >= 1 stopa má per-track chybu */
+        DSK_DIAG_IMAGE_TRACK_ERRORS          = 0x0020, /**< >= 1 stopa má per-track chybu jinou než BAD_TSIZE a ZERO_DATALEN */
         DSK_DIAG_IMAGE_TRACKCOUNT_EXCEEDED   = 0x0040, /**< Hlavička deklaruje tracks*sides > DSK_MAX_TOTAL_TRACKS (audit H-11) */
+        DSK_DIAG_IMAGE_ZERO_DATALEN          = 0x0080, /**< >= 1 stopa má sektor s nulovou délkou dat v Sector Info */
     } en_DSK_DIAG_IMAGE_FLAG;
 
 
@@ -389,6 +398,7 @@ extern "C" {
         uint8_t  sides;                                    /**< Počet stran */
         uint8_t  creator[DSK_CREATOR_FIELD_LENGTH + 1];    /**< Creator (nulou ukončený) */
         uint8_t  tsize_differences;                        /**< Počet stop se špatnou tsize */
+        uint8_t  zero_datalen_tracks;                      /**< Počet stop s flagem DSK_DIAG_TRACK_ZERO_DATALEN */
         uint32_t expected_image_size;                      /**< Hlavička + všechny stopy */
         uint32_t actual_file_size;                         /**< Skutečná velikost souboru */
         uint8_t  count_tracks;                             /**< Počet záznamů v tracks[] */
@@ -422,7 +432,8 @@ extern "C" {
     /**
      * @brief Zjistí, zda diagnostický výsledek obsahuje opravitelné chyby.
      *
-     * Opravitelné chyby: BAD_TRACKCOUNT, BAD_TSIZE, TRAILING_DATA.
+     * Opravitelné chyby: BAD_TRACKCOUNT, BAD_TSIZE, TRAILING_DATA,
+     * TRACKCOUNT_EXCEEDED, ZERO_DATALEN.
      *
      * @param result Diagnostický výsledek (může být NULL - vrátí 0).
      * @return Nenulová pokud existují opravitelné chyby, 0 pokud ne.
@@ -443,8 +454,15 @@ extern "C" {
     /**
      * @brief Opraví opravitelné chyby na základě diagnostiky.
      *
-     * Opravuje: počet stop v hlavičce, tsize pole.
+     * Opravuje: počet stop v hlavičce, tsize pole, trailing data za
+     * poslední stopou (zkrácením obrazu) a nulové délky dat sektorů
+     * v Sector Info (ZERO_DATALEN).
      * Vyžaduje handler otevřený pro zápis.
+     *
+     * Při ZERO_DATALEN se nulová délka nahradí velikostí, se kterou
+     * sektor počítá dsk_compute_sector_offset(): dekódované pole ssize
+     * sektoru, a je-li nulové, dekódované ssize stopy. Nenulové délky,
+     * sektorová data a ostatní pole Sector Info se nemění.
      *
      * @param h Handler (musí být otevřený pro zápis).
      * @param diag Diagnostický výsledek z dsk_tools_diagnose().
@@ -613,7 +631,7 @@ extern "C" {
     /* ─── Verze knihovny ─── */
 
     /** @brief Verze knihovny dsk_tools. */
-#define DSK_TOOLS_VERSION "3.3.0"
+#define DSK_TOOLS_VERSION "3.4.0"
 
     /**
      * @brief Vrátí řetězec s verzí knihovny dsk_tools.

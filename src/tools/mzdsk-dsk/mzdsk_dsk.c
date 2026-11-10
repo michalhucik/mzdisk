@@ -50,7 +50,7 @@
 
 
 /** @brief Verze nástroje mzdsk-dsk. */
-#define MZDSK_DSK_VERSION "1.5.7"
+#define MZDSK_DSK_VERSION "1.6.0"
 
 
 /* =========================================================================
@@ -451,20 +451,21 @@ static int print_track_detail ( st_HANDLER *h, uint8_t abstrack ) {
 
     if ( thinfo.sectors > 0 ) {
         printf ( "  Sectors detail:\n" );
-        printf ( "    %-4s  %-6s  %-5s  %-5s  %-8s  %-8s\n",
-            "Idx", "SectID", "Track", "Side", "FDC_STS1", "FDC_STS2" );
-        printf ( "    %-4s  %-6s  %-5s  %-5s  %-8s  %-8s\n",
-            "----", "------", "-----", "-----", "--------", "--------" );
+        printf ( "    %-4s  %-6s  %-5s  %-5s  %-8s  %-8s  %-7s\n",
+            "Idx", "SectID", "Track", "Side", "FDC_STS1", "FDC_STS2", "DataLen" );
+        printf ( "    %-4s  %-6s  %-5s  %-5s  %-8s  %-8s  %-7s\n",
+            "----", "------", "-----", "-----", "--------", "--------", "-------" );
 
         uint8_t si;
         for ( si = 0; si < thinfo.sectors && si < DSK_MAX_SECTORS; si++ ) {
-            printf ( "    %-4d  %-6d  %-5d  %-5d  0x%02x      0x%02x\n",
+            printf ( "    %-4d  %-6d  %-5d  %-5d  0x%02x      0x%02x      %d\n",
                 si,
                 thinfo.sinfo[si].sector,
                 thinfo.sinfo[si].track,
                 thinfo.sinfo[si].side,
                 thinfo.sinfo[si].fdc_sts1,
-                thinfo.sinfo[si].fdc_sts2 );
+                thinfo.sinfo[si].fdc_sts2,
+                dsk_sector_info_get_data_length ( &thinfo.sinfo[si] ) );
         }
     }
 
@@ -565,6 +566,7 @@ static void print_diag_report ( const st_DSK_DIAG_RESULT *diag ) {
     printf ( "Actual tracks  : %d\n", diag->actual_tracks );
     printf ( "Sides          : %d\n", diag->sides );
     printf ( "tsize diffs    : %d\n", diag->tsize_differences );
+    printf ( "Zero data len  : %d track(s)\n", diag->zero_datalen_tracks );
 
     if ( diag->actual_file_size > 0 ) {
         printf ( "Expected size  : %u bytes\n", (unsigned) diag->expected_image_size );
@@ -583,6 +585,7 @@ static void print_diag_report ( const st_DSK_DIAG_RESULT *diag ) {
         if ( diag->image_flags & DSK_DIAG_IMAGE_TRAILING_DATA )  printf ( " TRAILING_DATA" );
         if ( diag->image_flags & DSK_DIAG_IMAGE_TRACK_ERRORS )   printf ( " TRACK_ERRORS" );
         if ( diag->image_flags & DSK_DIAG_IMAGE_TRACKCOUNT_EXCEEDED ) printf ( " TRACKCOUNT_EXCEEDED" );
+        if ( diag->image_flags & DSK_DIAG_IMAGE_ZERO_DATALEN )   printf ( " ZERO_DATALEN" );
     }
     printf ( "\n" );
 
@@ -623,6 +626,7 @@ static void print_diag_report ( const st_DSK_DIAG_RESULT *diag ) {
             if ( dt->flags & DSK_DIAG_TRACK_BAD_SSIZE )       printf ( " BAD_SSIZE(0x%02x)", dt->ssize );
             if ( dt->flags & DSK_DIAG_TRACK_BAD_TSIZE )       printf ( " BAD_TSIZE(hdr=0x%02x,calc=0x%02x)", dt->header_tsize, dt->computed_tsize );
             if ( dt->flags & DSK_DIAG_TRACK_DATA_UNREADABLE ) printf ( " DATA_UNREADABLE" );
+            if ( dt->flags & DSK_DIAG_TRACK_ZERO_DATALEN )    printf ( " ZERO_DATALEN" );
 
             printf ( "\n" );
         }

@@ -92,7 +92,18 @@ extern "C" {
     } st_DSK_HEADER; /* 256 B */
 
 
-    /** @brief Informace o jednom sektoru v hlavičce stopy — 8 bajtů. */
+    /**
+     * @brief Informace o jednom sektoru v hlavičce stopy - 8 bajtů.
+     *
+     * Odpovídá položce Sector Information List formátu Extended CPC DSK.
+     * Pole data_len je v tomto formátu povinné ("actual data length in
+     * bytes"); nevyužité (nulové) je jen ve starém formátu "MV - CPC",
+     * který knihovna nepodporuje. Zdroj: CPCWiki,
+     * Format:DSK_disk_image_file_format.
+     *
+     * @invariant U obrazů vytvořených touto knihovnou platí
+     *            data_len == dsk_decode_sector_size ( ssize ).
+     */
     typedef struct st_DSK_SECTOR_INFO {
         uint8_t track;          /**< Číslo stopy */
         uint8_t side;           /**< Strana (0/1) */
@@ -100,8 +111,34 @@ extern "C" {
         uint8_t ssize;          /**< Kódovaná velikost sektoru (en_DSK_SECTOR_SIZE) */
         uint8_t fdc_sts1;       /**< FDC stavový registr 1 */
         uint8_t fdc_sts2;       /**< FDC stavový registr 2 */
-        uint8_t unused [ 2 ];   /**< Rezervované bajty */
+        uint8_t data_len [ 2 ]; /**< Skutečná délka uložených dat sektoru v bajtech, little-endian
+                                     (přístup přes dsk_sector_info_get/set_data_length) */
     } st_DSK_SECTOR_INFO; /* 8 B */
+
+
+    /**
+     * @brief Vrátí délku dat sektoru uloženou v Sector Info.
+     *
+     * @param sinfo Sector Info (nesmí být NULL).
+     * @return Délka dat v bajtech; 0 znamená, že pole není vyplněné.
+     */
+    static inline uint16_t dsk_sector_info_get_data_length ( const st_DSK_SECTOR_INFO *sinfo ) {
+        return (uint16_t) ( sinfo->data_len[0] | ( (uint16_t) sinfo->data_len[1] << 8 ) );
+    }
+
+
+    /**
+     * @brief Uloží délku dat sektoru do Sector Info (little-endian).
+     *
+     * Mění jen strukturu v paměti, do obrazu nezapisuje.
+     *
+     * @param sinfo Sector Info (nesmí být NULL).
+     * @param length Délka dat v bajtech.
+     */
+    static inline void dsk_sector_info_set_data_length ( st_DSK_SECTOR_INFO *sinfo, uint16_t length ) {
+        sinfo->data_len[0] = (uint8_t) ( length & 0xff );
+        sinfo->data_len[1] = (uint8_t) ( length >> 8 );
+    }
 
 
     /** @brief Hlavička stopy — 256 bajtů. */
@@ -403,7 +440,7 @@ extern "C" {
     /* ─── Verze knihovny ─── */
 
     /** @brief Verze knihovny dsk. */
-#define DSK_VERSION "2.0.7"
+#define DSK_VERSION "2.1.0"
 
     /**
      * @brief Vrátí řetězec s verzí knihovny dsk.

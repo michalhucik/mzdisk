@@ -439,4 +439,47 @@ run_test test_dsk_edit_track_atomicity
 run_test test_dsk_edit_header_atomicity
 run_test test_dsk_repair_atomicity_bad_file
 
+
+## Bug 2026-11-10-003: Sector Info musí nést skutečnou délku dat sektoru.
+## Nově vytvořený disk ji má vyplněnou, check hlásí nulovou délku jako
+## opravitelnou chybu a repair ji doplní beze změny čehokoliv jiného.
+test_dsk_sector_data_length() {
+    local dsk="$TEST_TMPDIR/dsk_datalen.dsk"
+    "$MZDSK_CREATE" "$dsk" --format-mrs 80 --sides 2 --overwrite >/dev/null 2>&1 || return 1
+
+    # Stopa 0 je 9x512 B, stopa 1 je FSMZ boot stopa 16x256 B.
+    # Sector Info prvního sektoru stopy 0 leží na offsetu 256+24, délka na +6.
+    local len0=$(od -An -tu2 -j $((256 + 24 + 6)) -N 2 --endian=little "$dsk" | tr -d ' ')
+    assert_eq "$len0" "512" "data length of 512 B sector" || return 1
+    local t1=$((256 + 256 + 9 * 512))
+    local len1=$(od -An -tu2 -j $((t1 + 24 + 6)) -N 2 --endian=little "$dsk" | tr -d ' ')
+    assert_eq "$len1" "256" "data length of 256 B sector" || return 1
+
+    local out
+    out=$("$MZDSK_DSK" "$dsk" tracks --abstrack 0 2>/dev/null)
+    assert_contains "$out" "DataLen" "tracks must print DataLen column" || return 1
+
+    # Simulace starého obrazu: vynulovat délku u dvou sektorů stopy 0
+    local sha_good=$(sha1sum "$dsk" | awk '{print $1}')
+    printf '\x00\x00' | dd of="$dsk" bs=1 seek=$((256 + 24 + 6)) conv=notrunc 2>/dev/null
+    printf '\x00\x00' | dd of="$dsk" bs=1 seek=$((256 + 24 + 8 + 6)) conv=notrunc 2>/dev/null
+
+    out=$("$MZDSK_DSK" "$dsk" check 2>&1)
+    assert_neq "$?" "0" "check must fail on zero data length" || return 1
+    assert_contains "$out" "ZERO_DATALEN" "check must report ZERO_DATALEN" || return 1
+    assert_contains "$out" "repairable errors found" "zero data length is repairable" || return 1
+
+    out=$("$MZDSK_DSK" "$dsk" repair 2>&1)
+    assert_eq "$?" "0" "repair should succeed" || return 1
+    assert_contains "$out" "Repair completed successfully" "repair must report success" || return 1
+
+    local sha_fixed=$(sha1sum "$dsk" | awk '{print $1}')
+    assert_eq "$sha_fixed" "$sha_good" "repair restores the original image byte for byte" || return 1
+
+    "$MZDSK_DSK" "$dsk" check >/dev/null 2>&1
+    assert_eq "$?" "0" "check after repair must be clean" || return 1
+}
+
+run_test test_dsk_sector_data_length
+
 test_summary

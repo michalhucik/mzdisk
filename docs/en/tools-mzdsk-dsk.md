@@ -1,6 +1,6 @@
 # mzdsk-dsk - DSK Container Diagnostics and Editing
 
-Tool version: 1.5.7. Part of the [mzdisk](https://github.com/michalhucik/mzdisk/) project.
+Tool version: 1.6.0. Part of the [mzdisk](https://github.com/michalhucik/mzdisk/) project.
 
 > **Disclaimer:** Always work on a copy of your DSK image, never on the
 > original. The author provides no warranty and accepts no liability for
@@ -142,12 +142,17 @@ Track 0:
   GAP#3        : 0x4e
   Filler       : 0xe5
   Sectors detail:
-    Idx   SectID  Track  Side   FDC_STS1  FDC_STS2
-    ----  ------  -----  -----  --------  --------
-    0     1       0      0      0x00      0x00
-    1     9       0      0      0x00      0x00
+    Idx   SectID  Track  Side   FDC_STS1  FDC_STS2  DataLen
+    ----  ------  -----  -----  --------  --------  -------
+    0     1       0      0      0x00      0x00      256
+    1     9       0      0      0x00      0x00      256
     ...
 ```
+
+The `DataLen` column is the actual sector data length in bytes as
+stored in the Sector Info (required by the Extended CPC DSK format).
+A value of 0 means the field is not filled in - see `ZERO_DATALEN`
+under the `check` command.
 
 ---
 
@@ -157,7 +162,8 @@ Performs a complete diagnostics of the DSK image without any
 modification. Checks the file_info identifier validity, track count
 consistency between header and actual data, tsize field consistency,
 track and side numbers in track headers, sector count and size
-validity, sector data readability and trailing data presence.
+validity, sector data length fields in the Sector Info, sector data
+readability and trailing data presence.
 
 Returns exit code 0 if the image is OK, 1 if errors are found.
 
@@ -171,6 +177,11 @@ mzdsk-dsk <image.dsk> check
 - `BAD_TRACKCOUNT` - wrong track count in DSK header
 - `BAD_TSIZE` - wrong tsize field(s) in DSK header
 - `TRAILING_DATA` - data beyond the last track
+- `ZERO_DATALEN` - a sector has a zero data length in its Sector Info.
+  Such images were produced by mzdisk tools built with the dsk_tools
+  library older than 3.4.0 (`mzdsk-create` and geometry changes in
+  `mzdsk-raw`). The mzdisk tools read them fine, but programs that rely
+  on the length field may see the sectors as empty.
 
 **Fatal errors** (automatic repair is not possible):
 - `BAD_FILEINFO` - invalid file_info identifier
@@ -188,7 +199,7 @@ mzdsk-dsk <image.dsk> check
 Per-track flag levels (printed in the "Track issues" section for damaged tracks):
 `NO_TRACKINFO` (missing Track-Info identifier), `READ_ERROR` (track data read failure),
 `BAD_TRACK_NUM`, `BAD_SIDE_NUM`, `BAD_SECTORS`, `BAD_SSIZE`, `BAD_TSIZE`,
-`DATA_UNREADABLE`.
+`DATA_UNREADABLE`, `ZERO_DATALEN`.
 
 ### Example
 
@@ -206,6 +217,7 @@ Header tracks  : 160 (tracks*sides)
 Actual tracks  : 160
 Sides          : 2
 tsize diffs    : 0
+Zero data len  : 0 track(s)
 Expected size  : 696576 bytes
 Actual size    : 696576 bytes
 
@@ -222,6 +234,7 @@ Header tracks  : 134 (tracks*sides)
 Actual tracks  : 134
 Sides          : 2
 tsize diffs    : 0
+Zero data len  : 0 track(s)
 Expected size  : 651520 bytes
 Actual size    : 777984 bytes
 
@@ -241,6 +254,10 @@ Performs diagnostics and then repairs all repairable errors:
 - **TRAILING_DATA** - data beyond the last track; the file is truncated
   to `expected_image_size` (header + sum of actual tsize values of all
   tracks)
+- **ZERO_DATALEN** - zero sector data length in the Sector Info; it is
+  set to the size given by the encoded sector size (128/256/512/1024 B).
+  Sector data, sector IDs, FDC statuses and non-zero lengths are left
+  untouched.
 
 Fatal errors (wrong track/side numbers in track headers, invalid
 sectors, file smaller than header) cannot be repaired automatically.

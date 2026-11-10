@@ -1,6 +1,6 @@
 # mzdsk-dsk - Diagnostika a editace DSK kontejneru
 
-Verze nástroje: 1.5.7. Součást projektu [mzdisk](https://github.com/michalhucik/mzdisk/).
+Verze nástroje: 1.6.0. Součást projektu [mzdisk](https://github.com/michalhucik/mzdisk/).
 
 > **Upozornění:** Vždy pracujte s kopií DSK obrazu, ne s originálem.
 > Autor projektu neposkytuje žádné záruky a neodpovídá za ztráty ani
@@ -141,12 +141,16 @@ Track 0:
   GAP#3        : 0x4e
   Filler       : 0xe5
   Sectors detail:
-    Idx   SectID  Track  Side   FDC_STS1  FDC_STS2
-    ----  ------  -----  -----  --------  --------
-    0     1       0      0      0x00      0x00
-    1     9       0      0      0x00      0x00
+    Idx   SectID  Track  Side   FDC_STS1  FDC_STS2  DataLen
+    ----  ------  -----  -----  --------  --------  -------
+    0     1       0      0      0x00      0x00      256
+    1     9       0      0      0x00      0x00      256
     ...
 ```
+
+Sloupec `DataLen` je skutečná délka dat sektoru v bajtech, jak ji uvádí
+Sector Info (formát Extended CPC DSK ji vyžaduje). Hodnota 0 znamená,
+že pole není vyplněné - viz `ZERO_DATALEN` u příkazu `check`.
 
 ---
 
@@ -156,7 +160,8 @@ Provede kompletní diagnostiku DSK obrazu bez jakékoliv modifikace.
 Kontroluje platnost file_info identifikátoru, shodu počtu stop
 v hlavičce se skutečností, konzistenci tsize polí, čísla stop
 a stran v track headerech, platnost počtu sektorů a velikostí
-sektorů, čitelnost sektorových dat a existenci trailing dat.
+sektorů, vyplnění délky dat sektorů v Sector Info, čitelnost
+sektorových dat a existenci trailing dat.
 
 Vrací exit code 0 pokud je obraz v pořádku, 1 pokud nalezne chyby.
 
@@ -170,6 +175,11 @@ mzdsk-dsk <obraz.dsk> check
 - `BAD_TRACKCOUNT` - špatný počet stop v DSK hlavičce
 - `BAD_TSIZE` - špatné tsize pole v DSK hlavičce
 - `TRAILING_DATA` - data za poslední stopou
+- `ZERO_DATALEN` - některý sektor má v Sector Info nulovou délku dat.
+  Takové obrazy vytvářely nástroje mzdisk s knihovnou dsk_tools starší
+  než 3.4.0 (`mzdsk-create` a změny geometrie v `mzdsk-raw`). Nástroje
+  mzdisk je čtou bez potíží, programy, které se polem délky řídí, ale
+  mohou sektory vidět jako prázdné.
 
 **Fatální chyby** (automatická oprava není možná):
 - `BAD_FILEINFO` - neplatný file_info identifikátor
@@ -187,7 +197,7 @@ mzdsk-dsk <obraz.dsk> check
 Per-track úrovně vlajek (vypisují se v sekci "Track issues" u poškozených stop):
 `NO_TRACKINFO` (chybí Track-Info identifikátor), `READ_ERROR` (chyba čtení dat stopy),
 `BAD_TRACK_NUM`, `BAD_SIDE_NUM`, `BAD_SECTORS`, `BAD_SSIZE`, `BAD_TSIZE`,
-`DATA_UNREADABLE`.
+`DATA_UNREADABLE`, `ZERO_DATALEN`.
 
 ### Příklady
 
@@ -205,6 +215,7 @@ Header tracks  : 160 (tracks*sides)
 Actual tracks  : 160
 Sides          : 2
 tsize diffs    : 0
+Zero data len  : 0 track(s)
 Expected size  : 696576 bytes
 Actual size    : 696576 bytes
 
@@ -221,6 +232,7 @@ Header tracks  : 134 (tracks*sides)
 Actual tracks  : 134
 Sides          : 2
 tsize diffs    : 0
+Zero data len  : 0 track(s)
 Expected size  : 651520 bytes
 Actual size    : 777984 bytes
 
@@ -239,6 +251,9 @@ Provede diagnostiku a následně opraví všechny opravitelné chyby:
 - **BAD_TSIZE** - nesprávná hodnota tsize pro některou stopu
 - **TRAILING_DATA** - data za poslední stopou; soubor je zkrácen na
   `expected_image_size` (hlavička + součet skutečných tsize všech stop)
+- **ZERO_DATALEN** - nulová délka dat sektoru v Sector Info; doplní se
+  velikost daná kódovanou velikostí sektoru (128/256/512/1024 B).
+  Sektorová data, ID sektorů, FDC statusy ani nenulové délky se nemění.
 
 Fatální chyby (špatná čísla stop/stran v track headerech, neplatné
 sektory, příliš malý soubor) nelze opravit automaticky.
