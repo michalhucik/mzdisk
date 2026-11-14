@@ -1,5 +1,48 @@
 # Changelog
 
+## 2026-11-14
+
+### Délka dat sektoru v DSK obrazech, make install
+
+Opravné vydání.
+
+- **DSK obrazy mají vyplněnou délku dat sektoru.** Formát Extended CPC
+  DSK ukládá u každého sektoru v Sector Info skutečnou délku dat
+  (offset 6-7). Nástroje mzdisk toto pole dosud nechávaly nulové, takže
+  každý vytvořený obraz deklaroval sektory nulové délky. Nástroje
+  mzdisk takové obrazy čtou bez potíží, programy, které se polem
+  řídí, ale mohou sektory vidět jako prázdné. Nově se délka zapisuje
+  při tvorbě obrazu i při změnách geometrie (CLI i GUI).
+- **Oprava starších obrazů:** `mzdsk-dsk <obraz.dsk> repair` doplní
+  chybějící délky. Sektorová data, ID sektorů ani FDC statusy se
+  nemění.
+- **`mzdsk-dsk check`** hlásí nulovou délku jako opravitelnou chybu
+  `ZERO_DATALEN`. **Změna chování:** nad obrazem vytvořeným starší
+  verzí proto `check` vrací 1, dokud se neprovede `repair`.
+- **`mzdsk-dsk tracks`** vypisuje u sektorů nový sloupec `DataLen`.
+- **`make install` a `make uninstall`:** souhrnné cíle pro instalaci
+  CLI nástrojů a jejich dokumentace (`install-cli` +
+  `install-cli-docs`). GUI se neinstaluje, distribuuje se jako
+  adresář z `make portable-gui`.
+- **Testy:** dočasné adresáře se berou z prostředí (`TMPDIR`, `TEMP`,
+  `TMP`) místo natvrdo `/tmp`; na Windows už testy nevyžadují adresář
+  `\tmp` na aktuálním disku.
+
+**Release:**
+
+- **mzdisk GUI v0.8.3**
+- **mzdisk CLI v0.8.3**
+
+**Změněné verze v tomto release:**
+
+| Komponenta        | Verze          |
+|-------------------|----------------|
+| `mzdsk-dsk`       | 1.5.7 -> 1.6.0 |
+| `dsk` (lib)       | 2.0.7 -> 2.1.0 |
+| `dsk_tools` (lib) | 3.3.0 -> 3.4.0 |
+
+Ostatní CLI nástroje a knihovny beze změny.
+
 ## 2026-11-10
 
 ### Opravy typů souborů FSMZ, sestavení na macOS a CI

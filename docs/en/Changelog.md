@@ -1,5 +1,48 @@
 # Changelog
 
+## 2026-11-14
+
+### Sector data length in DSK images, make install
+
+Bugfix release.
+
+- **DSK images now carry the sector data length.** The Extended CPC
+  DSK format stores the actual data length of each sector in its
+  Sector Info (offset 6-7). The mzdisk tools used to leave the field
+  zero, so every image they created declared zero-length sectors. The
+  mzdisk tools read such images fine, but programs that rely on the
+  field may see the sectors as empty. The length is now written when
+  an image is created and when its geometry is changed (CLI and GUI).
+- **Fixing older images:** `mzdsk-dsk <image.dsk> repair` fills in the
+  missing lengths. Sector data, sector IDs and FDC statuses are left
+  untouched.
+- **`mzdsk-dsk check`** reports a zero length as the repairable error
+  `ZERO_DATALEN`. **Behaviour change:** `check` therefore returns 1 on
+  an image created by an older version until `repair` is run.
+- **`mzdsk-dsk tracks`** prints a new `DataLen` column for sectors.
+- **`make install` and `make uninstall`:** umbrella targets that
+  install the CLI tools and their documentation (`install-cli` +
+  `install-cli-docs`). The GUI is not installed; it is distributed as
+  the folder produced by `make portable-gui`.
+- **Tests:** temporary directories are taken from the environment
+  (`TMPDIR`, `TEMP`, `TMP`) instead of a hard-coded `/tmp`; on Windows
+  the tests no longer need a `\tmp` directory on the current drive.
+
+**Release:**
+
+- **mzdisk GUI v0.8.3**
+- **mzdisk CLI v0.8.3**
+
+**Versions changed in this release:**
+
+| Component         | Version        |
+|-------------------|----------------|
+| `mzdsk-dsk`       | 1.5.7 -> 1.6.0 |
+| `dsk` (lib)       | 2.0.7 -> 2.1.0 |
+| `dsk_tools` (lib) | 3.3.0 -> 3.4.0 |
+
+Other CLI tools and libraries unchanged.
+
 ## 2026-11-10
 
 ### FSMZ file type fixes, macOS build and CI
